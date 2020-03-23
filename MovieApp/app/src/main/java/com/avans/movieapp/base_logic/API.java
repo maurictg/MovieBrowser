@@ -19,10 +19,10 @@ public class API {
      * @param callback Returns String in callback data
      */
     public static void getRequestToken(ICallback callback) {
-        NetworkTask nt = Security.getAPI3NetworkTask((d, s) -> {
-            if(s) {
+        NetworkTask nt = Security.getAPI3NetworkTask((data, success) -> {
+            if(success) {
                 try {
-                    JSONObject o = ((BinaryData)d).toJSONObject();
+                    JSONObject o = ((BinaryData)data).toJSONObject();
                     if(o.optBoolean("success", false)) {
                         callback.callback(o.getString("request_token"), true);
                     } else {
@@ -47,10 +47,10 @@ public class API {
      * @param callback Returns string in callback data
      */
     public static void getSessionId(String requestToken, ICallback callback) {
-        NetworkTask nt = Security.getAPI3NetworkTask((d,s) -> {
-            if(s) {
+        NetworkTask nt = Security.getAPI3NetworkTask((data,success) -> {
+            if(success) {
                 try {
-                    JSONObject o = ((BinaryData)d).toJSONObject();
+                    JSONObject o = ((BinaryData)data).toJSONObject();
                     if(o.optBoolean("success", false)) {
                         callback.callback(o.getString("session_id"), true);
                     } else {
