@@ -1,4 +1,4 @@
-package com.avans.movieapp.helpers;
+package com.avans.movieapp.interfaces;
 
 /**
  * Implement this callback with a lambda to use it

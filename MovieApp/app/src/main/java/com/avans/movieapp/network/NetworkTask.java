@@ -4,10 +4,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.avans.movieapp.helpers.BinaryData;
-import com.avans.movieapp.helpers.ICallback;
+import com.avans.movieapp.helpers.RequestMethod;
+import com.avans.movieapp.interfaces.ICallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -19,10 +22,40 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
     private ICallback callback;
 
     private HashMap<String, String> headers;
+    private HashMap<String, String> parameters;
+    private HashMap<String, String> formData;
+    private RequestMethod requestMethod;
 
-    public NetworkTask(ICallback callback) {
+    /**
+     * Create new NetworkTask. Default requestMethod set to GET
+     * @param callback
+     */
+    public NetworkTask(ICallback callback) { this(RequestMethod.GET, callback); }
+
+    /**
+     * Create new NetworkTask.
+     * @param method The HTTPMethod like GET, POST, PUT etc.
+     * @param callback The callback method. You can use a lambda here:
+     * <code>new NetworkTask((data, success) -> { your code here })</code>
+     */
+    public NetworkTask(RequestMethod method, ICallback callback) {
         this.callback = callback;
+        this.headers = new HashMap<>();
+        this.parameters = new HashMap<>();
+        this.formData = new HashMap<>();
+        this.requestMethod = method;
     }
+
+    //Add headers, parameters or HTTP form data
+    public void addHeader(String title, String value) { this.headers.put(title, value); }
+    public void addParameter(String title, String value) { this.parameters.put(title, value); }
+    public void addFormData(String title, String value) { this.formData.put(title, value); }
+
+    /**
+     * Set request method
+     * @param requestMethod HTTP method like GET, POST e.d.
+     */
+    public void setRequestMethod(RequestMethod requestMethod) {  this.requestMethod = requestMethod; }
 
     @Override
     protected void onPreExecute() {
@@ -34,11 +67,42 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
     protected BinaryData doInBackground(String... strings) {
         Log.d(TAG, "Executing doInBackground");
 
-        String url = strings[0];
+        StringBuilder url = new StringBuilder(strings[0]);
+        if(parameters.size() > 0) {
+            parameters.forEach((k, v) -> url.append("&").append(k).append("=").append(v));
+        }
+
+        StringBuilder form_data = new StringBuilder();
+        if(formData.size() > 0) {
+            formData.forEach((k, v) -> form_data.append("&").append(k).append("=").append(v));
+        }
 
         try {
-            Log.d(TAG, "Opening inputStream from given url ("+url+").");
-            InputStream is = (InputStream)new URL(url).getContent();
+            Log.d(TAG, "Opening connection to given url ("+url+") Http-"+requestMethod.get());
+            HttpURLConnection connection = (HttpURLConnection) new URL(url.toString().replaceFirst("&", "?")).openConnection();
+
+            //Add headers to connection
+            headers.forEach(connection::addRequestProperty);
+            connection.setRequestMethod(requestMethod.get());
+
+            //Write request if needed
+            if(formData.size() > 0) {
+                byte[] postData = new BinaryData(form_data.toString().replaceFirst("&", "")).getData();
+                connection.setDoOutput(true);
+                connection.setInstanceFollowRedirects(false);
+                connection.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.addRequestProperty("charset", "utf-8");
+                connection.addRequestProperty("Content-Length", Integer.toString(postData.length));
+                connection.setUseCaches(false);
+
+                //Write data using OutputStream
+                try(DataOutputStream ws = new DataOutputStream(connection.getOutputStream())) {
+                    ws.write(postData);
+                }
+            }
+
+            //Read response
+            InputStream is = connection.getInputStream();
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             int nRead;
             byte[] data = new byte[1024];
@@ -47,11 +111,10 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
             }
 
             buffer.flush();
-
             Log.d(TAG, "Flushed binary data. Returning BinaryData object");
 
+            //Create and return new BinaryData object. See BinaryData.java
             return new BinaryData(buffer.toByteArray());
-
         } catch (Exception e){
             e.printStackTrace();
             Log.e(TAG, "Failed to get data: "+e.getMessage());

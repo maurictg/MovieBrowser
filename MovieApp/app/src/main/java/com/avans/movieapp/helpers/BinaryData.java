@@ -5,9 +5,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 /**
@@ -43,11 +49,11 @@ public class BinaryData {
     }
 
     /**
-     * Convert String to BinaryData
+     * Create new BinaryData object from String
      * @param value The string
      */
     public BinaryData(String value) {
-        this.data = value.getBytes();
+        this.data = value.getBytes(StandardCharsets.UTF_8);
     }
 
     /**
@@ -55,12 +61,25 @@ public class BinaryData {
      * @return String
      */
     @Override
+    @NonNull
     public String toString() {
         InputStream is = new ByteArrayInputStream(this.data);
         Scanner s = new Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
     }
 
+    /**
+     * Return JSONObject from data
+     * @return JSONObject
+     */
+    public JSONObject toJSONObject() throws JSONException {
+        return new JSONObject(this.toString());
+    }
+
+    /**
+     * Get length
+     * @return Length of inner byte[]
+     */
     public int length() {
         return this.data.length;
     }
@@ -81,7 +100,9 @@ public class BinaryData {
         return Drawable.createFromStream(is, "Useless");
     }
 
-    public byte[] getData() {
-        return data;
-    }
+    /**
+     * Return inner byte[]
+     * @return byte[]
+     */
+    public byte[] getData() { return data; }
 }
