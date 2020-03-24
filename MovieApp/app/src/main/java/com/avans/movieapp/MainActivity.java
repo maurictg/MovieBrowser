@@ -36,12 +36,12 @@ public class MainActivity extends AppCompatActivity {
         nav_profile = navigation.findItem(R.id.nav_profile);
         nav_saved = navigation.findItem(R.id.nav_saved);
 
-        setNotification(nav_profile);
-        setNotification(nav_saved);
+//        setNotification(nav_profile);
+//        setNotification(nav_saved);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
     }
-    private void setNotification( MenuItem menuItem) {
+    private void setNotification(BadgeDrawable badgeDrawable, MenuItem menuItem) {
         bottomNavigationView.getOrCreateBadge(menuItem.getItemId());
     }
     private void clearNotif(MenuItem menuItem) {
