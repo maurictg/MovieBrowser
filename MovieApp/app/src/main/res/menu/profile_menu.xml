@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/profile_feed"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/feed" />
+    <item
+        android:id="@+id/profile_reviews"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/reviews"/>
+    <item
+        android:id="@+id/profile_list"
+        android:icon="@drawable/ic_bookmark_black_24dp"
+        android:title="@string/my_lists" />
+    <item
+        android:id="@+id/profile_settings"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/settings" />
+</menu>
