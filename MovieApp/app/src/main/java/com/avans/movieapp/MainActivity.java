@@ -1,6 +1,8 @@
 package com.avans.movieapp;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
     }
-    
+
     // Bottom navigation buttons
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item -> {
         Fragment fragment = null;
@@ -45,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         return true;
     };
-
+    // Resize GridView
+    public static int calculateNoOfColumns(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int noOfColumns = (int) (dpWidth / 180);
+        return noOfColumns;
+    }
 
 }
