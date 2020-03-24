@@ -7,15 +7,15 @@ public class Movie {
     private int id;
     private String title;
     private String description;
-    private int length;
     private String imageUrl;
     private boolean isAdult;
     private Date releaseDate;
-    private int voteAverage;
+    private double voteAverage;
 
     public Movie(String title) {
         this.title = title; //For debug
     }
+
 
     public int getId() {
         return id;
@@ -27,10 +27,6 @@ public class Movie {
 
     public String getDescription() {
         return description;
-    }
-
-    public int getLength() {
-        return length;
     }
 
     public String getImageUrl() {
@@ -45,7 +41,7 @@ public class Movie {
         return releaseDate;
     }
 
-    public int getVoteAverage() {
+    public double getVoteAverage() {
         return voteAverage;
     }
 

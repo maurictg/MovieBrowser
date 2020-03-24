@@ -70,4 +70,25 @@ public class API {
         nt.addFormData("request_token", requestToken);
         nt.execute("https://api.themoviedb.org/3/authentication/session/new");
     }
+
+    public static void searchMovie(String search, ICallback callback){
+        NetworkTask networkTask = new NetworkTask(RequestMethod.GET, (data, success) -> {
+            if (success){
+                BinaryData binaryData = ((BinaryData)data);
+                JSONObject JSON = binaryData.toJSONObject();
+
+
+                callback.callback(JSON, true);
+
+
+
+
+            }
+        });
+
+
+        networkTask.addParameter("api_key", "e4324f0349da1f199362d20965c34a40");
+        networkTask.addParameter("query", search);
+        networkTask.execute("https://api.themoviedb.org/3/search/movie");
+    }
 }

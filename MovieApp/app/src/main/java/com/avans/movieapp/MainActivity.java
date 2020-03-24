@@ -7,11 +7,14 @@ import android.util.DisplayMetrics;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.fragments.HomeFragment;
 import com.avans.movieapp.fragments.ProfileFragment;
 import com.avans.movieapp.fragments.SavedFragment;
 import com.avans.movieapp.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
@@ -24,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+
+
+
 
     }
 

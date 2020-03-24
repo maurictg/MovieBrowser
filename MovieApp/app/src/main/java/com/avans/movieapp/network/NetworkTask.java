@@ -10,8 +10,10 @@ import com.avans.movieapp.interfaces.ICallback;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 
 /**
@@ -69,7 +71,13 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
 
         StringBuilder url = new StringBuilder(strings[0]);
         if(parameters.size() > 0) {
-            parameters.forEach((k, v) -> url.append("&").append(k).append("=").append(v));
+            parameters.forEach((k, v) -> {
+                try {
+                    url.append("&").append(k).append("=").append(URLEncoder.encode(v, "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            });
         }
 
         StringBuilder form_data = new StringBuilder();
