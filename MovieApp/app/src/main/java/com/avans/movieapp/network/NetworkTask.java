@@ -7,6 +7,8 @@ import com.avans.movieapp.helpers.BinaryData;
 import com.avans.movieapp.helpers.RequestMethod;
 import com.avans.movieapp.interfaces.ICallback;
 
+import org.json.JSONException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -135,16 +137,30 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
         Log.d(TAG, "Executing onPostExecute. Calling callback.");
         super.onPostExecute(binaryData);
 
-        if(binaryData != null)
-            callback.callback(binaryData, true);
-        else
-            callback.callback(null, false);
+        if(binaryData != null) {
+            try {
+                callback.callback(binaryData, true);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                callback.callback(null, false);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     protected void onCancelled() {
         Log.d(TAG, "Executing onCancelled. Calling callback.");
         super.onCancelled();
-        callback.callback(null, false);
+        try {
+            callback.callback(null, false);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

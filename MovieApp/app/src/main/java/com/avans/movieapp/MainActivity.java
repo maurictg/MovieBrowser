@@ -3,8 +3,10 @@ package com.avans.movieapp;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -14,6 +16,8 @@ import com.avans.movieapp.fragments.HomeFragment;
 import com.avans.movieapp.fragments.ProfileFragment;
 import com.avans.movieapp.fragments.SavedFragment;
 import com.avans.movieapp.fragments.SearchFragment;
+import com.avans.movieapp.interfaces.ICallback;
+import com.avans.movieapp.models.Movie;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -28,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -42,7 +48,17 @@ public class MainActivity extends AppCompatActivity {
 //        setNotification(nav_profile);
 //        setNotification(nav_saved);
 
+
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+
+        API.searchMovies("How to train your dragon", ((data, success) -> {
+            if (success){
+                ArrayList<Movie> movies = (ArrayList<Movie>)data;
+                Log.d(TAG, movies.toString());
+            }
+
+        }));
+
     }
     private void setNotification(BadgeDrawable badgeDrawable, MenuItem menuItem) {
         bottomNavigationView.getOrCreateBadge(menuItem.getItemId());

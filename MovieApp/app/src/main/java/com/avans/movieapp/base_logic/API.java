@@ -1,12 +1,12 @@
 package com.avans.movieapp.base_logic;
 
-import android.util.JsonReader;
 import android.util.Log;
 
 import com.avans.movieapp.helpers.BinaryData;
 import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.helpers.RequestMethod;
 import com.avans.movieapp.models.Movie;
+import com.avans.movieapp.models.MovieDetails;
 import com.avans.movieapp.network.NetworkTask;
 
 import org.json.JSONArray;
@@ -33,6 +33,14 @@ public class API {
     private static final String JSON_ADULT = "adult";
     private static final String JSON_DATE = "release_date";
     private static final String JSON_VOTE_AVERAGE = "vote_average";
+
+    private static final String JSON_RUNTIME = "runtime";
+    private static final String JSON_GENRES = "genres";
+    private static final String JSON_NAME = "name";
+    private static final String JSON_PRODUCTION_COMPANIES = "production_companies";
+    private static final String JSON_CAST = "cast";
+    private static final String JSON_CREW = "crew";
+    private static final String JSON_JOB = "job";
 
     /**
      * Get request token to ask user for permission
@@ -92,6 +100,74 @@ public class API {
         nt.execute("https://api.themoviedb.org/3/authentication/session/new");
     }
 
+    public static void getMovieDetails(Movie movie, ICallback callback){
+
+        NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
+            if (success){
+                getMovieCreditsJsonObject(movie, ((dataCrew, success1) -> {
+
+                    JSONObject JSONMovieDetails = (JSONObject)data;
+                    int length = JSONMovieDetails.optInt(JSON_RUNTIME);
+                    JSONArray genres = JSONMovieDetails.getJSONArray(JSON_GENRES);
+                    JSONObject genre = (JSONObject)genres.get(0);
+                    String stringGenre = genre.optString(JSON_NAME);
+                    JSONArray productionCompanies = JSONMovieDetails.getJSONArray(JSON_PRODUCTION_COMPANIES);
+                    JSONObject productionCompany = (JSONObject)productionCompanies.get(0);
+                    String stringProductionCompany = productionCompany.optString(JSON_NAME);
+
+                    JSONObject JSONCredits = (JSONObject)dataCrew;
+                    JSONArray JSONCast = JSONCredits.getJSONArray(JSON_CAST);
+                    ArrayList<String> actors = null;
+                    for (int i = 0; i < 3; i++){
+                        JSONObject JSONCastMember = JSONCast.getJSONObject(i);
+                        String actor = JSONCastMember.optString(JSON_NAME);
+                        actors.add(actor);
+                    }
+                    String director = null;
+                    JSONArray JSONCrew = JSONCredits.getJSONArray(JSON_CREW);
+                    for (int i = 0; i < JSONCrew.length(); i++){
+                        JSONObject crewMember = JSONCrew.getJSONObject(i);
+                        if (crewMember.optString(JSON_JOB).equals("Director")){
+                            director = crewMember.optString(JSON_NAME);
+                            break;
+                        }
+                    }
+
+                    MovieDetails movieDetails = new MovieDetails(movie.getId(), movie.getTitle(), movie.getOverview(), movie.getImageUrlPoster(), movie.getImageUrlBackdrop(), movie.isAdult(), movie.getReleaseDate(), movie.getVoteAverage(),
+                            length, stringGenre, stringProductionCompany, actors, director);
+
+                    callback.callback(movieDetails, true);
+
+
+                }));
+
+                
+
+            }
+        }));
+
+        networkTask.addParameter("api_key", "e4324f0349da1f199362d20965c34a40");
+        networkTask.execute("https://api.themoviedb.org/3/search/movie/" + movie.getId());
+
+    }
+
+    public static void getMovieCreditsJsonObject(Movie movie, ICallback callback){
+        NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
+            if (success){
+                BinaryData binaryData = (BinaryData)data;
+
+                JSONObject JSONResult = binaryData.toJSONObject();
+
+                callback.callback(JSONResult, true);
+            }
+        }));
+
+        networkTask.addParameter("api_key", "e4324f0349da1f199362d20965c34a40");
+        networkTask.execute("https://api.themoviedb.org/3/movie/" + movie.getId() + "/credits");
+//        https://api.themoviedb.org/3/movie/10191/credits?api_key=0767cc753758bdc7d9556d163b0b3f3d
+
+    }
+
     /**
      * Search is een zoekterm voor films (vb. Star Wars)
      * Geeeft een ArrayList<movies> terug.
@@ -99,9 +175,9 @@ public class API {
     public static void searchMovies(String search, ICallback callback){
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, (data, success) -> {
             if (success){
-                BinaryData binaryData = ((BinaryData)data);
-
                 ArrayList<Movie> movies = new ArrayList<>();
+
+                BinaryData binaryData = ((BinaryData)data);
 
                 JSONObject JSONResult = binaryData.toJSONObject();
                 JSONArray results = JSONResult.getJSONArray(JSON_RESULTS);

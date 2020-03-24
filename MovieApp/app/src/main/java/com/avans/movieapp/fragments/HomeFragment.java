@@ -47,9 +47,9 @@ public class HomeFragment extends Fragment {
         adapter = new VideosAdapter(movies);
         rvHome.setAdapter(adapter);
 
-        movies.add(new Movie("Test"));
-        movies.add(new Movie("Test 2"));
-        movies.add(new Movie("Testje"));
+//        movies.add(new Movie("Test"));
+//        movies.add(new Movie("Test 2"));
+//        movies.add(new Movie("Testje"));
         adapter.notifyDataSetChanged();
 
         return view;
