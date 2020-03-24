@@ -35,13 +35,11 @@
                     android:id="@+id/titleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="@string/profile"
                     android:textAllCaps="true"
-                    android:gravity="center"
                     android:textColor="@color/colorHighlight"
                     android:textStyle="bold" />
-
-
             </RelativeLayout>
 
             <ImageButton
@@ -188,52 +186,41 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/int_notif_feed"
+                android:id="@+id/feed_notif_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_notif"
-                android:padding="7.5dp"
+                android:backgroundTint="@color/profile_color"                android:padding="7.5dp"
                 android:text="999"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/int_notif_reviews"
+                android:id="@+id/review_notif_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_notif"
-                android:padding="7.5dp"
+                android:backgroundTint="@color/profile_color"                android:padding="7.5dp"
                 android:text="999"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/int_notif_list"
+                android:id="@+id/list_count_notif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/bg_notif"
                 android:padding="7.5dp"
+                android:background="@drawable/bg_notif"
+                android:backgroundTint="@color/profile_color"
                 android:text="999"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/int_notif_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bg_notif"
-                android:padding="7.5dp"
-                android:text="999"
-                android:textColor="@android:color/white"
-                android:textSize="16dp" />
         </GridLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

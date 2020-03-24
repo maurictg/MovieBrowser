@@ -135,16 +135,18 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
         Log.d(TAG, "Executing onPostExecute. Calling callback.");
         super.onPostExecute(binaryData);
 
-        if(binaryData != null)
-            callback.callback(binaryData, true);
-        else
-            callback.callback(null, false);
+        if (binaryData != null) {
+//            callback.callback
+//                    (binaryData, true);
+        } else {
+//            callback.callback(null, false);
+        }
     }
 
     @Override
     protected void onCancelled() {
         Log.d(TAG, "Executing onCancelled. Calling callback.");
         super.onCancelled();
-        callback.callback(null, false);
+//        callback.callback(null, false);
     }
 }

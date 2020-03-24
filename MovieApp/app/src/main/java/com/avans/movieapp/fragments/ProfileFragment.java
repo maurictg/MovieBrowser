@@ -3,29 +3,26 @@ package com.avans.movieapp.fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.avans.movieapp.R;
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.badge.BadgeUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +30,13 @@ import java.util.Objects;
 public class ProfileFragment extends Fragment {
     private ImageView profPic;
 
-    private MenuItem profile_feed;
+    private TextView int_prof_feed;
+    private TextView int_prof_list;
+    private TextView int_prof_reviews;
+
+    private int feedCount;
+    private int listCount;
+    private int reviewCount;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -44,6 +47,17 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         profPic = v.findViewById(R.id.profilePic);
+        int_prof_feed = v.findViewById(R.id.feed_notif_count);
+        int_prof_list = v.findViewById(R.id.list_count_notif);
+        int_prof_reviews = v.findViewById(R.id.review_notif_count);
+
+        int_prof_feed.setText(setFeedBadge());
+        int_prof_list.setText(setListBadge());
+        int_prof_reviews.setText(setReviewBadge());
+
+        int_prof_feed.setEnabled(false);
+        int_prof_list.setEnabled(false);
+        int_prof_reviews.setEnabled(false);
 
         /* TODO METHOD TO LOAD URL, WITH DEFAULT STATE. THIS IS A DUMMY PLACEMENT */
         Picasso
@@ -53,6 +67,16 @@ public class ProfileFragment extends Fragment {
                 .resize(200,200)
                 .into(profPic);
         return v;
+    }
+
+    public String setFeedBadge() {
+        return null;
+    }
+    public String setReviewBadge() {
+        return null;
+    }
+    public String setListBadge() {
+        return null;
     }
 
     public class CircleTransform implements Transformation {
