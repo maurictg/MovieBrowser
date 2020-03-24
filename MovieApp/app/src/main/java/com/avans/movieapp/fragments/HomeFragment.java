@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
 //        movies.add(new Movie("Test"));
 //        movies.add(new Movie("Test 2"));
 //        movies.add(new Movie("Testje"));
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
 
         return view;
     }
