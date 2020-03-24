@@ -6,14 +6,27 @@ public class Movie {
 
     private int id;
     private String title;
-    private String description;
-    private String imageUrl;
+    private String overview;
+    private String imageUrlPoster;
+    private String imageUrlBackdrop;
     private boolean isAdult;
     private Date releaseDate;
     private double voteAverage;
 
-    public Movie(String title) {
-        this.title = title; //For debug
+
+
+    public Movie(int id, String title, String overview,
+                 String imageUrlPoster, String imageUrlBackdrop, boolean isAdult,
+                 Date releaseDate, double voteAverage) {
+        this.id = id;
+        this.title = title;
+        this.overview = overview;
+        this.imageUrlPoster = imageUrlPoster;
+        this.imageUrlBackdrop = imageUrlBackdrop;
+        this.isAdult = isAdult;
+        this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
+
     }
 
 
@@ -25,12 +38,12 @@ public class Movie {
         return title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getOverview() {
+        return overview;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageUrlPoster() {
+        return imageUrlPoster;
     }
 
     public boolean isAdult() {
@@ -45,6 +58,9 @@ public class Movie {
         return voteAverage;
     }
 
+    public String getImageUrlBackdrop() {
+        return imageUrlBackdrop;
+    }
     //Relations
     //ArrayList with Genres
     //ArrayList with Languages
