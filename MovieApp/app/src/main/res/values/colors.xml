@@ -4,4 +4,6 @@
     <color name="colorBackground">#111111</color>
     <color name="colorAccent">#333333</color>
     <color name="colorDisabled">#6E6E6E</color>
+    <color name="colorBlue">#2196F3</color>
+    <color name="colorBlueDark">#3F51B5</color>
 </resources>
