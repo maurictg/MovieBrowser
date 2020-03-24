@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     // Bottom navigation buttons
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item -> {
         Fragment fragment = null;
+        assert false;
         switch (item.getItemId()) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
@@ -47,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         return true;
     };
-    // Resize GridView
+
+    // Resize GridManager of the RecycleViews
     public static int calculateNoOfColumns(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;

@@ -11,4 +11,13 @@
     <string name="search">Search</string>
     <string name="saved">Saved</string>
     <string name="profile">Profile</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="hello">Hello</string>
+    <string name="reviews">Reviews</string>
+    <string name="movies">Movies</string>
+    <string name="username">Username</string>
+    <string name="feed">Feed</string>
+    <string name="my_reviews">My Reviews</string>
+    <string name="my_lists">My Lists</string>
+    <string name="settings">Settings</string>
 </resources>
