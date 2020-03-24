@@ -145,8 +145,8 @@
             android:paddingStart="50dp"
             android:paddingTop="10dp"
             android:paddingEnd="50dp"
-            android:paddingBottom="100dp"
-            android:rowCount="4">
+            android:paddingBottom="155dp"
+            android:rowCount="3">
 
             <TextView
                 android:id="@+id/feed"
@@ -176,23 +176,15 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_marginBottom="50dp"
-                android:text="@string/settings"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
-
-            <TextView
                 android:id="@+id/feed_notif_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_notif"
-                android:backgroundTint="@color/profile_color"                android:padding="7.5dp"
+                android:backgroundTint="@color/profile_color"
+                android:enabled="false"
+                android:padding="7.5dp"
                 android:text="999"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
@@ -204,7 +196,9 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_notif"
-                android:backgroundTint="@color/profile_color"                android:padding="7.5dp"
+                android:backgroundTint="@color/profile_color"
+                android:enabled="false"
+                android:padding="7.5dp"
                 android:text="999"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
@@ -215,9 +209,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
-                android:padding="7.5dp"
                 android:background="@drawable/bg_notif"
                 android:backgroundTint="@color/profile_color"
+                android:enabled="false"
+                android:padding="7.5dp"
                 android:text="999"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
