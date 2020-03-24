@@ -37,8 +37,7 @@ public class HomeFragment extends Fragment {
 
         Log.d(TAG, "Called onCreateView");
         movies = new ArrayList<>();
-
-        // Inflate the layout for this fragment\
+        
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         rvHome = view.findViewById(R.id.rvHome);

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorHighlight">#2699FB</color>
-    <color name="colorBackground">#111111</color>
-    <color name="colorAccent">#333333</color>
+    <color name="colorBackground">#000000</color>
+    <color name="colorMenu">#101010</color>
+    <color name="colorAccent">#181818</color>
     <color name="colorDisabled">#6E6E6E</color>
     <color name="colorBlue">#2196F3</color>
     <color name="colorBlueDark">#3F51B5</color>
+    /* TODO ADD WHITE MODE */
 </resources>
