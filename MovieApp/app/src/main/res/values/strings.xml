@@ -40,4 +40,5 @@
     <string name="discover">discover</string>
     <string name="recent">recent</string>
     <string name="poster">POSTER</string>
+    <string name="icon">ICON</string>
 </resources>
