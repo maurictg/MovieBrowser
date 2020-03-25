@@ -6,7 +6,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,7 +15,6 @@ import com.avans.movieapp.fragments.HomeFragment;
 import com.avans.movieapp.fragments.ProfileFragment;
 import com.avans.movieapp.fragments.SavedFragment;
 import com.avans.movieapp.fragments.SearchFragment;
-import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Movie;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem nav_profile;
     private MenuItem nav_saved;
 
+    BadgeDrawable badgeDrawable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -41,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
 
         Menu navigation = bottomNavigationView.getMenu();
-
+        badgeDrawable = BadgeDrawable.create(this);
         nav_profile = navigation.findItem(R.id.nav_profile);
         nav_saved = navigation.findItem(R.id.nav_saved);
 
-//        setNotification(nav_profile);
-//        setNotification(nav_saved);
 
+        setNotification(nav_profile);
+        setNotification(nav_saved);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
@@ -60,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
         }));
 
     }
-    private void setNotification(BadgeDrawable badgeDrawable, MenuItem menuItem) {
+    private void setNotification(MenuItem menuItem) {
         bottomNavigationView.getOrCreateBadge(menuItem.getItemId());
     }
-    private void clearNotif(MenuItem menuItem) {
+    private void clearNotification(MenuItem menuItem) {
         bottomNavigationView.removeBadge(menuItem.getItemId());
     }
 
@@ -80,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_saved:
                 fragment = new SavedFragment();
-                clearNotif(nav_saved);
+                clearNotification(nav_saved);
                 break;
             case R.id.nav_profile:
                 fragment = new ProfileFragment();
-                clearNotif(nav_profile);
+                clearNotification(nav_profile);
                 break;
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
