@@ -13,7 +13,6 @@ public class Movie {
     private Date releaseDate;
     private double voteAverage;
 
-
     public Movie(int id, String title, String overview,
                  String imageUrlPoster, String imageUrlBackdrop, boolean isAdult,
                  Date releaseDate, double voteAverage) {
@@ -25,7 +24,6 @@ public class Movie {
         this.isAdult = isAdult;
         this.releaseDate = releaseDate;
         this.voteAverage = voteAverage;
-
     }
 
 

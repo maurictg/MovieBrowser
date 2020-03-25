@@ -25,8 +25,8 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         RecyclerView mSearchRecycler = v.findViewById(R.id.rvSearch);
         EditText editText = (EditText) v.findViewById(R.id.etSearch);

@@ -19,12 +19,10 @@ public class MovieDetails extends Movie {
         this.company = company;
         this.actors = actors;
         this.director = director;
-
     }
 
     public int getLength() {
         return length;
-
     }
 
 
