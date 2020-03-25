@@ -22,7 +22,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/AppTheme" />
+                app:popupTheme="@style/AppTheme.Base" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,6 +33,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:background="@color/colorMenu"
+                    android:contentDescription="@string/search"
                     android:src="@drawable/ic_search_black_24dp"
                     android:tint="@color/colorText" />
 
@@ -40,15 +41,17 @@
                     android:id="@+id/etSearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:autofillHints="@string/search"
                     android:background="@color/colorMenu"
                     android:gravity="center_vertical"
                     android:hint="@string/search"
                     android:imeOptions="actionSearch"
-                    android:maxLength="48"
+                    android:inputType="text"
+                    android:maxLength="24"
+                    android:maxLines="1"
                     android:padding="10dp"
                     android:textColor="@color/colorText"
-                    android:textColorHint="@color/colorText"
-                    android:autofillHints="penis" />
+                    android:textColorHint="@color/colorText" />
             </LinearLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>

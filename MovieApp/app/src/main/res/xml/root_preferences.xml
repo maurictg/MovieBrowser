@@ -13,13 +13,13 @@
 <PreferenceCategory app:title="Preferences">
     <SwitchPreferenceCompat
         app:title="Theme"
+        app:key="theme"
         android:icon="@drawable/ic_whatshot_24dp" />
 
     <ListPreference
-        app:defaultValue="reply"
         app:entries="@array/languages"
         app:entryValues="@array/language_values"
-        app:key="English"
+        app:key="lang"
         app:title="Language"
         android:defaultValue="English"
         android:dialogTitle=""
