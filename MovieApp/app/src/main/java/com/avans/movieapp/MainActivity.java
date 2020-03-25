@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.fragments.HomeFragment;
 import com.avans.movieapp.fragments.ProfileFragment;
