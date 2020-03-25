@@ -1,0 +1,33 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<PreferenceCategory app:title="General Settings">
+    <EditTextPreference
+        app:key="signature"
+        app:title="Username"
+        app:useSimpleSummaryProvider="true"
+        android:icon="@drawable/ic_account_circle_24dp" />
+
+</PreferenceCategory>
+
+<PreferenceCategory app:title="Preferences">
+    <SwitchPreferenceCompat
+        app:title="Theme"
+        android:icon="@drawable/ic_whatshot_24dp" />
+
+    <ListPreference
+        app:defaultValue="reply"
+        app:entries="@array/languages"
+        app:entryValues="@array/language_values"
+        app:key="English"
+        app:title="Language"
+        android:defaultValue="English"
+        android:dialogTitle=""
+        android:icon="@drawable/ic_chat_24dp"
+        app:useSimpleSummaryProvider="true"
+        />
+
+</PreferenceCategory>
+
+</PreferenceScreen>
+

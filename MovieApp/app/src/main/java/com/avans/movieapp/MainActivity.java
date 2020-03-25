@@ -39,17 +39,19 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
 
+        // Menu notifications
         Menu navigation = bottomNavigationView.getMenu();
         badgeDrawable = BadgeDrawable.create(this);
         nav_profile = navigation.findItem(R.id.nav_profile);
         nav_saved = navigation.findItem(R.id.nav_saved);
-
-
+        
         setNotification(nav_profile);
         setNotification(nav_saved);
 
+        // Set the default fragment to HomeFragment
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
+        // Searches for Movie
         API.searchMovies("How to train your dragon", ((data, success) -> {
             if (success) {
                 ArrayList<Movie> movies = (ArrayList<Movie>) data;
@@ -91,13 +93,5 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         return true;
     };
-
-    // Resize GridManager of the RecycleViews
-    public static int calculateNoOfColumns(Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int noOfColumns = (int) (dpWidth / 180);
-        return noOfColumns;
-    }
 
 }
