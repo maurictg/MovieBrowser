@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.avans.movieapp.MainActivity;
 import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
+import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.models.Movie;
 
 import java.util.ArrayList;
@@ -48,10 +49,23 @@ public class HomeFragment extends Fragment {
         adapter = new VideosAdapter(movies);
         rvHome.setAdapter(adapter);
 
-        for (int i = 1; i < 12; i++) {
-            movies.add(new Movie(i, "Titel "+i, "Overview van film "+i, "imageUrlPoster", "", false, new Date(), 4));
+        final boolean LOAD_TESTDATA = true; //Even om te voorkomen dat we de API overdosen bij het debuggen
+
+        if(LOAD_TESTDATA) {
+            for (int i = 1; i < 12; i++) {
+                movies.add(new Movie(i, "Titel "+i, "Overview van film "+i, "imageUrlPoster", "", false, new Date(), 4));
+            }
+            adapter.notifyDataSetChanged();
+        } else {
+            //Test
+            API.searchMovies("James bond", (data, success) -> {
+                if(success) {
+                    ArrayList<Movie> mvs = (ArrayList<Movie>)data;
+                    movies.addAll(mvs);
+                    adapter.notifyDataSetChanged();
+                }
+            });
         }
-        adapter.notifyDataSetChanged();
 
         return view;
     }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
 import com.avans.movieapp.models.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,12 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
 
         holder.tvTitle.setText(m.getTitle());
         holder.tvInfo.setText(String.format("%d - %s", m.getId(), m.getVoteAverage())); //Just for testing
-        holder.tvOverview.setText(m.getOverview());
+        String overview = m.getOverview();
+        holder.tvOverview.setText(overview.substring(0, Math.min(overview.length(), 60))+"...");
+
+        if(m.getImageUrlPoster().length() > 10) {
+            Picasso.get().load(m.getImageUrlPoster()).into(holder.ivImage);
+        }
         //More items...
     }
 
