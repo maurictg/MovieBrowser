@@ -1,5 +1,6 @@
 package com.avans.movieapp.fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -18,10 +19,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.SettingsActivity;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -37,6 +41,8 @@ public class ProfileFragment extends Fragment {
     private int feedCount = 0;
     private int listCount = 0;
     private int reviewCount = 0;
+
+    private ImageButton settings;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -64,16 +70,22 @@ public class ProfileFragment extends Fragment {
         int_prof_list.setText(listCounter());
         int_prof_reviews.setText(reviewCounter());
 
+        settings = v.findViewById(R.id.btn_settings);
+        settings.setOnClickListener(this::onClick);
+
         /* TODO METHOD TO LOAD URL, WITH DEFAULT STATE. THIS IS A DUMMY PLACEMENT */
         Picasso
                 .get()
                 .load("https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg")
                 .transform(new CircleTransform())
                 .resize(200, 200)
-                .into(profPic);
+                .into(profPic)  ;
         return v;
     }
-
+    public void onClick(View view) {
+        Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        startActivity(intent);
+    }
     private String feedCounter() {
         if (feedCount != 0) {
             int_prof_feed.setEnabled(true);

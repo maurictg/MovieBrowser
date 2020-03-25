@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorAccent"
     tools:context=".fragments.SearchFragment">
 
@@ -12,27 +12,43 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorMenu">
+            android:background="@color/colorMenu"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                app:popupTheme="@style/AppTheme"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme" />
 
-            <TextView
-                android:id="@+id/titleTextView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/search"
-                android:textAllCaps="true"
-                android:textColor="@color/colorHighlight"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/colorMenu"
+                    android:src="@drawable/ic_search_black_24dp"
+                    android:tint="@color/colorText" />
+
+                <EditText
+                    android:id="@+id/titleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorMenu"
+                    android:gravity="center_vertical"
+                    android:hint="@string/search"
+                    android:maxLength="48"
+                    android:padding="10dp"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorText"
+                    android:autofillHints="penis" />
+            </LinearLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -47,4 +63,4 @@
 
     </ScrollView>
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

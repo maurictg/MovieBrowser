@@ -7,6 +7,7 @@
     <color name="colorDisabled">#6E6E6E</color>
     <color name="colorBlue">#2196F3</color>
     <color name="colorBlueDark">#3F51B5</color>
-    <color name="transparent">@android:color/transparent</color>
+    <color name="colorTransparent">@android:color/transparent</color>
+    <color name="colorText">#C8C8C8</color>
     /* TODO ADD WHITE MODE */
 </resources>

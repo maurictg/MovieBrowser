@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         badgeDrawable = BadgeDrawable.create(this);
         nav_profile = navigation.findItem(R.id.nav_profile);
         nav_saved = navigation.findItem(R.id.nav_saved);
-
-
+        
         setNotification(nav_profile);
         setNotification(nav_saved);
 
