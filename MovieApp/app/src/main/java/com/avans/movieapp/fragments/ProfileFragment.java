@@ -29,7 +29,6 @@ import com.squareup.picasso.Transformation;
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
-    private ImageView profPic;
 
     private TextView int_prof_feed;
     private TextView int_prof_list;
@@ -48,7 +47,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        profPic = v.findViewById(R.id.profilePic);
+        ImageView profPic = v.findViewById(R.id.profilePic);
         int_prof_feed = v.findViewById(R.id.feed_notif_count);
         int_prof_list = v.findViewById(R.id.list_count_notif);
         int_prof_reviews = v.findViewById(R.id.review_notif_count);
