@@ -37,12 +37,13 @@
                     android:tint="@color/colorText" />
 
                 <EditText
-                    android:id="@+id/titleTextView"
+                    android:id="@+id/etSearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/colorMenu"
                     android:gravity="center_vertical"
                     android:hint="@string/search"
+                    android:imeOptions="actionSearch"
                     android:maxLength="48"
                     android:padding="10dp"
                     android:textColor="@color/colorText"

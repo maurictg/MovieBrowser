@@ -4,15 +4,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.Gravity;
@@ -21,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avans.movieapp.R;
@@ -34,9 +28,9 @@ import com.squareup.picasso.Transformation;
  */
 public class ProfileFragment extends Fragment {
 
-    private TextView int_prof_feed;
-    private TextView int_prof_list;
-    private TextView int_prof_reviews;
+    private TextView tvFeedCount;
+    private TextView tvListCount;
+    private TextView tvReviewCount;
 
     private int feedCount = 0;
     private int listCount = 0;
@@ -54,21 +48,21 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         ImageView profPic = v.findViewById(R.id.profilePic);
-        int_prof_feed = v.findViewById(R.id.feed_notif_count);
-        int_prof_list = v.findViewById(R.id.list_count_notif);
-        int_prof_reviews = v.findViewById(R.id.review_notif_count);
+        tvFeedCount = v.findViewById(R.id.feed_notif_count);
+        tvListCount = v.findViewById(R.id.list_count_notif);
+        tvReviewCount = v.findViewById(R.id.review_notif_count);
 
-        int_prof_feed.setGravity(Gravity.CENTER);
-        int_prof_list.setGravity(Gravity.CENTER);
-        int_prof_reviews.setGravity(Gravity.CENTER);
+        tvFeedCount.setGravity(Gravity.CENTER);
+        tvListCount.setGravity(Gravity.CENTER);
+        tvReviewCount.setGravity(Gravity.CENTER);
 
-        int_prof_feed.setPadding(20, 20, 20, 20);
-        int_prof_list.setPadding(20, 20, 20, 20);
-        int_prof_reviews.setPadding(20, 20, 20, 20);
+        tvFeedCount.setPadding(20, 20, 20, 20);
+        tvListCount.setPadding(20, 20, 20, 20);
+        tvReviewCount.setPadding(20, 20, 20, 20);
 
-        int_prof_feed.setText(feedCounter());
-        int_prof_list.setText(listCounter());
-        int_prof_reviews.setText(reviewCounter());
+        tvFeedCount.setText(feedCounter());
+        tvListCount.setText(listCounter());
+        tvReviewCount.setText(reviewCounter());
 
         settings = v.findViewById(R.id.btn_settings);
         settings.setOnClickListener(this::onClick);
@@ -88,7 +82,7 @@ public class ProfileFragment extends Fragment {
     }
     private String feedCounter() {
         if (feedCount != 0) {
-            int_prof_feed.setEnabled(true);
+            tvFeedCount.setEnabled(true);
             return String.valueOf(feedCount);
         } else {
             return null;
@@ -97,7 +91,7 @@ public class ProfileFragment extends Fragment {
 
     private String reviewCounter() {
         if (reviewCount != 0) {
-            int_prof_reviews.setEnabled(true);
+            tvReviewCount.setEnabled(true);
             return String.valueOf(reviewCount);
         } else {
             return null;
@@ -106,7 +100,7 @@ public class ProfileFragment extends Fragment {
 
     private String listCounter() {
         if (listCount != 0) {
-            int_prof_list.setEnabled(true);
+            tvListCount.setEnabled(true);
             return String.valueOf(listCount);
         } else {
             return null;
