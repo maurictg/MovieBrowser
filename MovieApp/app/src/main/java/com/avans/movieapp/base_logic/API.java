@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class API {
     private static final String TAG = API.class.getSimpleName();
@@ -193,7 +194,7 @@ public class API {
                     String releaseDateString = movie.optString(JSON_DATE);
                     Date date = null;
                     try {
-                        date = new SimpleDateFormat("yyyy-MM-dd").parse(releaseDateString);
+                        date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(releaseDateString);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }

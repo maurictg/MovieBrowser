@@ -3,6 +3,7 @@ package com.avans.movieapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,8 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         Movie m = movies.get(position);
 
         holder.tvTitle.setText(m.getTitle());
+        holder.tvInfo.setText(String.format("%d - %s", m.getId(), m.getVoteAverage())); //Just for testing
+        holder.tvOverview.setText(m.getOverview());
         //More items...
     }
 
@@ -42,12 +45,17 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle;
-        //More items... (movie.xml)
+        ImageView ivImage;
+        TextView tvTitle;
+        TextView tvOverview;
+        TextView tvInfo;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvOverview = itemView.findViewById(R.id.tvOverview);
+            tvInfo = itemView.findViewById(R.id.tvInfo);
+            ivImage = itemView.findViewById(R.id.ivImage);
         }
     }
 }

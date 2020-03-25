@@ -77,6 +77,7 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
                 try {
                     url.append("&").append(k).append("=").append(URLEncoder.encode(v, "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
+                    Log.e(TAG, "Failed to encode URL data");
                     e.printStackTrace();
                 }
             });
@@ -84,7 +85,14 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
 
         StringBuilder form_data = new StringBuilder();
         if(formData.size() > 0) {
-            formData.forEach((k, v) -> form_data.append("&").append(k).append("=").append(v));
+            formData.forEach((k, v) -> {
+                try {
+                    form_data.append("&").append(k).append("=").append(URLEncoder.encode(v, "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    Log.e(TAG, "Failed to URLEncode data");
+                    e.printStackTrace();
+                }
+            });
         }
 
         try {

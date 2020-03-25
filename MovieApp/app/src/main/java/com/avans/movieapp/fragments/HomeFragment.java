@@ -18,6 +18,7 @@ import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.models.Movie;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,16 +42,16 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         rvHome = view.findViewById(R.id.rvHome);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), MainActivity.calculateNoOfColumns(getActivity()));
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), /*MainActivity.calculateNoOfColumns(getActivity())*/1);
         rvHome.setLayoutManager(layoutManager);
 
         adapter = new VideosAdapter(movies);
         rvHome.setAdapter(adapter);
 
-//        movies.add(new Movie("Test"));
-//        movies.add(new Movie("Test 2"));
-//        movies.add(new Movie("Testje"));
-//        adapter.notifyDataSetChanged();
+        for (int i = 1; i < 12; i++) {
+            movies.add(new Movie(i, "Titel "+i, "Overview van film "+i, "imageUrlPoster", "", false, new Date(), 4));
+        }
+        adapter.notifyDataSetChanged();
 
         return view;
     }

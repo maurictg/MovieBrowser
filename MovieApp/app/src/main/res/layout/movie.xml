@@ -3,16 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_margin="5dp"
     android:theme="@style/AppTheme">
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="26sp"
-        android:textStyle="bold"/>
+        android:orientation="horizontal">
 
-    <!-- More items -->
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_image_placeholder_24dp"/>
 
+        <LinearLayout
+            android:layout_marginStart="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="26sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/tvInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>
