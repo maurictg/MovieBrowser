@@ -11,7 +11,7 @@ public class Security {
     //API v4 template NetworkTask
     public static NetworkTask getAPI4NetworkTask(ICallback callback) {
         NetworkTask nt = new NetworkTask(callback);
-        nt.addHeader("Authorization", "Bearer "+keyV4);
+        nt.addHeader("Authorization", "Bearer " + keyV4);
         return nt;
     }
 

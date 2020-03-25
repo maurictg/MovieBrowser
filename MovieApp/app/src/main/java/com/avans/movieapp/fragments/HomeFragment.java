@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.avans.movieapp.MainActivity;
 import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
+import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.models.Movie;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,27 +32,41 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvHome;
     private VideosAdapter adapter;
 
-    public HomeFragment() {}
+    public HomeFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Log.d(TAG, "Called onCreateView");
         movies = new ArrayList<>();
-        
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         rvHome = view.findViewById(R.id.rvHome);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), MainActivity.calculateNoOfColumns(getActivity()));
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), /*MainActivity.calculateNoOfColumns(getActivity())*/1);
         rvHome.setLayoutManager(layoutManager);
 
         adapter = new VideosAdapter(movies);
         rvHome.setAdapter(adapter);
 
-//        movies.add(new Movie("Test"));
-//        movies.add(new Movie("Test 2"));
-//        movies.add(new Movie("Testje"));
-//        adapter.notifyDataSetChanged();
+        final boolean LOAD_TESTDATA = true; //Even om te voorkomen dat we de API overdosen bij het debuggen
+
+        if (LOAD_TESTDATA) {
+            for (int i = 1; i < 12; i++) {
+                movies.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4));
+            }
+            adapter.notifyDataSetChanged();
+        } else {
+            //Test
+            API.searchMovies("James bond", (data, success) -> {
+                if (success) {
+                    ArrayList<Movie> mvs = (ArrayList<Movie>) data;
+                    movies.addAll(mvs);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
 
         return view;
     }

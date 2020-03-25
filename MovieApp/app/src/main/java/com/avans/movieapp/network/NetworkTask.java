@@ -32,15 +32,19 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
 
     /**
      * Create new NetworkTask. Default requestMethod set to GET
+     *
      * @param callback
      */
-    public NetworkTask(ICallback callback) { this(RequestMethod.GET, callback); }
+    public NetworkTask(ICallback callback) {
+        this(RequestMethod.GET, callback);
+    }
 
     /**
      * Create new NetworkTask.
-     * @param method The HTTPMethod like GET, POST, PUT etc.
+     *
+     * @param method   The HTTPMethod like GET, POST, PUT etc.
      * @param callback The callback method. You can use a lambda here:
-     * <code>new NetworkTask((data, success) -> { your code here })</code>
+     *                 <code>new NetworkTask((data, success) -> { your code here })</code>
      */
     public NetworkTask(RequestMethod method, ICallback callback) {
         this.callback = callback;
@@ -51,15 +55,26 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
     }
 
     //Add headers, parameters or HTTP form data
-    public void addHeader(String title, String value) { this.headers.put(title, value); }
-    public void addParameter(String title, String value) { this.parameters.put(title, value); }
-    public void addFormData(String title, String value) { this.formData.put(title, value); }
+    public void addHeader(String title, String value) {
+        this.headers.put(title, value);
+    }
+
+    public void addParameter(String title, String value) {
+        this.parameters.put(title, value);
+    }
+
+    public void addFormData(String title, String value) {
+        this.formData.put(title, value);
+    }
 
     /**
      * Set request method
+     *
      * @param requestMethod HTTP method like GET, POST e.d.
      */
-    public void setRequestMethod(RequestMethod requestMethod) {  this.requestMethod = requestMethod; }
+    public void setRequestMethod(RequestMethod requestMethod) {
+        this.requestMethod = requestMethod;
+    }
 
     @Override
     protected void onPreExecute() {
@@ -72,23 +87,31 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
         Log.d(TAG, "Executing doInBackground");
 
         StringBuilder url = new StringBuilder(strings[0]);
-        if(parameters.size() > 0) {
+        if (parameters.size() > 0) {
             parameters.forEach((k, v) -> {
                 try {
                     url.append("&").append(k).append("=").append(URLEncoder.encode(v, "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
+                    Log.e(TAG, "Failed to encode URL data");
                     e.printStackTrace();
                 }
             });
         }
 
         StringBuilder form_data = new StringBuilder();
-        if(formData.size() > 0) {
-            formData.forEach((k, v) -> form_data.append("&").append(k).append("=").append(v));
+        if (formData.size() > 0) {
+            formData.forEach((k, v) -> {
+                try {
+                    form_data.append("&").append(k).append("=").append(URLEncoder.encode(v, "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    Log.e(TAG, "Failed to URLEncode data");
+                    e.printStackTrace();
+                }
+            });
         }
 
         try {
-            Log.d(TAG, "Opening connection to given url ("+url+") Http-"+requestMethod.get());
+            Log.d(TAG, "Opening connection to given url (" + url + ") Http-" + requestMethod.get());
             HttpURLConnection connection = (HttpURLConnection) new URL(url.toString().replaceFirst("&", "?")).openConnection();
 
             //Add headers to connection
@@ -96,7 +119,7 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
             connection.setRequestMethod(requestMethod.get());
 
             //Write request if needed
-            if(formData.size() > 0) {
+            if (formData.size() > 0) {
                 byte[] postData = new BinaryData(form_data.toString().replaceFirst("&", "")).getData();
                 connection.setDoOutput(true);
                 connection.setInstanceFollowRedirects(false);
@@ -106,7 +129,7 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
                 connection.setUseCaches(false);
 
                 //Write data using OutputStream
-                try(DataOutputStream ws = new DataOutputStream(connection.getOutputStream())) {
+                try (DataOutputStream ws = new DataOutputStream(connection.getOutputStream())) {
                     ws.write(postData);
                 }
             }
@@ -125,9 +148,9 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
 
             //Create and return new BinaryData object. See BinaryData.java
             return new BinaryData(buffer.toByteArray());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, "Failed to get data: "+e.getMessage());
+            Log.e(TAG, "Failed to get data: " + e.getMessage());
             return null;
         }
     }
@@ -137,14 +160,13 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
         Log.d(TAG, "Executing onPostExecute. Calling callback.");
         super.onPostExecute(binaryData);
 
-        if(binaryData != null) {
+        if (binaryData != null) {
             try {
                 callback.callback(binaryData, true);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             try {
                 callback.callback(null, false);
             } catch (JSONException e) {

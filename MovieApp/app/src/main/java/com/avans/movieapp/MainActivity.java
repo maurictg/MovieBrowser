@@ -49,17 +49,19 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
         API.searchMovies("How to train your dragon", ((data, success) -> {
-            if (success){
-                ArrayList<Movie> movies = (ArrayList<Movie>)data;
+            if (success) {
+                ArrayList<Movie> movies = (ArrayList<Movie>) data;
                 Log.d(TAG, movies.toString());
             }
 
         }));
 
     }
+
     private void setNotification(MenuItem menuItem) {
         bottomNavigationView.getOrCreateBadge(menuItem.getItemId());
     }
+
     private void clearNotification(MenuItem menuItem) {
         bottomNavigationView.removeBadge(menuItem.getItemId());
     }

@@ -62,9 +62,9 @@ public class ProfileFragment extends Fragment {
         int_prof_list.setGravity(Gravity.CENTER);
         int_prof_reviews.setGravity(Gravity.CENTER);
 
-        int_prof_feed.setPadding(20,20,20,20);
-        int_prof_list.setPadding(20,20,20,20);
-        int_prof_reviews.setPadding(20,20,20,20);
+        int_prof_feed.setPadding(20, 20, 20, 20);
+        int_prof_list.setPadding(20, 20, 20, 20);
+        int_prof_reviews.setPadding(20, 20, 20, 20);
 
         int_prof_feed.setText(feedCounter());
         int_prof_list.setText(listCounter());
@@ -103,6 +103,7 @@ public class ProfileFragment extends Fragment {
             return null;
         }
     }
+
     private String listCounter() {
         if (listCount != 0) {
             int_prof_list.setEnabled(true);
