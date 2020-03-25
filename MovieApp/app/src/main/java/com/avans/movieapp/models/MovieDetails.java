@@ -12,7 +12,7 @@ public class MovieDetails extends Movie {
     private String director;
 
     public MovieDetails(int id, String title, String overview, String imageUrlPoster, String imageUrlBackdrop, boolean isAdult, Date releaseDate, double voteAverage,
-                        int length, String genre, String company, ArrayList<String> actors, String director){
+                        int length, String genre, String company, ArrayList<String> actors, String director) {
         super(id, title, overview, imageUrlPoster, imageUrlBackdrop, isAdult, releaseDate, voteAverage);
         this.length = length;
         this.genre = genre;

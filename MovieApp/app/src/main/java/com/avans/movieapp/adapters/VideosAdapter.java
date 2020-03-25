@@ -37,9 +37,9 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         holder.tvTitle.setText(m.getTitle());
         holder.tvInfo.setText(String.format("%d - %s", m.getId(), m.getVoteAverage())); //Just for testing
         String overview = m.getOverview();
-        holder.tvOverview.setText(overview.substring(0, Math.min(overview.length(), 60))+"...");
+        holder.tvOverview.setText(overview.substring(0, Math.min(overview.length(), 60)) + "...");
 
-        if(m.getImageUrlPoster().length() > 10) {
+        if (m.getImageUrlPoster().length() > 10) {
             Picasso.get().load(m.getImageUrlPoster()).into(holder.ivImage);
         }
         //More items...

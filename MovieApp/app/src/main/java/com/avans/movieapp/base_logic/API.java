@@ -46,14 +46,15 @@ public class API {
     /**
      * Get request token to ask user for permission
      * Then ask the user for permission
+     *
      * @param callback Returns String in callback data
      */
     public static void getRequestToken(ICallback callback) {
         NetworkTask nt = Security.getAPI3NetworkTask((data, success) -> {
-            if(success) {
+            if (success) {
                 try {
-                    JSONObject o = ((BinaryData)data).toJSONObject();
-                    if(o.optBoolean("success", false)) {
+                    JSONObject o = ((BinaryData) data).toJSONObject();
+                    if (o.optBoolean("success", false)) {
                         callback.callback(o.getString("request_token"), true);
                     } else {
                         callback.callback(null, false);
@@ -73,15 +74,16 @@ public class API {
 
     /**
      * Get session ID with requestToken
+     *
      * @param requestToken The request token. Must be granted by the user
-     * @param callback Returns string in callback data
+     * @param callback     Returns string in callback data
      */
     public static void getSessionId(String requestToken, ICallback callback) {
-        NetworkTask nt = Security.getAPI3NetworkTask((data,success) -> {
-            if(success) {
+        NetworkTask nt = Security.getAPI3NetworkTask((data, success) -> {
+            if (success) {
                 try {
-                    JSONObject o = ((BinaryData)data).toJSONObject();
-                    if(o.optBoolean("success", false)) {
+                    JSONObject o = ((BinaryData) data).toJSONObject();
+                    if (o.optBoolean("success", false)) {
                         callback.callback(o.getString("session_id"), true);
                     } else {
                         callback.callback(null, false);
@@ -101,34 +103,34 @@ public class API {
         nt.execute("https://api.themoviedb.org/3/authentication/session/new");
     }
 
-    public static void getMovieDetails(Movie movie, ICallback callback){
+    public static void getMovieDetails(Movie movie, ICallback callback) {
 
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
-            if (success){
+            if (success) {
                 getMovieCreditsJsonObject(movie, ((dataCrew, success1) -> {
 
-                    JSONObject JSONMovieDetails = (JSONObject)data;
+                    JSONObject JSONMovieDetails = (JSONObject) data;
                     int length = JSONMovieDetails.optInt(JSON_RUNTIME);
                     JSONArray genres = JSONMovieDetails.getJSONArray(JSON_GENRES);
-                    JSONObject genre = (JSONObject)genres.get(0);
+                    JSONObject genre = (JSONObject) genres.get(0);
                     String stringGenre = genre.optString(JSON_NAME);
                     JSONArray productionCompanies = JSONMovieDetails.getJSONArray(JSON_PRODUCTION_COMPANIES);
-                    JSONObject productionCompany = (JSONObject)productionCompanies.get(0);
+                    JSONObject productionCompany = (JSONObject) productionCompanies.get(0);
                     String stringProductionCompany = productionCompany.optString(JSON_NAME);
 
-                    JSONObject JSONCredits = (JSONObject)dataCrew;
+                    JSONObject JSONCredits = (JSONObject) dataCrew;
                     JSONArray JSONCast = JSONCredits.getJSONArray(JSON_CAST);
                     ArrayList<String> actors = null;
-                    for (int i = 0; i < 3; i++){
+                    for (int i = 0; i < 3; i++) {
                         JSONObject JSONCastMember = JSONCast.getJSONObject(i);
                         String actor = JSONCastMember.optString(JSON_NAME);
                         actors.add(actor);
                     }
                     String director = null;
                     JSONArray JSONCrew = JSONCredits.getJSONArray(JSON_CREW);
-                    for (int i = 0; i < JSONCrew.length(); i++){
+                    for (int i = 0; i < JSONCrew.length(); i++) {
                         JSONObject crewMember = JSONCrew.getJSONObject(i);
-                        if (crewMember.optString(JSON_JOB).equals("Director")){
+                        if (crewMember.optString(JSON_JOB).equals("Director")) {
                             director = crewMember.optString(JSON_NAME);
                             break;
                         }
@@ -143,7 +145,6 @@ public class API {
                 }));
 
 
-
             }
         }));
 
@@ -152,10 +153,10 @@ public class API {
 
     }
 
-    public static void getMovieCreditsJsonObject(Movie movie, ICallback callback){
+    public static void getMovieCreditsJsonObject(Movie movie, ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
-            if (success){
-                BinaryData binaryData = (BinaryData)data;
+            if (success) {
+                BinaryData binaryData = (BinaryData) data;
 
                 JSONObject JSONResult = binaryData.toJSONObject();
 
@@ -173,16 +174,16 @@ public class API {
      * Search is een zoekterm voor films (vb. Star Wars)
      * Geeeft een ArrayList<movies> terug.
      */
-    public static void searchMovies(String search, ICallback callback){
+    public static void searchMovies(String search, ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, (data, success) -> {
-            if (success){
+            if (success) {
                 ArrayList<Movie> movies = new ArrayList<>();
 
-                BinaryData binaryData = ((BinaryData)data);
+                BinaryData binaryData = ((BinaryData) data);
 
                 JSONObject JSONResult = binaryData.toJSONObject();
                 JSONArray results = JSONResult.getJSONArray(JSON_RESULTS);
-                for (int i = 0; i < results.length(); i++){
+                for (int i = 0; i < results.length(); i++) {
                     JSONObject movie = (JSONObject) results.get(i);
 
                     int id = movie.optInt(JSON_ID);
@@ -200,9 +201,9 @@ public class API {
                     }
                     double voteAverage = movie.optDouble(JSON_VOTE_AVERAGE);
 
-                    movies.add(new Movie(   id, title, overview,
-                                            imageUrlPoster, imageUrlBackdrop, isAdult,
-                                            date, voteAverage));
+                    movies.add(new Movie(id, title, overview,
+                            imageUrlPoster, imageUrlBackdrop, isAdult,
+                            date, voteAverage));
                 }
 
                 callback.callback(movies, true);

@@ -27,22 +27,26 @@ public class BinaryData {
 
     /**
      * Create new BinaryData instance
+     *
      * @param data Binary data, containing Drawable or String
      */
-    public BinaryData(byte[] data) { this.data = data; }
+    public BinaryData(byte[] data) {
+        this.data = data;
+    }
 
     /**
      * Convert Drawable to BinaryData
+     *
      * @param drawable The drawable
      */
     public BinaryData(Drawable drawable) {
-        if(drawable == null){
+        if (drawable == null) {
             this.data = new byte[0];
             Log.e(TAG, "Drawable is NULL");
             return;
         }
 
-        Bitmap bmp = ((BitmapDrawable)drawable).getBitmap();
+        Bitmap bmp = ((BitmapDrawable) drawable).getBitmap();
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, os);
         this.data = os.toByteArray();
@@ -50,6 +54,7 @@ public class BinaryData {
 
     /**
      * Create new BinaryData object from String
+     *
      * @param value The string
      */
     public BinaryData(String value) {
@@ -58,6 +63,7 @@ public class BinaryData {
 
     /**
      * Get String from inner byte[]
+     *
      * @return String
      */
     @Override
@@ -70,6 +76,7 @@ public class BinaryData {
 
     /**
      * Return JSONObject from data
+     *
      * @return JSONObject
      */
     public JSONObject toJSONObject() throws JSONException {
@@ -78,6 +85,7 @@ public class BinaryData {
 
     /**
      * Get length
+     *
      * @return Length of inner byte[]
      */
     public int length() {
@@ -86,12 +94,13 @@ public class BinaryData {
 
     /**
      * Get drawable from inner byte[]
+     *
      * @return Drawable
      */
     public Drawable toDrawable() {
         Log.d(TAG, "Converting to drawable");
 
-        if(data.length == 0){
+        if (data.length == 0) {
             Log.e(TAG, "Data size must be greater than 0");
             return null;
         }
@@ -102,7 +111,10 @@ public class BinaryData {
 
     /**
      * Return inner byte[]
+     *
      * @return byte[]
      */
-    public byte[] getData() { return data; }
+    public byte[] getData() {
+        return data;
+    }
 }

@@ -7,6 +7,12 @@ public enum RequestMethod {
     DELETE("DELETE");
 
     private String method;
-    RequestMethod(String method) { this.method = method; }
-    public String get() { return method; }
+
+    RequestMethod(String method) {
+        this.method = method;
+    }
+
+    public String get() {
+        return method;
+    }
 }

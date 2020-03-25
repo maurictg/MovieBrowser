@@ -32,14 +32,15 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvHome;
     private VideosAdapter adapter;
 
-    public HomeFragment() {}
+    public HomeFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Log.d(TAG, "Called onCreateView");
         movies = new ArrayList<>();
-        
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         rvHome = view.findViewById(R.id.rvHome);
@@ -51,16 +52,16 @@ public class HomeFragment extends Fragment {
 
         final boolean LOAD_TESTDATA = true; //Even om te voorkomen dat we de API overdosen bij het debuggen
 
-        if(LOAD_TESTDATA) {
+        if (LOAD_TESTDATA) {
             for (int i = 1; i < 12; i++) {
-                movies.add(new Movie(i, "Titel "+i, "Overview van film "+i, "imageUrlPoster", "", false, new Date(), 4));
+                movies.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4));
             }
             adapter.notifyDataSetChanged();
         } else {
             //Test
             API.searchMovies("James bond", (data, success) -> {
-                if(success) {
-                    ArrayList<Movie> mvs = (ArrayList<Movie>)data;
+                if (success) {
+                    ArrayList<Movie> mvs = (ArrayList<Movie>) data;
                     movies.addAll(mvs);
                     adapter.notifyDataSetChanged();
                 }

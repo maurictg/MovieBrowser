@@ -14,7 +14,6 @@ public class Movie {
     private double voteAverage;
 
 
-
     public Movie(int id, String title, String overview,
                  String imageUrlPoster, String imageUrlBackdrop, boolean isAdult,
                  Date releaseDate, double voteAverage) {
