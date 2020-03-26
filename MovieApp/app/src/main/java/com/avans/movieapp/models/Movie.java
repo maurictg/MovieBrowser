@@ -73,10 +73,10 @@ public class Movie implements Serializable {
 
     public String isAdultString() {
         if (isAdult) {
-            return "Adult";
+            return "yes";
 
         } else {
-            return "Child";
+            return "no";
         }
     }
 

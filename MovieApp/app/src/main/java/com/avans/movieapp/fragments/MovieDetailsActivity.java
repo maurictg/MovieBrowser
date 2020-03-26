@@ -3,7 +3,9 @@ package com.avans.movieapp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +25,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView title;
     private TextView genre;
     private TextView company;
+    private TextView summaryName;
     private TextView summary;
     private TextView age;
-    private TextView rating;
+    private RatingBar rating;
+    private TextView ratingNumber;
+    private Button addToList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,9 +42,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
         title = findViewById(R.id.movie_detail_title);
         genre = findViewById(R.id.movie_detail_genre);
         company = findViewById(R.id.movie_detail_company);
+        summaryName = findViewById(R.id.movie_detail_summary_name);
         summary = findViewById(R.id.movie_detail_summary);
         age = findViewById(R.id.movie_detail_age);
         rating = findViewById(R.id.movie_detail_rating);
+        ratingNumber = findViewById(R.id.movie_detail_rating_number);
+        addToList = findViewById(R.id.movie_detail_list);
 
         Intent intent = getIntent();
         this.movie = (Movie) intent.getSerializableExtra("MOVIE");
@@ -50,10 +58,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
                 title.setText(movies.getTitle());
                 genre.setText(movies.getGenre());
-                company.setText(movies.getGenre());
+                company.setText(movies.getCompany());
+                summaryName.setText("Summary: ");
                 summary.setText(movies.getOverview());
-                age.setText(movies.isAdultString());
-                rating.setText(movies.getVoteAverageString());
+                age.setText(String.format("Adult movie: %s", movies.isAdultString()));
+                rating.setRating((int) movies.getVoteAverage());
+                ratingNumber.setText(movies.getVoteAverageString());
             }
         });
 
