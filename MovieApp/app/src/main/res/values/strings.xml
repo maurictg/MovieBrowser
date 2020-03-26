@@ -41,4 +41,17 @@
     <string name="recent">recent</string>
     <string name="poster">POSTER</string>
     <string name="icon">ICON</string>
+    <string name="filter">filter</string>
+
+    <string name="openNavDrawer">Navigation Drawer Open</string>
+    <string name="closeNavDrawer">Navigation Drawer Close</string>
+    <string name="language">Language</string>
+    <string name="genre">Genre</string>
+    <string name="rating">rating</string>
+    <string name="duration">duration</string>
+    <string name="reset_filter">reset all filters</string>
+    <string name="dutch">DUTCH</string>
+    <string name="german">GERMAN</string>
+    <string name="english">ENGLISH</string>
+
 </resources>

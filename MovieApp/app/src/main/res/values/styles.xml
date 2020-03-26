@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/colorBackground</item>
         <item name="colorPrimaryDark">@color/colorBackground</item>
         <item name="colorAccent">@color/colorMenu</item>
+        <item name="colorSecondary">@color/colorBackground</item>
     </style>
     <!-- Preference application theme. -->
     <style name="AppTheme.Preference" parent="Theme.MaterialComponents.DayNight.NoActionBar">

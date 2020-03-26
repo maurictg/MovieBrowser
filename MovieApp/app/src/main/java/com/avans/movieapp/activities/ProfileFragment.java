@@ -1,4 +1,4 @@
-package com.avans.movieapp.fragments;
+package com.avans.movieapp.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avans.movieapp.R;
-import com.avans.movieapp.SettingsActivity;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 

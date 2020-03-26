@@ -2,12 +2,13 @@
 <resources>
     <color name="colorHighlight">#2699FB</color>
     <color name="colorBackground">#000000</color>
-    <color name="colorMenu">#101010</color>
+    <color name="colorMenu">#111111</color>
     <color name="colorAccent">#181818</color>
     <color name="colorDisabled">#6E6E6E</color>
     <color name="colorBlue">#2196F3</color>
     <color name="colorBlueDark">#3F51B5</color>
     <color name="colorTransparent">@android:color/transparent</color>
     <color name="colorText">#C8C8C8</color>
+    <color name="colorTransparentBackground">#66000000</color>
     /* TODO ADD WHITE MODE */
 </resources>

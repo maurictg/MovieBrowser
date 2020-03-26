@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context=".fragments.ProfileFragment">
+    tools:context=".activities.ProfileFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -183,11 +183,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/bg_notif"
+                android:background="@drawable/bg_circle"
                 android:backgroundTint="@color/profile_color"
                 android:enabled="false"
                 android:padding="7.5dp"
-                android:text="999"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 
@@ -197,11 +197,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/bg_notif"
+                android:background="@drawable/bg_circle"
                 android:backgroundTint="@color/profile_color"
                 android:enabled="false"
                 android:padding="7.5dp"
-                android:text="999"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 
@@ -211,11 +211,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/bg_notif"
+                android:background="@drawable/bg_circle"
                 android:backgroundTint="@color/profile_color"
                 android:enabled="false"
                 android:padding="7.5dp"
-                android:text="999"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
         </GridLayout>
