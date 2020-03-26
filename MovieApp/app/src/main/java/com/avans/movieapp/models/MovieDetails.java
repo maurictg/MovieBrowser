@@ -25,5 +25,39 @@ public class MovieDetails extends Movie {
         return length;
     }
 
+    public void setLength(int length) {
+        this.length = length;
+    }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public ArrayList<String> getActors() {
+        return actors;
+    }
+
+    public void setActors(ArrayList<String> actors) {
+        this.actors = actors;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
 }

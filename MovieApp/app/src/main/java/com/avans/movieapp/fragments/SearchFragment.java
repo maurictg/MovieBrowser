@@ -1,6 +1,8 @@
 package com.avans.movieapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +60,20 @@ public class SearchFragment extends Fragment {
         filter_chip.setOnClickListener(v12 -> mDrawerLayout.openDrawer(mNavigation));
 
         RecyclerView mSearchRecycler = v.findViewById(R.id.rvSearch);
-        RecyclerView.Adapter adapter = new VideosAdapter(movies);
+        EditText editText = v.findViewById(R.id.etSearch);
+
+        RecyclerView.Adapter adapter = new VideosAdapter(movies, (data, success) -> {
+
+            Movie m = (Movie) data;
+            Log.d("M:", "Title: " + m.getTitle());
+
+            Intent intent = new Intent();
+
+            intent.putExtra("MOVIE", m);
+
+            startActivity(intent);
+        });
+
         mSearchRecycler.setAdapter(adapter);
 
         EditText editText = v.findViewById(R.id.etSearch);

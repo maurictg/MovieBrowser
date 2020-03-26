@@ -202,7 +202,8 @@ public class API {
                         String releaseDateString = movie.optString(JSON_DATE);
                         Date date = null;
                         try {
-                            date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(releaseDateString);
+                            Log.d(TAG, "Date: "+releaseDateString);
+                            date = new SimpleDateFormat("yyyy-MM-dd").parse(releaseDateString);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }

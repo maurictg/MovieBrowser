@@ -67,14 +67,17 @@ public class HomeFragment extends Fragment {
             for (int i = 1; i < 12; i++) {
                 moviesDiscover.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4));
                 moviesRecent.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4));
-
             }
         } else {
             //Test
             API.searchMovies("James bond", (data, success) -> {
                 if (success) {
-                    ArrayList<Movie> mvs = (ArrayList<Movie>) data;
+                    ArrayList<Movie> mvs = (ArrayList<Movie>)data;
+                    Log.d(TAG, "Movies: "+mvs.size());
+                    moviesDiscover.clear();
                     moviesDiscover.addAll(mvs);
+                    adapterDiscover.notifyDataSetChanged();
+                    adapterRecent.notifyDataSetChanged();
                 }
             });
         }
