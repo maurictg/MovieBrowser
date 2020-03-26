@@ -69,20 +69,20 @@
             android:id="@+id/movie_detail_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
 
         <RatingBar
             android:id="@+id/movie_detail_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5"
-            android:layout_margin="12sp"/>
+            android:layout_margin="12sp"
+            android:numStars="5" />
 
         <TextView
             android:id="@+id/movie_detail_rating_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/movie_detail_list"
