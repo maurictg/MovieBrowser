@@ -3,6 +3,7 @@ package com.avans.movieapp.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.base_logic.DisplayCalc;
+import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Movie;
 
 import java.util.ArrayList;
@@ -37,7 +39,14 @@ public class SearchFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         RecyclerView mSearchRecycler = v.findViewById(R.id.rvSearch);
         EditText editText = (EditText)v.findViewById(R.id.etSearch);
-        RecyclerView.Adapter adapter = new VideosAdapter(movies);
+        RecyclerView.Adapter adapter = new VideosAdapter(movies, new ICallback() {
+            @Override
+            public void callback(Object data, boolean success) {
+                Movie m = (Movie)data;
+                Log.d("M:", "Title: "+m.getTitle());
+            }
+        });
+
         mSearchRecycler.setAdapter(adapter);
         editText.setOnKeyListener((v1, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
