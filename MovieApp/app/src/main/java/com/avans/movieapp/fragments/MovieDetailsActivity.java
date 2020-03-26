@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.models.Movie;
+import com.avans.movieapp.models.MovieDetails;
 import com.squareup.picasso.Picasso;
 
 public class MovieDetailsActivity extends AppCompatActivity {
@@ -41,12 +44,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         this.movie = (Movie) intent.getSerializableExtra("MOVIE");
 
+        API.getMovieDetails(movie, (data, success) -> {
+            if (success) {
+                MovieDetails movies = (MovieDetails) data;
+
+
+                title.setText(movies.getTitle());
+                genre.setText(movies.getGenre());
+                company.setText(movies.getGenre());
+                summary.setText(movies.getOverview());
+                age.setText(movies.isAdultString());
+                rating.setText(movies.getVoteAverageString());
+            }
+        });
+
         Picasso.get().load(movie.getImageUrlPoster()).into(image);
-        title.setText(movie.getTitle());
-        genre.setText("dd");
-        company.setText("vv");
-        summary.setText("bb");
-        age.setText("xx");
-        rating.setText("zz");
     }
 }
