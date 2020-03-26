@@ -161,17 +161,9 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
         super.onPostExecute(binaryData);
 
         if (binaryData != null) {
-            try {
-                callback.callback(binaryData, true);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            callback.callback(binaryData, true);
         } else {
-            try {
-                callback.callback(null, false);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            callback.callback(null, false);
         }
     }
 
@@ -179,10 +171,6 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
     protected void onCancelled() {
         Log.d(TAG, "Executing onCancelled. Calling callback.");
         super.onCancelled();
-        try {
-            callback.callback(null, false);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        callback.callback(null, false);
     }
 }

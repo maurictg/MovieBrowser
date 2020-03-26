@@ -3,6 +3,7 @@ package com.avans.movieapp.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,18 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.adapters.VideosAdapter;
+import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.base_logic.DisplayCalc;
+import com.avans.movieapp.models.Movie;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchFragment extends Fragment {
+    private ArrayList<Movie> movies;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -26,27 +33,28 @@ public class SearchFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        movies = new ArrayList<>();
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         RecyclerView mSearchRecycler = v.findViewById(R.id.rvSearch);
-        EditText editText = (EditText) v.findViewById(R.id.etSearch);
-        editText.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable s) {
-//              Might work better
+        EditText editText = (EditText)v.findViewById(R.id.etSearch);
+        RecyclerView.Adapter adapter = new VideosAdapter(movies);
+        mSearchRecycler.setAdapter(adapter);
+        editText.setOnKeyListener((v1, keyCode, event) -> {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                String searchTerm = editText.getText().toString();
+                if(!searchTerm.isEmpty()) {
+                    API.searchMovies(searchTerm, (data, success) -> {
+                        if(success) {
+                            ArrayList<Movie> results = (ArrayList<Movie>)data;
+                            movies.clear();
+                            movies.addAll(results);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+                return true;
             }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                Empty required method
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //TODO Listener to search update
-            }
-
+            return false;
         });
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
         mSearchRecycler.setLayoutManager(layoutManager);

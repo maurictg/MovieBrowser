@@ -108,43 +108,43 @@ public class API {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
                 getMovieCreditsJsonObject(movie, ((dataCrew, success1) -> {
+                    try {
+                        JSONObject JSONMovieDetails = (JSONObject) data;
+                        int length = JSONMovieDetails.optInt(JSON_RUNTIME);
+                        JSONArray genres = JSONMovieDetails.getJSONArray(JSON_GENRES);
+                        JSONObject genre = (JSONObject) genres.get(0);
+                        String stringGenre = genre.optString(JSON_NAME);
+                        JSONArray productionCompanies = JSONMovieDetails.getJSONArray(JSON_PRODUCTION_COMPANIES);
+                        JSONObject productionCompany = (JSONObject) productionCompanies.get(0);
+                        String stringProductionCompany = productionCompany.optString(JSON_NAME);
 
-                    JSONObject JSONMovieDetails = (JSONObject) data;
-                    int length = JSONMovieDetails.optInt(JSON_RUNTIME);
-                    JSONArray genres = JSONMovieDetails.getJSONArray(JSON_GENRES);
-                    JSONObject genre = (JSONObject) genres.get(0);
-                    String stringGenre = genre.optString(JSON_NAME);
-                    JSONArray productionCompanies = JSONMovieDetails.getJSONArray(JSON_PRODUCTION_COMPANIES);
-                    JSONObject productionCompany = (JSONObject) productionCompanies.get(0);
-                    String stringProductionCompany = productionCompany.optString(JSON_NAME);
-
-                    JSONObject JSONCredits = (JSONObject) dataCrew;
-                    JSONArray JSONCast = JSONCredits.getJSONArray(JSON_CAST);
-                    ArrayList<String> actors = null;
-                    for (int i = 0; i < 3; i++) {
-                        JSONObject JSONCastMember = JSONCast.getJSONObject(i);
-                        String actor = JSONCastMember.optString(JSON_NAME);
-                        actors.add(actor);
-                    }
-                    String director = null;
-                    JSONArray JSONCrew = JSONCredits.getJSONArray(JSON_CREW);
-                    for (int i = 0; i < JSONCrew.length(); i++) {
-                        JSONObject crewMember = JSONCrew.getJSONObject(i);
-                        if (crewMember.optString(JSON_JOB).equals("Director")) {
-                            director = crewMember.optString(JSON_NAME);
-                            break;
+                        JSONObject JSONCredits = (JSONObject) dataCrew;
+                        JSONArray JSONCast = JSONCredits.getJSONArray(JSON_CAST);
+                        ArrayList<String> actors = null;
+                        for (int i = 0; i < 3; i++) {
+                            JSONObject JSONCastMember = JSONCast.getJSONObject(i);
+                            String actor = JSONCastMember.optString(JSON_NAME);
+                            actors.add(actor);
                         }
+                        String director = null;
+                        JSONArray JSONCrew = JSONCredits.getJSONArray(JSON_CREW);
+                        for (int i = 0; i < JSONCrew.length(); i++) {
+                            JSONObject crewMember = JSONCrew.getJSONObject(i);
+                            if (crewMember.optString(JSON_JOB).equals("Director")) {
+                                director = crewMember.optString(JSON_NAME);
+                                break;
+                            }
+                        }
+
+                        MovieDetails movieDetails = new MovieDetails(movie.getId(), movie.getTitle(), movie.getOverview(), movie.getImageUrlPoster(), movie.getImageUrlBackdrop(), movie.isAdult(), movie.getReleaseDate(), movie.getVoteAverage(),
+                                length, stringGenre, stringProductionCompany, actors, director);
+
+                        callback.callback(movieDetails, true);
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Failed to get details");
+                        callback.callback(null, false);
                     }
-
-                    MovieDetails movieDetails = new MovieDetails(movie.getId(), movie.getTitle(), movie.getOverview(), movie.getImageUrlPoster(), movie.getImageUrlBackdrop(), movie.isAdult(), movie.getReleaseDate(), movie.getVoteAverage(),
-                            length, stringGenre, stringProductionCompany, actors, director);
-
-                    callback.callback(movieDetails, true);
-
-
                 }));
-
-
             }
         }));
 
@@ -158,9 +158,15 @@ public class API {
             if (success) {
                 BinaryData binaryData = (BinaryData) data;
 
-                JSONObject JSONResult = binaryData.toJSONObject();
-
-                callback.callback(JSONResult, true);
+                JSONObject JSONResult = null;
+                try {
+                    JSONResult = binaryData.toJSONObject();
+                    callback.callback(JSONResult, true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "Failed to parse json");
+                    callback.callback(null, false);
+                }
             }
         }));
 
@@ -181,29 +187,34 @@ public class API {
 
                 BinaryData binaryData = ((BinaryData) data);
 
-                JSONObject JSONResult = binaryData.toJSONObject();
-                JSONArray results = JSONResult.getJSONArray(JSON_RESULTS);
-                for (int i = 0; i < results.length(); i++) {
-                    JSONObject movie = (JSONObject) results.get(i);
+                try {
+                    JSONObject JSONResult = binaryData.toJSONObject();
+                    JSONArray results = JSONResult.getJSONArray(JSON_RESULTS);
+                    for (int i = 0; i < results.length(); i++) {
+                        JSONObject movie = (JSONObject) results.get(i);
 
-                    int id = movie.optInt(JSON_ID);
-                    String title = movie.optString(JSON_TITLE);
-                    String overview = movie.optString(JSON_OVERVIEW);
-                    String imageUrlPoster = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_POSTER);
-                    String imageUrlBackdrop = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_BACKDROP);
-                    boolean isAdult = movie.optBoolean(JSON_ADULT);
-                    String releaseDateString = movie.optString(JSON_DATE);
-                    Date date = null;
-                    try {
-                        date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(releaseDateString);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                        int id = movie.optInt(JSON_ID);
+                        String title = movie.optString(JSON_TITLE);
+                        String overview = movie.optString(JSON_OVERVIEW);
+                        String imageUrlPoster = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_POSTER);
+                        String imageUrlBackdrop = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_BACKDROP);
+                        boolean isAdult = movie.optBoolean(JSON_ADULT);
+                        String releaseDateString = movie.optString(JSON_DATE);
+                        Date date = null;
+                        try {
+                            date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(releaseDateString);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        double voteAverage = movie.optDouble(JSON_VOTE_AVERAGE);
+
+                        movies.add(new Movie(id, title, overview,
+                                imageUrlPoster, imageUrlBackdrop, isAdult,
+                                date, voteAverage));
                     }
-                    double voteAverage = movie.optDouble(JSON_VOTE_AVERAGE);
-
-                    movies.add(new Movie(id, title, overview,
-                            imageUrlPoster, imageUrlBackdrop, isAdult,
-                            date, voteAverage));
+                } catch (JSONException e) {
+                    Log.e(TAG, "Failed to parse json");
+                    callback.callback(movies, false);
                 }
 
                 callback.callback(movies, true);

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -21,9 +22,14 @@ import java.util.ArrayList;
 public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder> {
 
     private ArrayList<Movie> movies;
+    private ICallback clickCallback;
 
     public VideosAdapter(ArrayList<Movie> movies) {
         this.movies = movies;
+    }
+    public VideosAdapter(ArrayList<Movie> movies, ICallback clickCallback) {
+        this(movies);
+        this.clickCallback = clickCallback;
     }
 
     @NonNull
@@ -49,7 +55,12 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
                     .placeholder(R.drawable.ic_image_placeholder_24dp)
                     .into(holder.ivImage);
         }
-        //More items...
+
+        holder.itemView.setOnClickListener(v -> {
+            if(clickCallback != null) {
+                clickCallback.callback(m, true);
+            }
+        });
     }
 
     @Override
