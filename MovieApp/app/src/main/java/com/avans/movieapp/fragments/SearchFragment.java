@@ -76,7 +76,6 @@ public class SearchFragment extends Fragment {
 
         mSearchRecycler.setAdapter(adapter);
 
-        EditText editText = v.findViewById(R.id.etSearch);
         editText.setOnKeyListener((v1, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 String searchTerm = editText.getText().toString();
