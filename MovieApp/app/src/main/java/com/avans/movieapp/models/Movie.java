@@ -27,38 +27,83 @@ public class Movie implements Serializable {
         this.voteAverage = voteAverage;
     }
 
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getOverview() {
         return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public String getImageUrlPoster() {
         return imageUrlPoster;
     }
 
+    public void setImageUrlPoster(String imageUrlPoster) {
+        this.imageUrlPoster = imageUrlPoster;
+    }
+
+    public String getImageUrlBackdrop() {
+        return imageUrlBackdrop;
+    }
+
+    public void setImageUrlBackdrop(String imageUrlBackdrop) {
+        this.imageUrlBackdrop = imageUrlBackdrop;
+    }
+
     public boolean isAdult() {
         return isAdult;
+    }
+
+    public String isAdultString() {
+        if (isAdult) {
+            return "Adult";
+
+        } else {
+            return "Child";
+        }
+    }
+
+    public void setAdult(boolean adult) {
+        isAdult = adult;
     }
 
     public Date getReleaseDate() {
         return releaseDate;
     }
 
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
     public double getVoteAverage() {
         return voteAverage;
     }
 
-    public String getImageUrlBackdrop() {
-        return imageUrlBackdrop;
+    public String getVoteAverageString() {
+        return voteAverage + "";
     }
+
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
     //Relations
     //ArrayList with Genres
     //ArrayList with Languages
