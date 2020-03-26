@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MovieApp</string>
+    <string name="home">Hoofd</string>
+    <string name="search">Zoek</string>
+    <string name="saved">Bewaard</string>
+    <string name="profile">Profiel</string>
+    <string name="profile_picture">Profiel afbeelding</string>
+    <string name="hello">Hallo</string>
+    <string name="reviews">Recensies</string>
+    <string name="movies">Films</string>
+    <string name="username">Gebruikersnaam</string>
+    <string name="feed">Feed</string>
+    <string name="my_reviews">Mijn Recensies</string>
+    <string name="my_lists">Mijn Lijsten</string>
+    <string name="settings">Opties</string>
+    <string name="country">Nederlands</string>
+    <string name="title_activity_settings">Opties</string>
+    <string name="messages_header">Berichten</string>
+    <string name="sync_header">Synchroniseer</string>
+    <string name="signature_title">Uw handtekening</string>
+    <string name="reply_title">Standaard reactie</string>
+    <string name="sync_title">Synchroniseer email periodiek</string>
+    <string name="attachment_title">Download inkomende bijlagen</string>
+    <string name="attachment_summary_on">Download bijlagen automatisch</string>
+    <string name="attachment_summary_off">Download bijlagen alleen wanneer het manueel geaccepteerd is.</string>
+    <string name="discover">ontdek</string>
+    <string name="recent">recent</string>
+    <string name="poster">POSTER</string>
+    <string name="icon">ICOON</string>
+</resources>
