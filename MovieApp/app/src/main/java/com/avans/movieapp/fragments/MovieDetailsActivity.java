@@ -48,7 +48,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
             if (success) {
                 MovieDetails movies = (MovieDetails) data;
 
-
                 title.setText(movies.getTitle());
                 genre.setText(movies.getGenre());
                 company.setText(movies.getGenre());

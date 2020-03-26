@@ -43,7 +43,7 @@ public class SearchFragment extends Fragment {
             Movie m = (Movie) data;
             Log.d("M:", "Title: " + m.getTitle());
 
-            Intent intent = new Intent();
+            Intent intent = new Intent(getActivity().getApplicationContext(), MovieDetailsActivity.class);
 
             intent.putExtra("MOVIE", m);
 
