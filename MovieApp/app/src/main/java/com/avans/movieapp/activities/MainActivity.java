@@ -1,8 +1,6 @@
-package com.avans.movieapp;
+package com.avans.movieapp.activities;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,10 +8,9 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.avans.movieapp.adapters.VideosAdapter;
+import com.avans.movieapp.R;
 import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.fragments.HomeFragment;
-import com.avans.movieapp.fragments.ProfileFragment;
 import com.avans.movieapp.fragments.SavedFragment;
 import com.avans.movieapp.fragments.SearchFragment;
 import com.avans.movieapp.models.Movie;
@@ -49,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
         setNotification(nav_saved);
 
         // Set the default fragment to HomeFragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        if (savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        }
 
         // Searches for Movie
         API.searchMovies("How to train your dragon", ((data, success) -> {

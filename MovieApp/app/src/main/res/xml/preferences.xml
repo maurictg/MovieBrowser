@@ -14,6 +14,7 @@
     <SwitchPreferenceCompat
         app:title="Theme"
         app:key="theme"
+        android:defaultValue="true"
         android:icon="@drawable/ic_whatshot_24dp" />
 
     <ListPreference
