@@ -5,6 +5,7 @@ import android.util.Log;
 import com.avans.movieapp.helpers.BinaryData;
 import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.helpers.RequestMethod;
+import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 import com.avans.movieapp.models.MovieDetails;
 import com.avans.movieapp.network.NetworkTask;
@@ -34,6 +35,7 @@ public class API {
     private static final String JSON_ADULT = "adult";
     private static final String JSON_DATE = "release_date";
     private static final String JSON_VOTE_AVERAGE = "vote_average";
+    private static final String JSON_GENRE_IDS = "genre_ids";
 
     private static final String JSON_RUNTIME = "runtime";
     private static final String JSON_GENRES = "genres";
@@ -103,6 +105,60 @@ public class API {
         nt.execute("https://api.themoviedb.org/3/authentication/session/new");
     }
 
+
+    /**
+     * * geeft een Arraylist<Genre> genres terug.
+        https://api.themoviedb.org/3/genre/movie/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
+     *
+
+     */
+    public static void getGenres(ICallback callback){
+
+        NetworkTask nt = new NetworkTask(RequestMethod.GET, (data, success) -> {
+           if (success){
+               BinaryData binaryData = (BinaryData) data;
+               ArrayList<Genre> genres = new ArrayList<>();
+               try {
+                   JSONObject result = binaryData.toJSONObject();
+                    JSONArray jsonGenres = result.getJSONArray(JSON_GENRES);
+                    for (int i = 0; i < jsonGenres.length(); i++){
+                        JSONObject arrayResult = jsonGenres.getJSONObject(i);
+                        String genreName = arrayResult.optString(JSON_NAME);
+                        int genreId = arrayResult.optInt(JSON_ID);
+                        genres.add(new Genre(genreName, genreId));
+                    }
+
+                    callback.callback(genres, true);
+
+
+               } catch (JSONException e){
+                   e.printStackTrace();
+                   Log.e(TAG, "Failed to parse JSON getGenres");
+                   callback.callback(null, false);
+               }
+
+           } else {
+               callback.callback(null, false);
+           }
+
+        });
+
+        nt.addParameter("api_key", "e4324f0349da1f199362d20965c34a40");
+        nt.execute("https://api.themoviedb.org/3/genre/movie/list");
+//        https://api.themoviedb.org/3/genre/movie/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
+
+
+
+
+    }
+
+    /**
+     * Movie is een film die hij binnenkrijgt.
+     * * geeft een moviedetails klasse terug.
+     * https://developers.themoviedb.org/3/movies/get-movie-details
+     * roept ook getcast aan om de cast te krijgen (staat niet in detials)
+     */
+
     public static void getMovieDetails(Movie movie, ICallback callback) {
         NetworkTask nt = new NetworkTask((data, success) -> {
             if(success) {
@@ -161,6 +217,12 @@ public class API {
         nt.execute("https://api.themoviedb.org/3/movie/" + movie.getId());
     }
 
+    /**
+     * Movie is een film die hij binnenkrijgt.
+     * * Geeeft een JSONobject terug waarin de cast staat.
+     * https://developers.themoviedb.org/3/movies/get-movie-credits
+     */
+
     public static void getMovieCreditsJsonObject(Movie movie, ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
@@ -185,6 +247,7 @@ public class API {
     /**
      * Search is een zoekterm voor films (vb. Star Wars)
      * Geeeft een ArrayList<movies> terug.
+     * https://developers.themoviedb.org/3/getting-started/search-and-query-for-details
      */
     public static void searchMovies(String search, ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, (data, success) -> {
@@ -215,9 +278,20 @@ public class API {
                         }
                         double voteAverage = movie.optDouble(JSON_VOTE_AVERAGE);
 
+
+                        JSONArray jsonGenreIds = movie.optJSONArray(JSON_GENRE_IDS);
+                        ArrayList<Integer> genreIds = null;
+                        if (jsonGenreIds != null && jsonGenreIds.length() > 0){
+                            for (i = 0; i < jsonGenreIds.length(); i++){
+                                int a = jsonGenreIds.optInt(i);
+                                genreIds.add(a);
+                            }
+                        }
+
+
                         movies.add(new Movie(id, title, overview,
                                 imageUrlPoster, imageUrlBackdrop, isAdult,
-                                date, voteAverage));
+                                date, voteAverage, genreIds));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse json");
