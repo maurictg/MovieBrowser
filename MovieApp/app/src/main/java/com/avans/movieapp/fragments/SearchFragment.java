@@ -12,10 +12,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -34,6 +37,7 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class SearchFragment extends Fragment {
+
     private ArrayList<Movie> movies;
     private Spinner mSortDropdown;
 
@@ -70,7 +74,9 @@ public class SearchFragment extends Fragment {
         RecyclerView mSearchRecycler = v.findViewById(R.id.rvSearch);
         EditText editText = v.findViewById(R.id.etSearch);
 
-        RecyclerView.Adapter adapter = new VideosAdapter(movies, (data, success) -> {
+        LinearLayout genreLayout = v.findViewById(R.id.genreLayout);
+
+        RecyclerView.Adapter movieAdapter = new VideosAdapter(movies, (data, success) -> {
 
             Movie m = (Movie) data;
             Log.d("M:", "Title: " + m.getTitle());
@@ -81,8 +87,7 @@ public class SearchFragment extends Fragment {
 
             startActivity(intent);
         });
-
-        mSearchRecycler.setAdapter(adapter);
+        mSearchRecycler.setAdapter(movieAdapter);
 
         editText.setOnKeyListener((v1, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -96,7 +101,7 @@ public class SearchFragment extends Fragment {
                             movies.clear();
                             movies.addAll(results);
                             Log.d("List: ",results.toString());
-                            adapter.notifyDataSetChanged();
+                            movieAdapter.notifyDataSetChanged();
                         }
                     });
                 }
@@ -108,6 +113,13 @@ public class SearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
         mSearchRecycler.setLayoutManager(layoutManager);
 
+        TextView[] textViewArray = new TextView[10];
+        for(int i = 0; i < 10; i++) {
+            textViewArray[i] = new TextView(getContext());
+            textViewArray[i].setText("GENREAA");
+            textViewArray[i].setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bg_filter));
+            genreLayout.addView(textViewArray[i]);
+        }
         return v;
     }
 

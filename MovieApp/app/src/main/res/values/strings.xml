@@ -56,6 +56,9 @@
     <string name="date_new">Date - New</string>
     <string name="date_old">Date - Old</string>
     <string name="length">length</string>
+    <string name="title">Title</string>
+    <string name="company">company</string>
+    <string name="summary">summary</string>
 
     <string-array name="sort_entries">
         <item>Default</item>
