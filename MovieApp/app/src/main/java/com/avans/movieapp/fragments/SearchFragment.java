@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 public class SearchFragment extends Fragment {
     private ArrayList<Movie> movies;
-    Spinner mSortDropdown;
+    private Spinner mSortDropdown;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -90,10 +90,12 @@ public class SearchFragment extends Fragment {
                 if (!searchTerm.isEmpty()) {
                     API.searchMovies(searchTerm, (data, success) -> {
                         if (success) {
-                            ArrayList<Movie> results = (ArrayList<Movie>) data;
+                            ArrayList<Movie> results;
+                            results = (ArrayList<Movie>) data;
                             editText.setText("");
                             movies.clear();
                             movies.addAll(results);
+                            Log.d("List: ",results.toString());
                             adapter.notifyDataSetChanged();
                         }
                     });

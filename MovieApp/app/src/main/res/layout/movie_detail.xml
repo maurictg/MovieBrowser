@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlue"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
     tools:context=".fragments.MovieDetailsActivity">
 
@@ -76,6 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12sp"
+            android:isIndicator="true"
             android:numStars="5" />
 
         <TextView
