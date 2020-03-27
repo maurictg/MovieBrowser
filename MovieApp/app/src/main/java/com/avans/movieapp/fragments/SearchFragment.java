@@ -1,8 +1,11 @@
 package com.avans.movieapp.fragments;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -45,6 +49,7 @@ public class SearchFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
@@ -74,8 +79,6 @@ public class SearchFragment extends Fragment {
         RecyclerView mSearchRecycler = v.findViewById(R.id.rvSearch);
         EditText editText = v.findViewById(R.id.etSearch);
 
-        LinearLayout genreLayout = v.findViewById(R.id.genreLayout);
-
         RecyclerView.Adapter movieAdapter = new VideosAdapter(movies, (data, success) -> {
 
             Movie m = (Movie) data;
@@ -100,7 +103,7 @@ public class SearchFragment extends Fragment {
                             editText.setText("");
                             movies.clear();
                             movies.addAll(results);
-                            Log.d("List: ",results.toString());
+                            Log.d("List: ", results.toString());
                             movieAdapter.notifyDataSetChanged();
                         }
                     });
@@ -113,20 +116,53 @@ public class SearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
         mSearchRecycler.setLayoutManager(layoutManager);
 
-        TextView[] textViewArray = new TextView[10];
-        for(int i = 0; i < 10; i++) {
-            textViewArray[i] = new TextView(getContext());
-            textViewArray[i].setText("GENREAA");
-            textViewArray[i].setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bg_filter));
-            genreLayout.addView(textViewArray[i]);
-        }
+        printGenres(v);
         return v;
+    }
+
+    private void printGenres(View v) {
+        Drawable bgDisabled = ContextCompat.getDrawable(getContext(), R.drawable.bg_genre);
+        Drawable bgEnabled = ContextCompat.getDrawable(getContext(), R.drawable.bg_genre_on);
+
+
+        API.getGenres((data, success) -> {
+
+        });
+
+        LinearLayout genreLayout = v.findViewById(R.id.genreLayout);
+
+        LinearLayout ll = new LinearLayout(getContext());
+        ll.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                300, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        TextView[] textViewArray = new TextView[10];
+        for (int i = 0; i < 10; i++) {
+
+            textViewArray[i] = new TextView(getContext());
+            textViewArray[i].setText("GENRE");
+            textViewArray[i].setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bg_genre));
+            textViewArray[i].setGravity(Gravity.CENTER);
+
+            layoutParams.setMargins(10, 10, 10, 10);
+            layoutParams.gravity = Gravity.CENTER;
+            int j = i;
+            textViewArray[i].setOnClickListener(v13 -> {
+                if (textViewArray[j].getBackground() == bgDisabled) {
+                    textViewArray[j].setBackground(bgEnabled);
+                } else {
+                    textViewArray[j].setBackground(bgDisabled);
+                }
+            });
+            genreLayout.addView(textViewArray[i], layoutParams);
+        }
     }
 
     private class onSortTypeClick implements android.widget.AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getActivity(), mSortDropdown.getSelectedItem() +" selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), mSortDropdown.getSelectedItem() + " selected", Toast.LENGTH_SHORT).show();
         }
 
         @Override
