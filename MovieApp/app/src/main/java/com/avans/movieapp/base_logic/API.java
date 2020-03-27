@@ -1,5 +1,7 @@
 package com.avans.movieapp.base_logic;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.avans.movieapp.helpers.BinaryData;
@@ -113,31 +115,28 @@ public class API {
      *
 
      */
-    public static void getGenres(ICallback callback){
+    public static void getGenres(Context context, ICallback callback){
+
+        SharedPreferences sp = context.getSharedPreferences("MOVIEDB", Context.MODE_PRIVATE);
+        String strGenres = sp.getString("genres", "");
+        if(!strGenres.equals("")) {
+            callback.callback(API.parseGenres(strGenres), true);
+            Log.d(TAG, "Returned genres from device storage");
+            return;
+        }
 
         NetworkTask nt = new NetworkTask(RequestMethod.GET, (data, success) -> {
            if (success){
-               BinaryData binaryData = (BinaryData) data;
-               ArrayList<Genre> genres = new ArrayList<>();
-               try {
-                   JSONObject result = binaryData.toJSONObject();
-                    JSONArray jsonGenres = result.getJSONArray(JSON_GENRES);
-                    for (int i = 0; i < jsonGenres.length(); i++){
-                        JSONObject arrayResult = jsonGenres.getJSONObject(i);
-                        String genreName = arrayResult.optString(JSON_NAME);
-                        int genreId = arrayResult.optInt(JSON_ID);
-                        genres.add(new Genre(genreName, genreId));
-                    }
-
+               ArrayList<Genre> genres = API.parseGenres(data.toString());
+                if(genres != null) {
                     callback.callback(genres, true);
-
-
-               } catch (JSONException e){
-                   e.printStackTrace();
-                   Log.e(TAG, "Failed to parse JSON getGenres");
-                   callback.callback(null, false);
-               }
-
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("genres", data.toString());
+                    editor.apply();
+                    Log.d(TAG, "Returned genres from API");
+                }
+                else
+                    callback.callback(null, false);
            } else {
                callback.callback(null, false);
            }
@@ -151,6 +150,26 @@ public class API {
 
 
 
+    }
+
+    private static ArrayList<Genre> parseGenres(String json) {
+        ArrayList<Genre> genres = new ArrayList<>();
+        try {
+            JSONObject result = new JSONObject(json);
+            JSONArray jsonGenres = result.getJSONArray(JSON_GENRES);
+            for (int i = 0; i < jsonGenres.length(); i++){
+                JSONObject arrayResult = jsonGenres.getJSONObject(i);
+                String genreName = arrayResult.optString(JSON_NAME);
+                int genreId = arrayResult.optInt(JSON_ID);
+                genres.add(new Genre(genreName, genreId));
+            }
+
+            return genres;
+        } catch (JSONException e){
+            e.printStackTrace();
+            Log.e(TAG, "Failed to parse JSON getGenres");
+            return null;
+        }
     }
 
     /**

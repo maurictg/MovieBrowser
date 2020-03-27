@@ -38,6 +38,7 @@ import com.avans.movieapp.models.Movie;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +53,7 @@ public class SearchFragment extends Fragment {
     private Drawable bgEnabled;
     private Drawable bgDisabled;
     private ArrayList<Genre> genres;
+    private RecyclerView.Adapter adapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -87,7 +89,7 @@ public class SearchFragment extends Fragment {
         RecyclerView mSearchRecycler = v.findViewById(R.id.rvSearch);
         EditText editText = v.findViewById(R.id.etSearch);
 
-        RecyclerView.Adapter movieAdapter = new VideosAdapter(movies, (data, success) -> {
+        adapter = new VideosAdapter(movies, (data, success) -> {
 
             Movie m = (Movie) data;
             Log.d("M:", "Title: " + m.getTitle());
@@ -98,7 +100,7 @@ public class SearchFragment extends Fragment {
 
             startActivity(intent);
         });
-        mSearchRecycler.setAdapter(movieAdapter);
+        mSearchRecycler.setAdapter(adapter);
 
         editText.setOnKeyListener((v1, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -112,7 +114,7 @@ public class SearchFragment extends Fragment {
                             movies.clear();
                             movies.addAll(results);
                             Log.d("List: ", results.toString());
-                            movieAdapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
                         }
                     });
                 }
@@ -139,7 +141,7 @@ public class SearchFragment extends Fragment {
         bgEnabled = ContextCompat.getDrawable(getContext(), R.drawable.bg_genre_on);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        API.getGenres((data, success) -> {
+        API.getGenres(getActivity().getApplicationContext(), (data, success) -> {
             if (success) {
                 genres = (ArrayList<Genre>) data;
 
@@ -181,7 +183,31 @@ public class SearchFragment extends Fragment {
     private class onSortTypeClick implements android.widget.AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getActivity(), mSortDropdown.getSelectedItem() + " selected", Toast.LENGTH_SHORT).show();
+            //Sort
+            switch (position) {
+                case 1: //Rating
+                {
+                    Collections.sort(movies, Movie.RatingSorter);
+                    Collections.reverse(movies);
+                    adapter.notifyDataSetChanged();
+                }
+                break; //Date - New - old
+                case 2:
+                {
+                    Collections.sort(movies, Movie.ReleaseDateSorter);
+                    Collections.reverse(movies);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+                case 3: //Date - Old- new
+                {
+                    Collections.sort(movies, Movie.ReleaseDateSorter);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+                default:
+                    break;
+            }
         }
 
         @Override

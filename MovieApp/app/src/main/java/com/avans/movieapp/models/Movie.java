@@ -113,7 +113,7 @@ public class Movie implements Serializable {
     }
 
     public Date getReleaseDate() {
-        return releaseDate;
+        return (releaseDate != null) ? releaseDate : new Date(0);
     }
 
     public void setReleaseDate(Date releaseDate) {
