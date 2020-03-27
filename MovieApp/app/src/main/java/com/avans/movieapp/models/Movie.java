@@ -16,6 +16,7 @@ public class Movie implements Serializable {
     private Date releaseDate;
     private double voteAverage;
     private ArrayList<Integer> genreIds;
+    private String originalLanguage = "N/A";
 
     public Movie(int id, String title, String overview,
                  String imageUrlPoster, String imageUrlBackdrop, boolean isAdult,
@@ -31,8 +32,27 @@ public class Movie implements Serializable {
         this.genreIds = genreIds;
     }
 
+    public Movie(int id, String title, String overview,
+                 String imageUrlPoster, String imageUrlBackdrop, boolean isAdult,
+                 Date releaseDate, double voteAverage, ArrayList<Integer> genreIds, String originalLanguage) {
+        this.id = id;
+        this.title = title;
+        this.overview = overview;
+        this.imageUrlPoster = imageUrlPoster;
+        this.imageUrlBackdrop = imageUrlBackdrop;
+        this.isAdult = isAdult;
+        this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
+        this.genreIds = genreIds;
+        this.originalLanguage = originalLanguage;
+    }
+
     public ArrayList<Integer> getGenreIds() {
         return genreIds;
+    }
+
+    public String getOriginalLanguage() {
+        return originalLanguage;
     }
 
     public int getId() {

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
+import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 
 import java.util.ArrayList;
@@ -63,10 +64,13 @@ public class HomeFragment extends Fragment {
 
         final boolean LOAD_TESTDATA = true; //Even om te voorkomen dat we de API overdosen bij het debuggen
 
+
         if (LOAD_TESTDATA) {
+            ArrayList<Integer> genreIds = new ArrayList<>();
+            genreIds.add(28); genreIds.add(12); genreIds.add(16);
             for (int i = 1; i < 12; i++) {
-                moviesDiscover.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4));
-                moviesRecent.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4));
+                moviesDiscover.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4, genreIds));
+                moviesRecent.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4, genreIds));
             }
         } else {
             //Test
