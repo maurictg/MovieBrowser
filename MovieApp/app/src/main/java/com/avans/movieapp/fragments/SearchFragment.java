@@ -1,6 +1,7 @@
 package com.avans.movieapp.fragments;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.base_logic.DisplayCalc;
+import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 import com.google.android.material.navigation.NavigationView;
 
@@ -44,6 +46,12 @@ public class SearchFragment extends Fragment {
 
     private ArrayList<Movie> movies;
     private Spinner mSortDropdown;
+    private ArrayList<Integer> genresList = new ArrayList<>();
+    private TextView[] textViewArray;
+
+    private Drawable bgEnabled;
+    private Drawable bgDisabled;
+    private ArrayList<Genre> genres;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -121,43 +129,54 @@ public class SearchFragment extends Fragment {
     }
 
     private void printGenres(View v) {
-        Drawable bgDisabled = ContextCompat.getDrawable(getContext(), R.drawable.bg_genre);
-        Drawable bgEnabled = ContextCompat.getDrawable(getContext(), R.drawable.bg_genre_on);
-
-
-        API.getGenres((data, success) -> {
-
-        });
+        Genre genre = null;
 
         LinearLayout genreLayout = v.findViewById(R.id.genreLayout);
 
         LinearLayout ll = new LinearLayout(getContext());
         ll.setOrientation(LinearLayout.VERTICAL);
+        bgDisabled = ContextCompat.getDrawable(getContext(), R.drawable.bg_genre);
+        bgEnabled = ContextCompat.getDrawable(getContext(), R.drawable.bg_genre_on);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                300, LinearLayout.LayoutParams.WRAP_CONTENT);
+        API.getGenres((data, success) -> {
+            if (success) {
+                genres = (ArrayList<Genre>) data;
 
-        TextView[] textViewArray = new TextView[10];
-        for (int i = 0; i < 10; i++) {
+                textViewArray = new TextView[genres.size()];
 
-            textViewArray[i] = new TextView(getContext());
-            textViewArray[i].setText("GENRE");
-            textViewArray[i].setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bg_genre));
-            textViewArray[i].setGravity(Gravity.CENTER);
+                for (int i = 1; i < genres.size(); i++) {
+                    textViewArray[i] = new TextView(getContext());
+                    textViewArray[i].setText(genres.get(i).getName().toUpperCase());
+                    textViewArray[i].setBackground(bgDisabled);
+                    textViewArray[i].setGravity(Gravity.CENTER);
+                    textViewArray[i].setTextSize(12);
+                    textViewArray[i].setTypeface(null, Typeface.BOLD);
+                    layoutParams.setMargins(10, 10, 10, 10);
+                    layoutParams.gravity = Gravity.CENTER;
+                    int j = i;
+                    textViewArray[i].setOnClickListener(v1 -> {
+                        if (textViewArray[j].getBackground() == bgDisabled) {
+                            Toast.makeText(getContext(), "Genre added: " + genres.get(j).getName(), Toast.LENGTH_SHORT).show();
+                            Log.d("Genre added: ", String.valueOf(genres.get(j).getId()));
+                            textViewArray[j].setBackground(bgEnabled);
+                            genresList.add(genres.get(j).getId());
 
-            layoutParams.setMargins(10, 10, 10, 10);
-            layoutParams.gravity = Gravity.CENTER;
-            int j = i;
-            textViewArray[i].setOnClickListener(v13 -> {
-                if (textViewArray[j].getBackground() == bgDisabled) {
-                    textViewArray[j].setBackground(bgEnabled);
-                } else {
-                    textViewArray[j].setBackground(bgDisabled);
+                        } else if (textViewArray[j].getBackground() == bgEnabled) {
+                            Toast.makeText(getContext(), "Genre removed: " + genres.get(j).getName(), Toast.LENGTH_SHORT).show();
+                            textViewArray[j].setBackground(bgDisabled);
+                            for (int k = 0; k < genresList.size(); k++)
+                                if (genresList.get(k) == genres.get(k).getId())
+                                    genresList.remove(genres.get(k).getId());
+                        }
+                    });
+                    genreLayout.addView(textViewArray[i], layoutParams);
                 }
-            });
-            genreLayout.addView(textViewArray[i], layoutParams);
-        }
+            }
+        });
+
     }
+
 
     private class onSortTypeClick implements android.widget.AdapterView.OnItemSelectedListener {
         @Override
