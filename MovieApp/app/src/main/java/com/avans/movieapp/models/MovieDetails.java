@@ -11,9 +11,9 @@ public class MovieDetails extends Movie {
     private ArrayList<String> actors;
     private String director;
 
-    public MovieDetails(int id, String title, String overview, String imageUrlPoster, String imageUrlBackdrop, boolean isAdult, Date releaseDate, double voteAverage,
+    public MovieDetails(int id, String title, String overview, String imageUrlPoster, String imageUrlBackdrop, boolean isAdult, Date releaseDate, double voteAverage, ArrayList<Integer> genreIds,
                         int length, String genre, String company, ArrayList<String> actors, String director) {
-        super(id, title, overview, imageUrlPoster, imageUrlBackdrop, isAdult, releaseDate, voteAverage);
+        super(id, title, overview, imageUrlPoster, imageUrlBackdrop, isAdult, releaseDate, voteAverage, genreIds);
         this.length = length;
         this.genre = genre;
         this.company = company;
@@ -22,7 +22,7 @@ public class MovieDetails extends Movie {
     }
 
     public MovieDetails(Movie m) {
-        super(m.getId(), m.getTitle(), m.getOverview(), m.getImageUrlPoster(), m.getImageUrlBackdrop(), m.isAdult(),m.getReleaseDate(), m.getVoteAverage());
+        super(m.getId(), m.getTitle(), m.getOverview(), m.getImageUrlPoster(), m.getImageUrlBackdrop(), m.isAdult(),m.getReleaseDate(), m.getVoteAverage(), m.getGenreIds());
     }
 
     public int getLength() {

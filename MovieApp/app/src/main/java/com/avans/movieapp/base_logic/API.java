@@ -34,6 +34,7 @@ public class API {
     private static final String JSON_ADULT = "adult";
     private static final String JSON_DATE = "release_date";
     private static final String JSON_VOTE_AVERAGE = "vote_average";
+    private static final String JSON_GENRE_IDS = "genre_ids";
 
     private static final String JSON_RUNTIME = "runtime";
     private static final String JSON_GENRES = "genres";
@@ -103,6 +104,22 @@ public class API {
         nt.execute("https://api.themoviedb.org/3/authentication/session/new");
     }
 
+
+    public static void getGenres(ICallback callback){
+
+        NetworkTask nt = new NetworkTask(data, (data, success) -> {
+            
+        })
+
+    }
+
+    /**
+     * Movie is een film die hij binnenkrijgt.
+     * * geeft een moviedetails klasse terug.
+     * https://developers.themoviedb.org/3/movies/get-movie-details
+     * roept ook getcast aan om de cast te krijgen (staat niet in detials)
+     */
+
     public static void getMovieDetails(Movie movie, ICallback callback) {
         NetworkTask nt = new NetworkTask((data, success) -> {
             if(success) {
@@ -161,6 +178,12 @@ public class API {
         nt.execute("https://api.themoviedb.org/3/movie/" + movie.getId());
     }
 
+    /**
+     * Movie is een film die hij binnenkrijgt.
+     * * Geeeft een JSONobject terug waarin de cast staat.
+     * https://developers.themoviedb.org/3/movies/get-movie-credits
+     */
+
     public static void getMovieCreditsJsonObject(Movie movie, ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
@@ -185,6 +208,7 @@ public class API {
     /**
      * Search is een zoekterm voor films (vb. Star Wars)
      * Geeeft een ArrayList<movies> terug.
+     * https://developers.themoviedb.org/3/getting-started/search-and-query-for-details
      */
     public static void searchMovies(String search, ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, (data, success) -> {
@@ -215,9 +239,20 @@ public class API {
                         }
                         double voteAverage = movie.optDouble(JSON_VOTE_AVERAGE);
 
+
+                        JSONArray jsonGenreIds = movie.optJSONArray(JSON_GENRE_IDS);
+                        ArrayList<Integer> genreIds = null;
+                        if (jsonGenreIds != null && jsonGenreIds.length() > 0){
+                            for (i = 0; i < jsonGenreIds.length(); i++){
+                                int a = jsonGenreIds.optInt(i);
+                                genreIds.add(a);
+                            }
+                        }
+
+
                         movies.add(new Movie(id, title, overview,
                                 imageUrlPoster, imageUrlBackdrop, isAdult,
-                                date, voteAverage));
+                                date, voteAverage, genreIds));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse json");
