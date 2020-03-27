@@ -29,7 +29,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView summary;
     private TextView age;
     private RatingBar rating;
-    private TextView ratingNumber;
     private Button addToList;
 
     @Override
@@ -46,7 +45,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         summary = findViewById(R.id.movie_detail_summary);
         age = findViewById(R.id.movie_detail_age);
         rating = findViewById(R.id.movie_detail_rating);
-        ratingNumber = findViewById(R.id.movie_detail_rating_number);
         addToList = findViewById(R.id.movie_detail_list);
 
         Intent intent = getIntent();
@@ -62,8 +60,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 summaryName.setText("Summary: ");
                 summary.setText(movies.getOverview());
                 age.setText(String.format("Adult movie: %s", movies.isAdultString()));
-                rating.setRating((int) movies.getVoteAverage());
-                ratingNumber.setText(movies.getVoteAverageString());
+                rating.setRating((int) (movies.getVoteAverage() / 2));
             }
         });
 

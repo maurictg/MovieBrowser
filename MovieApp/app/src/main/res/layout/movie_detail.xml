@@ -35,17 +35,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="20dp"
+                    android:textColor="@color/colorText"
                     android:textSize="21sp" />
 
                 <TextView
                     android:id="@+id/movie_detail_genre"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorText" />
 
                 <TextView
                     android:id="@+id/movie_detail_company"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorText" />
 
             </LinearLayout>
 
@@ -55,6 +58,8 @@
             android:id="@+id/movie_detail_summary_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorText"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -62,7 +67,8 @@
             android:id="@+id/movie_detail_summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorText"
             android:textSize="15sp" />
 
         <TextView
@@ -74,22 +80,18 @@
         <RatingBar
             android:id="@+id/movie_detail_rating"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="47dp"
             android:layout_margin="12sp"
+            android:background="@color/colorText"
             android:isIndicator="true"
             android:numStars="5" />
-
-        <TextView
-            android:id="@+id/movie_detail_rating_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp" />
 
         <Button
             android:id="@+id/movie_detail_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add to list" />
+            android:text="Add to list"
+            android:textColor="@color/colorText" />
 
     </LinearLayout>
 
