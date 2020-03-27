@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
+import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class HomeFragment extends Fragment {
         rvHomeRecent.setAdapter(adapterRecent);
 
         final boolean LOAD_TESTDATA = true; //Even om te voorkomen dat we de API overdosen bij het debuggen
+
 
         if (LOAD_TESTDATA) {
             ArrayList<Integer> genreIds = new ArrayList<>();
