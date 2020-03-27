@@ -21,6 +21,10 @@ public class MovieDetails extends Movie {
         this.director = director;
     }
 
+    public MovieDetails(Movie m) {
+        super(m.getId(), m.getTitle(), m.getOverview(), m.getImageUrlPoster(), m.getImageUrlBackdrop(), m.isAdult(),m.getReleaseDate(), m.getVoteAverage());
+    }
+
     public int getLength() {
         return length;
     }

@@ -75,7 +75,8 @@ public class SearchFragment extends Fragment {
             Movie m = (Movie) data;
             Log.d("M:", "Title: " + m.getTitle());
 
-            Intent intent = new Intent();
+            Intent intent = new Intent(getActivity().getApplicationContext(), MovieDetailsActivity.class);
+
             intent.putExtra("MOVIE", m);
 
             startActivity(intent);
@@ -90,6 +91,7 @@ public class SearchFragment extends Fragment {
                     API.searchMovies(searchTerm, (data, success) -> {
                         if (success) {
                             ArrayList<Movie> results = (ArrayList<Movie>) data;
+                            editText.setText("");
                             movies.clear();
                             movies.addAll(results);
                             adapter.notifyDataSetChanged();

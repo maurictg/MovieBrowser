@@ -18,6 +18,7 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Movie> movies = (ArrayList<Movie>) data;
                 Log.d(TAG, movies.toString());
             }
-
         }));
 
     }

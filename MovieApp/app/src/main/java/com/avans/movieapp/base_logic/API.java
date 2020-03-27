@@ -104,63 +104,69 @@ public class API {
     }
 
     public static void getMovieDetails(Movie movie, ICallback callback) {
+        NetworkTask nt = new NetworkTask((data, success) -> {
+            if(success) {
+                getMovieCreditsJsonObject(movie, (data1, success1) -> {
+                    if(success1) {
+                        try {
+                            JSONObject movieCredits = (JSONObject)data1;
+                            JSONObject movieDetails = ((BinaryData)data).toJSONObject();
 
-        NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
-            if (success) {
-                getMovieCreditsJsonObject(movie, ((dataCrew, success1) -> {
-                    try {
-                        JSONObject JSONMovieDetails = (JSONObject) data;
-                        int length = JSONMovieDetails.optInt(JSON_RUNTIME);
-                        JSONArray genres = JSONMovieDetails.getJSONArray(JSON_GENRES);
-                        JSONObject genre = (JSONObject) genres.get(0);
-                        String stringGenre = genre.optString(JSON_NAME);
-                        JSONArray productionCompanies = JSONMovieDetails.getJSONArray(JSON_PRODUCTION_COMPANIES);
-                        JSONObject productionCompany = (JSONObject) productionCompanies.get(0);
-                        String stringProductionCompany = productionCompany.optString(JSON_NAME);
+                            //Get movieDetails
+                            MovieDetails m = new MovieDetails(movie);
+                            m.setLength(movieDetails.optInt(JSON_RUNTIME));
 
-                        JSONObject JSONCredits = (JSONObject) dataCrew;
-                        JSONArray JSONCast = JSONCredits.getJSONArray(JSON_CAST);
-                        ArrayList<String> actors = null;
-                        for (int i = 0; i < 3; i++) {
-                            JSONObject JSONCastMember = JSONCast.getJSONObject(i);
-                            String actor = JSONCastMember.optString(JSON_NAME);
-                            actors.add(actor);
-                        }
-                        String director = null;
-                        JSONArray JSONCrew = JSONCredits.getJSONArray(JSON_CREW);
-                        for (int i = 0; i < JSONCrew.length(); i++) {
-                            JSONObject crewMember = JSONCrew.getJSONObject(i);
-                            if (crewMember.optString(JSON_JOB).equals("Director")) {
-                                director = crewMember.optString(JSON_NAME);
-                                break;
+                            JSONArray genres = movieDetails.optJSONArray(JSON_GENRES);
+                            if(genres != null && genres.length() > 0)
+                                m.setGenre(genres.getJSONObject(0).optString(JSON_NAME));
+
+                            JSONArray companies = movieCredits.optJSONArray(JSON_PRODUCTION_COMPANIES);
+                            if(companies != null && companies.length() > 0)
+                                m.setCompany(companies.getJSONObject(0).optString(JSON_NAME));
+
+                            JSONArray casts = movieCredits.optJSONArray(JSON_CAST);
+                            ArrayList<String> actors = new ArrayList<>();
+                            if(casts != null) {
+                                for (int i = 0; i < Math.min(3, casts.length()); i++)
+                                    actors.add(casts.getJSONObject(i).optString(JSON_NAME));
                             }
+
+                            m.setActors(actors);
+
+                            JSONArray crew = movieCredits.optJSONArray(JSON_CREW);
+                            if(crew != null) {
+                                for (int i = 0; i < crew.length(); i++) {
+                                    JSONObject crewMember = crew.getJSONObject(i);
+                                    if (crewMember.optString(JSON_JOB, "").equals("Director")) {
+                                        m.setDirector(crewMember.optString(JSON_NAME));
+                                        break;
+                                    }
+                                }
+                            }
+
+                            callback.callback(m, true);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, "Failed to parse JSON");
+                            callback.callback(null, false);
                         }
-
-                        MovieDetails movieDetails = new MovieDetails(movie.getId(), movie.getTitle(), movie.getOverview(), movie.getImageUrlPoster(), movie.getImageUrlBackdrop(), movie.isAdult(), movie.getReleaseDate(), movie.getVoteAverage(),
-                                length, stringGenre, stringProductionCompany, actors, director);
-
-                        callback.callback(movieDetails, true);
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Failed to get details");
-                        callback.callback(null, false);
                     }
-                }));
+                });
+            } else {
+                Log.e(TAG, "Failed to get movie details");
+                callback.callback(null, false);
             }
-        }));
-
-        networkTask.addParameter("api_key", "e4324f0349da1f199362d20965c34a40");
-        networkTask.execute("https://api.themoviedb.org/3/search/movie/" + movie.getId());
-
+        });
+        nt.addParameter("api_key", "e4324f0349da1f199362d20965c34a40");
+        nt.execute("https://api.themoviedb.org/3/movie/" + movie.getId());
     }
 
     public static void getMovieCreditsJsonObject(Movie movie, ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
                 BinaryData binaryData = (BinaryData) data;
-
-                JSONObject JSONResult = null;
                 try {
-                    JSONResult = binaryData.toJSONObject();
+                    JSONObject JSONResult = binaryData.toJSONObject();
                     callback.callback(JSONResult, true);
                 } catch (JSONException e) {
                     e.printStackTrace();
