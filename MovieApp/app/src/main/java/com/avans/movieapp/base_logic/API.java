@@ -280,11 +280,11 @@ public class API {
 
 
                         JSONArray jsonGenreIds = movie.optJSONArray(JSON_GENRE_IDS);
-                        ArrayList<Integer> genreIds = null;
+                        ArrayList<Integer> genreIds = new ArrayList<>();
                         if (jsonGenreIds != null && jsonGenreIds.length() > 0){
-                            for (i = 0; i < jsonGenreIds.length(); i++){
-                                int a = jsonGenreIds.optInt(i);
-                                genreIds.add(a);
+                            for (int j = 0; j < jsonGenreIds.length(); j++){
+                                int a = jsonGenreIds.optInt(j);
+                                genreIds.add(j);
                             }
                         }
 
