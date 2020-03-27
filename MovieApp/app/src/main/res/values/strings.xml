@@ -43,15 +43,24 @@
     <string name="icon">ICON</string>
     <string name="filter">filter</string>
 
-    <string name="openNavDrawer">Navigation Drawer Open</string>
-    <string name="closeNavDrawer">Navigation Drawer Close</string>
+
     <string name="language">Language</string>
     <string name="genre">Genre</string>
-    <string name="rating">rating</string>
+    <string name="rating">Rating</string>
     <string name="duration">duration</string>
     <string name="reset_filter">reset all filters</string>
     <string name="dutch">DUTCH</string>
     <string name="german">GERMAN</string>
     <string name="english">ENGLISH</string>
+    <string name="sort_by">sort by</string>
+    <string name="date_new">Date - New</string>
+    <string name="date_old">Date - Old</string>
+    <string name="length">length</string>
 
+    <string-array name="sort_entries">
+        <item>Default</item>
+        <item>Rating</item>
+        <item>Date: New - Old</item>
+        <item>Date: Old - New</item>
+    </string-array>
 </resources>

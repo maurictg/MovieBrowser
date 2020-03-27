@@ -106,7 +106,8 @@
                         android:background="@drawable/bg_filter"
                         android:gravity="center"
                         android:text="@string/genre"
-                        android:textAllCaps="true" />
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorText" />
 
                     <TextView
                         android:layout_width="120dp"
@@ -139,8 +140,8 @@
                         android:textColor="@color/colorText" />
 
                 </LinearLayout>
-            </HorizontalScrollView>
 
+            </HorizontalScrollView>
         </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -149,7 +150,7 @@
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
+        android:layout_gravity=""
         android:background="@color/colorMenu"
         app:elevation="120dp"
         app:itemIconTint="@color/colorText"
@@ -184,6 +185,7 @@
                 android:textColor="@color/colorText" />
 
             <GridLayout
+                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:columnCount="2">
@@ -239,14 +241,34 @@
             <RatingBar
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/colorMenu"
                 android:numStars="5"
                 android:progressTint="@color/colorHighlight"
                 android:rating="2"
+                android:scaleX=".9"
+                android:scaleY=".9"
                 android:stepSize=".5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorAccent"
+                android:padding="10dp"
+                android:text="@string/sort_by"
+                android:textAllCaps="true"
+                android:textColor="@color/colorText" />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/sort_entries"
+                android:spinnerMode="dropdown"/>
 
 
         </LinearLayout>

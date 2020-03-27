@@ -7,11 +7,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
  */
 public class SearchFragment extends Fragment {
     private ArrayList<Movie> movies;
-
+    Spinner mSortDropdown;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -48,7 +50,13 @@ public class SearchFragment extends Fragment {
         CheckBox lang_en = v.findViewById(R.id.lang_en);
         CheckBox lang_nl = v.findViewById(R.id.lang_nl);
         CheckBox lang_de = v.findViewById(R.id.lang_de);
+//                lang_de.isChecked();
+
         RatingBar ratingBar = v.findViewById(R.id.rating);
+//        ratingBar.getNumStars();
+
+        mSortDropdown = v.findViewById(R.id.spinner);
+        mSortDropdown.setOnItemSelectedListener(new onSortTypeClick());
 
         DrawerLayout mDrawerLayout = v.findViewById(R.id.drawer_layout);
         NavigationView mNavigation = v.findViewById(R.id.nav_view);
@@ -68,7 +76,6 @@ public class SearchFragment extends Fragment {
             Log.d("M:", "Title: " + m.getTitle());
 
             Intent intent = new Intent();
-
             intent.putExtra("MOVIE", m);
 
             startActivity(intent);
@@ -98,5 +105,17 @@ public class SearchFragment extends Fragment {
         mSearchRecycler.setLayoutManager(layoutManager);
 
         return v;
+    }
+
+    private class onSortTypeClick implements android.widget.AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(getActivity(), mSortDropdown.getSelectedItem() +" selected", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
     }
 }
