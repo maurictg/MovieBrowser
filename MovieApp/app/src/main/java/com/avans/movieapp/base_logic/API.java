@@ -35,7 +35,7 @@ public class API {
     private static final String JSON_ADULT = "adult";
     private static final String JSON_DATE = "release_date";
     private static final String JSON_VOTE_AVERAGE = "vote_average";
-    private static final String JSON_GENRE_IDS = "genre_ids";
+    private static final String JSON_GENRE_IDS = "genre_id";
 
     private static final String JSON_RUNTIME = "runtime";
     private static final String JSON_GENRES = "genres";
