@@ -5,6 +5,7 @@ import android.util.Log;
 import com.avans.movieapp.helpers.BinaryData;
 import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.helpers.RequestMethod;
+import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 import com.avans.movieapp.models.MovieDetails;
 import com.avans.movieapp.network.NetworkTask;
@@ -105,11 +106,49 @@ public class API {
     }
 
 
+    /**
+     * * geeft een Arraylist<Genre> genres terug.
+        https://api.themoviedb.org/3/genre/movie/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
+     *
+
+     */
     public static void getGenres(ICallback callback){
 
-        NetworkTask nt = new NetworkTask(data, (data, success) -> {
-            
-        })
+        NetworkTask nt = new NetworkTask(RequestMethod.GET, (data, success) -> {
+           if (success){
+               BinaryData binaryData = (BinaryData) data;
+               ArrayList<Genre> genres = new ArrayList<>();
+               try {
+                   JSONObject result = binaryData.toJSONObject();
+                    JSONArray jsonGenres = result.getJSONArray(JSON_GENRES);
+                    for (int i = 0; i < jsonGenres.length(); i++){
+                        JSONObject arrayResult = jsonGenres.getJSONObject(i);
+                        String genreName = arrayResult.optString(JSON_NAME);
+                        int genreId = arrayResult.optInt(JSON_ID);
+                        genres.add(new Genre(genreName, genreId));
+                    }
+
+                    callback.callback(genres, true);
+
+
+               } catch (JSONException e){
+                   e.printStackTrace();
+                   Log.e(TAG, "Failed to parse JSON getGenres");
+                   callback.callback(null, false);
+               }
+
+           } else {
+               callback.callback(null, false);
+           }
+
+        });
+
+        nt.addParameter("api_key", "e4324f0349da1f199362d20965c34a40");
+        nt.execute("https://api.themoviedb.org/3/genre/movie/list");
+//        https://api.themoviedb.org/3/genre/movie/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
+
+
+
 
     }
 
