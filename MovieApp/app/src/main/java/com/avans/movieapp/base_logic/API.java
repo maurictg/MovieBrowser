@@ -35,7 +35,8 @@ public class API {
     private static final String JSON_ADULT = "adult";
     private static final String JSON_DATE = "release_date";
     private static final String JSON_VOTE_AVERAGE = "vote_average";
-    private static final String JSON_GENRE_IDS = "genre_id";
+    private static final String JSON_GENRE_IDS = "genre_ids";
+    private static final String JSON_ORIGINAL_LANGUAGE = "original_language";
 
     private static final String JSON_RUNTIME = "runtime";
     private static final String JSON_GENRES = "genres";
@@ -280,18 +281,20 @@ public class API {
 
 
                         JSONArray jsonGenreIds = movie.optJSONArray(JSON_GENRE_IDS);
-                        ArrayList<Integer> genreIds = null;
+                        ArrayList<Integer> genreIds = new ArrayList<>();
                         if (jsonGenreIds != null && jsonGenreIds.length() > 0){
-                            for (i = 0; i < jsonGenreIds.length(); i++){
-                                int a = jsonGenreIds.optInt(i);
-                                genreIds.add(a);
+                            for (int j = 0; j < jsonGenreIds.length(); j++){
+                                int a = jsonGenreIds.optInt(j);
+                                genreIds.add(j);
                             }
                         }
+
+                        String originalLanguage = movie.optString(JSON_ORIGINAL_LANGUAGE);
 
 
                         movies.add(new Movie(id, title, overview,
                                 imageUrlPoster, imageUrlBackdrop, isAdult,
-                                date, voteAverage, genreIds));
+                                date, voteAverage, genreIds, originalLanguage));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse json");
