@@ -1,6 +1,7 @@
 package com.avans.movieapp.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -14,10 +15,11 @@ public class Movie implements Serializable {
     private boolean isAdult;
     private Date releaseDate;
     private double voteAverage;
+    private ArrayList<Integer> genreIds;
 
     public Movie(int id, String title, String overview,
                  String imageUrlPoster, String imageUrlBackdrop, boolean isAdult,
-                 Date releaseDate, double voteAverage) {
+                 Date releaseDate, double voteAverage, ArrayList<Integer> genreIds) {
         this.id = id;
         this.title = title;
         this.overview = overview;
@@ -26,6 +28,11 @@ public class Movie implements Serializable {
         this.isAdult = isAdult;
         this.releaseDate = releaseDate;
         this.voteAverage = voteAverage;
+        this.genreIds = genreIds;
+    }
+
+    public ArrayList<Integer> getGenreIds() {
+        return genreIds;
     }
 
     public int getId() {
