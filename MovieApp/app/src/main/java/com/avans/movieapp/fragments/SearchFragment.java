@@ -83,6 +83,7 @@ public class SearchFragment extends Fragment {
                     API.searchMovies(searchTerm, (data, success) -> {
                         if (success) {
                             ArrayList<Movie> results = (ArrayList<Movie>) data;
+                            editText.setText("");
                             movies.clear();
                             movies.addAll(results);
                             adapter.notifyDataSetChanged();

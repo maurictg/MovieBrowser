@@ -1,6 +1,7 @@
 package com.avans.movieapp.models;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 public class Movie implements Serializable {
@@ -104,7 +105,19 @@ public class Movie implements Serializable {
         this.voteAverage = voteAverage;
     }
 
-    //Relations
-    //ArrayList with Genres
-    //ArrayList with Languages
+    //Sorting using Collections.sort(ArrayList<Movie> movies, Movie.*Sorter);
+    public static Comparator<Movie> ReleaseDateSorter = new Comparator<Movie>() {
+        @Override
+        public int compare(Movie o1, Movie o2) {
+            return o1.getReleaseDate().compareTo(o2.getReleaseDate());
+        }
+    };
+
+    public static Comparator<Movie> RatingSorter = new Comparator<Movie>() {
+        @Override
+        public int compare(Movie o1, Movie o2) {
+            return (int)((o1.getVoteAverage()*100) - (o2.getVoteAverage()*100));
+        }
+    };
+
 }
