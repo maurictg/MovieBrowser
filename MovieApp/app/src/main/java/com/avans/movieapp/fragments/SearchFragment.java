@@ -1,6 +1,7 @@
 package com.avans.movieapp.fragments;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -54,6 +56,7 @@ public class SearchFragment extends Fragment {
     private Drawable bgDisabled;
     private ArrayList<Genre> genres;
     private RecyclerView.Adapter adapter;
+    private RecyclerView rvMovies;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -86,7 +89,7 @@ public class SearchFragment extends Fragment {
         ImageButton filter_chip = v.findViewById(R.id.filter_chip);
         filter_chip.setOnClickListener(v12 -> mDrawerLayout.openDrawer(mNavigation));
 
-        RecyclerView mSearchRecycler = v.findViewById(R.id.rvSearch);
+        rvMovies = v.findViewById(R.id.rvSearch);
         EditText editText = v.findViewById(R.id.etSearch);
 
         adapter = new VideosAdapter(movies, (data, success) -> {
@@ -100,7 +103,7 @@ public class SearchFragment extends Fragment {
 
             startActivity(intent);
         });
-        mSearchRecycler.setAdapter(adapter);
+        rvMovies.setAdapter(adapter);
 
         editText.setOnKeyListener((v1, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -124,7 +127,7 @@ public class SearchFragment extends Fragment {
         });
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
-        mSearchRecycler.setLayoutManager(layoutManager);
+        rvMovies.setLayoutManager(layoutManager);
 
         printGenres(v);
         return v;
@@ -179,6 +182,12 @@ public class SearchFragment extends Fragment {
 
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
+        rvMovies.setLayoutManager(layoutManager);
+    }
 
     private class onSortTypeClick implements android.widget.AdapterView.OnItemSelectedListener {
         @Override
