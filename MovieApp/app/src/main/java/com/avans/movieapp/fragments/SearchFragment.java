@@ -59,6 +59,9 @@ public class SearchFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView rvMovies;
 
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigation;
+
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -76,24 +79,20 @@ public class SearchFragment extends Fragment {
 //                lang_de.isChecked();
 
         RatingBar ratingBar = v.findViewById(R.id.rating);
-//        ratingBar.getNumStars();
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if(fromUser) {
-                    Log.d("onRatingChanged", "Rating: "+rating * 2);
-                    Filters.FilterRating(movies, rating * 2);
-                    adapter.notifyDataSetChanged();
-                }
+        ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
+            if(fromUser) {
+                Log.d("onRatingChanged", "Rating: "+rating * 2);
+                Filters.FilterRating(movies, rating * 2);
+                adapter.notifyDataSetChanged();
             }
         });
 
         mSortDropdown = v.findViewById(R.id.spinner);
         mSortDropdown.setOnItemSelectedListener(new onSortTypeClick());
 
-        DrawerLayout mDrawerLayout = v.findViewById(R.id.drawer_layout);
-        NavigationView mNavigation = v.findViewById(R.id.nav_view);
+        mDrawerLayout = v.findViewById(R.id.drawer_layout);
+        mNavigation = v.findViewById(R.id.nav_view);
 
         Button reset = v.findViewById(R.id.reset);
         reset.setOnClickListener(arg0 -> Toast.makeText(getActivity(), "Reset clicked", Toast.LENGTH_SHORT).show());
@@ -147,7 +146,6 @@ public class SearchFragment extends Fragment {
     }
 
     private void printGenres(View v) {
-        Genre genre = null;
 
         LinearLayout genreLayout = v.findViewById(R.id.genreLayout);
 
@@ -223,6 +221,7 @@ public class SearchFragment extends Fragment {
             default:
                 break;
         }
+        mDrawerLayout.closeDrawer(mNavigation);
     }
 
     @Override
