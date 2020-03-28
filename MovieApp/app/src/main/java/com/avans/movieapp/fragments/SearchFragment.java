@@ -35,6 +35,7 @@ import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.base_logic.DisplayCalc;
+import com.avans.movieapp.base_logic.Filters;
 import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 import com.google.android.material.navigation.NavigationView;
@@ -77,6 +78,17 @@ public class SearchFragment extends Fragment {
         RatingBar ratingBar = v.findViewById(R.id.rating);
 //        ratingBar.getNumStars();
 
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if(fromUser) {
+                    Log.d("onRatingChanged", "Rating: "+rating * 2);
+                    Filters.FilterRating(movies, rating * 2);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
         mSortDropdown = v.findViewById(R.id.spinner);
         mSortDropdown.setOnItemSelectedListener(new onSortTypeClick());
 
@@ -118,6 +130,7 @@ public class SearchFragment extends Fragment {
                             movies.addAll(results);
                             Log.d("List: ", results.toString());
                             adapter.notifyDataSetChanged();
+                            ratingBar.setRating(ratingBar.getNumStars());
                         }
                     });
                 }
@@ -179,7 +192,37 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
+    }
 
+    private void sort() {
+        int position = mSortDropdown.getSelectedItemPosition();
+        switch (position) {
+            case 1: //Rating
+            {
+                Collections.sort(movies, Movie.RatingSorter);
+                Collections.reverse(movies);
+                Collections.sort(movies, Movie.VisibleSorter);
+                adapter.notifyDataSetChanged();
+            }
+            break; //Date - New - old
+            case 2:
+            {
+                Collections.sort(movies, Movie.ReleaseDateSorter);
+                Collections.reverse(movies);
+                Collections.sort(movies, Movie.VisibleSorter);
+                adapter.notifyDataSetChanged();
+            }
+            break;
+            case 3: //Date - Old- new
+            {
+                Collections.sort(movies, Movie.ReleaseDateSorter);
+                Collections.sort(movies, Movie.VisibleSorter);
+                adapter.notifyDataSetChanged();
+            }
+            break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -191,37 +234,7 @@ public class SearchFragment extends Fragment {
 
     private class onSortTypeClick implements android.widget.AdapterView.OnItemSelectedListener {
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            //Sort
-            switch (position) {
-                case 1: //Rating
-                {
-                    Collections.sort(movies, Movie.RatingSorter);
-                    Collections.reverse(movies);
-                    adapter.notifyDataSetChanged();
-                }
-                break; //Date - New - old
-                case 2:
-                {
-                    Collections.sort(movies, Movie.ReleaseDateSorter);
-                    Collections.reverse(movies);
-                    adapter.notifyDataSetChanged();
-                }
-                break;
-                case 3: //Date - Old- new
-                {
-                    Collections.sort(movies, Movie.ReleaseDateSorter);
-                    adapter.notifyDataSetChanged();
-                }
-                break;
-                default:
-                    break;
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { sort(); }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 }

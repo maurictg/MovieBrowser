@@ -5,8 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,10 +26,12 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
 
     private ArrayList<Movie> movies;
     private ICallback clickCallback;
+    private boolean show = false;
 
     public VideosAdapter(ArrayList<Movie> movies) {
         this.movies = movies;
     }
+
     public VideosAdapter(ArrayList<Movie> movies, ICallback clickCallback) {
         this(movies);
         this.clickCallback = clickCallback;
@@ -42,6 +47,22 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Movie m = movies.get(position);
+
+        View vw = (View)holder.itemView.getRootView();
+        if(!m.isVisible()) {
+            ViewGroup.LayoutParams pw = vw.getLayoutParams();
+            pw.height = 0;
+            pw.width = 0;
+            vw.setLayoutParams(pw);
+            vw.setVisibility(View.GONE);
+        } else {
+            vw.setVisibility(View.VISIBLE);
+            vw.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+
+        show = !show;
 
         holder.tvTitle.setText(m.getTitle());
         holder.tvInfo.setText(String.format("%d - %s", m.getId(), m.getVoteAverage())); //Just for testing
