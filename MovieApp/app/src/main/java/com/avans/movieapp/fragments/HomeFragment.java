@@ -67,6 +67,7 @@ public class HomeFragment extends Fragment {
 
         if (LOAD_TESTDATA) {
             ArrayList<Integer> genreIds = new ArrayList<>();
+
             genreIds.add(28); genreIds.add(12); genreIds.add(16);
             for (int i = 1; i < 12; i++) {
                 moviesDiscover.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4, genreIds));
