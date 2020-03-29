@@ -59,6 +59,8 @@
     <string name="title">Title</string>
     <string name="company">company</string>
     <string name="summary">summary</string>
+    <string name="write_a_review">Write a review:</string>
+    <string name="actors">Actors:</string>
 
     <string-array name="sort_entries">
         <item>Default</item>

@@ -1,7 +1,5 @@
 package com.avans.movieapp.adapters;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Movie;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder> {
@@ -27,6 +24,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     public VideosAdapter(ArrayList<Movie> movies) {
         this.movies = movies;
     }
+
     public VideosAdapter(ArrayList<Movie> movies, ICallback clickCallback) {
         this(movies);
         this.clickCallback = clickCallback;
@@ -43,17 +41,27 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Movie m = movies.get(position);
 
+        View vw = holder.itemView.getRootView();
+        if(!m.isVisible()) {
+            ViewGroup.LayoutParams pw = vw.getLayoutParams();
+            pw.height = 0;
+            pw.width = 0;
+            vw.setLayoutParams(pw);
+            vw.setVisibility(View.GONE);
+        } else {
+            vw.setVisibility(View.VISIBLE);
+            vw.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+
         holder.tvTitle.setText(m.getTitle());
         holder.tvInfo.setText(String.format("%d - %s", m.getId(), m.getVoteAverage())); //Just for testing
         String overview = m.getOverview();
 //        holder.tvOverview.setText(overview.substring(0, Math.min(overview.length(), 60)) + "...");
 
         if (m.getImageUrlPoster().length() > 10) {
-            Picasso
-                    .get()
-                    .load(m.getImageUrlPoster())
-                    .placeholder(R.drawable.ic_image_placeholder_24dp)
-                    .into(holder.ivImage);
+            Picasso.get().load(m.getImageUrlPoster()).placeholder(R.drawable.ic_image_placeholder_24dp).into(holder.ivImage);
         }
 
         holder.itemView.setOnClickListener(v -> {

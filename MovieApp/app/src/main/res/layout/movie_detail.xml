@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
@@ -33,7 +33,7 @@
                     android:src="@drawable/ic_image_placeholder_24dp" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -59,6 +59,21 @@
                         android:layout_height="wrap_content"
                         android:text="@string/company"
                         android:textColor="@color/colorText" />
+
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="100dp"
+                        android:autofillHints="Review"
+                        android:backgroundTint="@color/colorDisabled"
+                        android:hint="@string/write_a_review"
+                        android:inputType="textLongMessage"
+                        android:padding="10dp"
+                        android:textColor="@color/colorText"
+                        android:textColorHint="@color/colorText"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -102,7 +117,7 @@
                 android:isIndicator="true"
                 android:numStars="5"
                 android:progressBackgroundTint="@color/colorBackground"
-                android:progressTint="@color/colorAccent" />
+                android:progressTint="@color/colorHighlight" />
 
             <TextView
                 android:id="@+id/movie_detail_rating_number"
@@ -111,6 +126,22 @@
                 android:layout_marginStart="10dp"
                 android:textColor="@color/colorText"
                 android:textSize="15sp" />
+
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/actors"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+            </GridLayout>
+
         </LinearLayout>
 
         <ImageButton
@@ -121,11 +152,11 @@
             android:layout_marginTop="260dp"
             android:background="@drawable/bg_circle"
             android:backgroundTint="@color/colorAccent"
+            android:contentDescription="@string/saved"
             android:padding="15dp"
             android:src="@drawable/ic_bookmark_24dp"
             android:textColor="@color/colorText"
-            android:tint="@color/colorHighlight"
-            android:contentDescription="@string/saved" />
+            android:tint="@color/colorHighlight" />
 
     </RelativeLayout>
 </ScrollView>

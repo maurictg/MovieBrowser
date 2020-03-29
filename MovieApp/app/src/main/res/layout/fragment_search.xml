@@ -38,55 +38,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorMenu"
-                app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                app:contentScrim="?attr/colorPrimary">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:popupTheme="@style/AppTheme.Base" />
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|snap"
+                    app:popupTheme="@style/AppTheme.Base">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical">
 
-                    <ImageButton
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/colorMenu"
-                        android:contentDescription="@string/search"
-                        android:src="@drawable/ic_search_24dp"
-                        android:tint="@color/colorText" />
+                        <ImageButton
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/colorMenu"
+                            android:contentDescription="@string/search"
+                            android:src="@drawable/ic_search_24dp"
+                            android:tint="@color/colorText" />
 
-                    <EditText
-                        android:id="@+id/etSearch"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:autofillHints="@string/search"
-                        android:background="@color/colorMenu"
-                        android:gravity="center_vertical"
-                        android:hint="@string/search"
-                        android:imeOptions="actionSearch"
-                        android:inputType="text"
-                        android:maxLength="24"
-                        android:maxLines="1"
-                        android:padding="10dp"
-                        android:textColor="@color/colorText"
-                        android:textColorHint="@color/colorText" />
+                        <EditText
+                            android:id="@+id/etSearch"
+                            android:layout_width="300dp"
+                            android:layout_height="match_parent"
+                            android:autofillHints="@string/search"
+                            android:background="@color/colorMenu"
+                            android:gravity="center_vertical"
+                            android:hint="@string/search"
+                            android:imeOptions="actionSearch"
+                            android:inputType="text"
+                            android:maxLength="24"
+                            android:maxLines="1"
+                            android:padding="10dp"
+                            android:textColor="@color/colorText"
+                            android:textColorHint="@color/colorText" />
 
-                    <ImageButton
-                        android:id="@+id/filter_chip"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="end"
-                        android:background="@color/colorMenu"
-                        android:contentDescription="@string/search"
-                        android:src="@drawable/ic_filter_list_24dp"
-                        android:tint="@color/colorText" />
-                </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/filter_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="10dp"
+                            android:background="@color/colorMenu"
+                            android:contentDescription="@string/search"
+                            android:padding="20dp"
+                            android:src="@drawable/ic_filter_list_24dp"
+                            android:tint="@color/colorText" />
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <HorizontalScrollView
@@ -97,7 +102,8 @@
                 <LinearLayout
                     android:id="@+id/genreLayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
 
             </HorizontalScrollView>
         </com.google.android.material.appbar.AppBarLayout>
@@ -125,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/colorAccent"
-                android:drawableLeft="@drawable/ic_close_black_24dp"
+                android:drawableStart="@drawable/ic_close_black_24dp"
                 android:drawableTint="@color/colorText"
                 android:padding="10dp"
                 android:text="@string/reset_filter"
@@ -143,9 +149,10 @@
                 android:textColor="@color/colorText" />
 
             <GridLayout
-                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:theme="@style/AppTheme.Preference"
                 android:columnCount="2">
 
                 <CheckBox
@@ -220,13 +227,14 @@
                 android:text="@string/sort_by"
                 android:textAllCaps="true"
                 android:textColor="@color/colorText" />
+
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:entries="@array/sort_entries"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
 
 
         </LinearLayout>

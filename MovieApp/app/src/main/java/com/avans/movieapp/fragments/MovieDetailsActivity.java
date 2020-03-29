@@ -65,8 +65,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 company.setText(movies.getCompany());
                 summary.setText(movies.getOverview());
                 age.setText(String.format("Adult movie: %s", movies.isAdultString()));
-                rating.setRating((int) movies.getVoteAverage());
-                ratingNumber.setText(movies.getVoteAverageString());
+                rating.setRating((int) (movies.getVoteAverage() / 2));
             }
         });
 

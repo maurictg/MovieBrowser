@@ -18,6 +18,8 @@ public class Movie implements Serializable {
     private ArrayList<Integer> genreIds;
     private String originalLanguage = "N/A";
 
+    private boolean visible; //For filtering
+
     public Movie(int id, String title, String overview,
                  String imageUrlPoster, String imageUrlBackdrop, boolean isAdult,
                  Date releaseDate, double voteAverage, ArrayList<Integer> genreIds) {
@@ -30,6 +32,7 @@ public class Movie implements Serializable {
         this.releaseDate = releaseDate;
         this.voteAverage = voteAverage;
         this.genreIds = genreIds;
+        this.visible = true;
     }
 
     public Movie(int id, String title, String overview,
@@ -45,6 +48,7 @@ public class Movie implements Serializable {
         this.voteAverage = voteAverage;
         this.genreIds = genreIds;
         this.originalLanguage = originalLanguage;
+        this.visible = true;
     }
 
     public ArrayList<Integer> getGenreIds() {
@@ -91,6 +95,14 @@ public class Movie implements Serializable {
         return imageUrlBackdrop;
     }
 
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
     public void setImageUrlBackdrop(String imageUrlBackdrop) {
         this.imageUrlBackdrop = imageUrlBackdrop;
     }
@@ -113,7 +125,7 @@ public class Movie implements Serializable {
     }
 
     public Date getReleaseDate() {
-        return releaseDate;
+        return (releaseDate != null) ? releaseDate : new Date(0);
     }
 
     public void setReleaseDate(Date releaseDate) {
@@ -144,6 +156,13 @@ public class Movie implements Serializable {
         @Override
         public int compare(Movie o1, Movie o2) {
             return (int)((o1.getVoteAverage()*100) - (o2.getVoteAverage()*100));
+        }
+    };
+
+    public static Comparator<Movie> VisibleSorter = new Comparator<Movie>() {
+        @Override
+        public int compare(Movie o1, Movie o2) {
+            return (o1.isVisible() == o2.isVisible() ? 0 : (o2.isVisible() ? 1 : -1));
         }
     };
 
