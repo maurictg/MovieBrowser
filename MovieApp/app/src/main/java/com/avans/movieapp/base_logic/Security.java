@@ -7,6 +7,9 @@ public class Security {
     private static final String keyV4 = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNDMyNGYwMzQ5ZGExZjE5OTM2MmQyMDk2NWMzNGE0MCIsInN1YiI6IjVlNzhhODU2MmYzYjE3MDAxOTU0YjQwMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HXngkMgAjCp-JjJFq-aEDy2XFERouZtyk8cl5a0WXe4";
     private static final String keyV3 = "e4324f0349da1f199362d20965c34a40";
     private static final String TAG = Security.class.getSimpleName();
+//  Session Id & accountId van account Laicoz (Lauran)
+    private static final String sessionId = "61a26c854ae3c0b7fb9422cada90dd1773a98146";
+    private static final int accountId = 9160674;
 
     //API v4 template NetworkTask
     public static NetworkTask getAPI4NetworkTask(ICallback callback) {

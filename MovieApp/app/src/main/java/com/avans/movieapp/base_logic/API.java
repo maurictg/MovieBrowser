@@ -10,6 +10,7 @@ import com.avans.movieapp.helpers.RequestMethod;
 import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 import com.avans.movieapp.models.MovieDetails;
+import com.avans.movieapp.models.MovieList;
 import com.avans.movieapp.network.NetworkTask;
 
 import org.json.JSONArray;
@@ -21,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import javax.security.auth.callback.Callback;
 
 public class API {
     private static final String TAG = API.class.getSimpleName();
@@ -47,6 +50,10 @@ public class API {
     private static final String JSON_CAST = "cast";
     private static final String JSON_CREW = "crew";
     private static final String JSON_JOB = "job";
+
+    private static final String JSON_DESCRIPTION = "description";
+    private static final String JSON_ITEM_COUNT = "item_count";
+    private static final String JSON_ITEMS = "items";
 
     /**
      * Get request token to ask user for permission
@@ -108,12 +115,78 @@ public class API {
         nt.execute("https://api.themoviedb.org/3/authentication/session/new");
     }
 
+    public static void getLists(ICallback callback){
+        NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
+            if (success){
+                ArrayList<MovieList> movieLists = new ArrayList<>();
+                BinaryData binaryData = (BinaryData) data;
+
+                try {
+                    JSONObject JSONResult = binaryData.toJSONObject();
+                    JSONArray results = JSONResult.optJSONArray(JSON_RESULTS);
+                    for (int i = 0; i < results.length(); i++){
+                        JSONObject movieList = (JSONObject) results.get(i);
+                        String description = movieList.optString(JSON_DESCRIPTION);
+                        int id = movieList.optInt(JSON_ID);
+                        int itemCount = movieList.optInt(JSON_ITEM_COUNT);
+                        String name = movieList.optString(JSON_NAME);
+
+                        movieLists.add(new MovieList(description, id, itemCount, name));
+                    }
+
+                    callback.callback(movieLists, true);
+
+                } catch (JSONException e) {
+                    Log.e(TAG, "Failed to parse json");
+                    callback.callback(movieLists, false);
+                }
+            }
+        }));
+
+        networkTask.addParameter("api_key", "0767cc753758bdc7d9556d163b0b3f3d");
+        networkTask.addParameter("session_id", "61a26c854ae3c0b7fb9422cada90dd1773a98146");
+        networkTask.execute("https://api.themoviedb.org/3/account/" + 9160674 + "/lists");
+//        https://api.themoviedb.org/3/account/9160674/lists?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146&page=1
+    }
+
+    public static void getMoviesFromMovieList(MovieList movieList, ICallback callback){
+        int movieListId = movieList.getId();
+        NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
+            if (success){
+                BinaryData binaryData = (BinaryData) data;
+                ArrayList<Movie> movies = new ArrayList<>();
+                try {
+                    JSONObject JSONResult = binaryData.toJSONObject();
+                    JSONArray items = JSONResult.optJSONArray(JSON_ITEMS);
+                    for (int i = 0; i < items.length(); i++){
+                        JSONObject jsonMovie = (JSONObject) items.get(i);
+
+                        Movie movie = parseMovie(jsonMovie);
+
+                        movies.add(movie);
+                    }
+
+                    callback.callback(movies, success);
+
+                } catch (JSONException e) {
+                    Log.e(TAG, "Failed to parse json");
+                    callback.callback(null, false);
+                }
+            }
+
+        }));
+
+        networkTask.addParameter("api_key", "0767cc753758bdc7d9556d163b0b3f3d");
+        networkTask.execute(" https://api.themoviedb.org/3/list/" + movieListId);
+//         https://api.themoviedb.org/3/list/137504?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
+
+    }
+
 
     /**
      * * geeft een Arraylist<Genre> genres terug.
         https://api.themoviedb.org/3/genre/movie/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
-     *
-
+     * Lauran, Maurice
      */
     public static void getGenres(Context context, ICallback callback){
 
@@ -146,10 +219,6 @@ public class API {
         nt.addParameter("api_key", "e4324f0349da1f199362d20965c34a40");
         nt.execute("https://api.themoviedb.org/3/genre/movie/list");
 //        https://api.themoviedb.org/3/genre/movie/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
-
-
-
-
     }
 
     private static ArrayList<Genre> parseGenres(String json) {
@@ -177,6 +246,7 @@ public class API {
      * * geeft een moviedetails klasse terug.
      * https://developers.themoviedb.org/3/movies/get-movie-details
      * roept ook getcast aan om de cast te krijgen (staat niet in detials)
+     * Lauran
      */
 
     public static void getMovieDetails(Movie movie, ICallback callback) {
@@ -241,6 +311,7 @@ public class API {
      * Movie is een film die hij binnenkrijgt.
      * * Geeeft een JSONobject terug waarin de cast staat.
      * https://developers.themoviedb.org/3/movies/get-movie-credits
+     * Lauran
      */
 
     public static void getMovieCreditsJsonObject(Movie movie, ICallback callback) {
@@ -282,38 +353,41 @@ public class API {
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject movie = (JSONObject) results.get(i);
 
-                        int id = movie.optInt(JSON_ID);
-                        String title = movie.optString(JSON_TITLE);
-                        String overview = movie.optString(JSON_OVERVIEW);
-                        String imageUrlPoster = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_POSTER);
-                        String imageUrlBackdrop = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_BACKDROP);
-                        boolean isAdult = movie.optBoolean(JSON_ADULT);
-                        String releaseDateString = movie.optString(JSON_DATE);
-                        Date date = null;
-                        try {
-                            Log.d(TAG, "Date: "+releaseDateString);
-                            date = new SimpleDateFormat("yyyy-MM-dd").parse(releaseDateString);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        double voteAverage = movie.optDouble(JSON_VOTE_AVERAGE);
+//                        Commentaar hieronder staat nu in de methode parseMovie()
+                        movies.add(parseMovie(movie));
 
-
-                        JSONArray jsonGenreIds = movie.optJSONArray(JSON_GENRE_IDS);
-                        ArrayList<Integer> genreIds = new ArrayList<>();
-                        if (jsonGenreIds != null && jsonGenreIds.length() > 0){
-                            for (int j = 0; j < jsonGenreIds.length(); j++){
-                                int a = jsonGenreIds.optInt(j);
-                                genreIds.add(j);
-                            }
-                        }
-
-                        String originalLanguage = movie.optString(JSON_ORIGINAL_LANGUAGE);
-
-
-                        movies.add(new Movie(id, title, overview,
-                                imageUrlPoster, imageUrlBackdrop, isAdult,
-                                date, voteAverage, genreIds, originalLanguage));
+//                        int id = movie.optInt(JSON_ID);
+//                        String title = movie.optString(JSON_TITLE);
+//                        String overview = movie.optString(JSON_OVERVIEW);
+//                        String imageUrlPoster = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_POSTER);
+//                        String imageUrlBackdrop = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_BACKDROP);
+//                        boolean isAdult = movie.optBoolean(JSON_ADULT);
+//                        String releaseDateString = movie.optString(JSON_DATE);
+//                        Date date = null;
+//                        try {
+//                            Log.d(TAG, "Date: "+releaseDateString);
+//                            date = new SimpleDateFormat("yyyy-MM-dd").parse(releaseDateString);
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+//                        double voteAverage = movie.optDouble(JSON_VOTE_AVERAGE);
+//
+//
+//                        JSONArray jsonGenreIds = movie.optJSONArray(JSON_GENRE_IDS);
+//                        ArrayList<Integer> genreIds = new ArrayList<>();
+//                        if (jsonGenreIds != null && jsonGenreIds.length() > 0){
+//                            for (int j = 0; j < jsonGenreIds.length(); j++){
+//                                int a = jsonGenreIds.optInt(j);
+//                                genreIds.add(j);
+//                            }
+//                        }
+//
+//                        String originalLanguage = movie.optString(JSON_ORIGINAL_LANGUAGE);
+//
+//
+//                        movies.add(new Movie(id, title, overview,
+//                                imageUrlPoster, imageUrlBackdrop, isAdult,
+//                                date, voteAverage, genreIds, originalLanguage));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse json");
@@ -328,5 +402,40 @@ public class API {
         networkTask.addParameter("api_key", "e4324f0349da1f199362d20965c34a40");
         networkTask.addParameter("query", search);
         networkTask.execute("https://api.themoviedb.org/3/search/movie");
+    }
+
+    public static Movie parseMovie(JSONObject movie){
+
+        int id = movie.optInt(JSON_ID);
+        String title = movie.optString(JSON_TITLE);
+        String overview = movie.optString(JSON_OVERVIEW);
+        String imageUrlPoster = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_POSTER);
+        String imageUrlBackdrop = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_BACKDROP);
+        boolean isAdult = movie.optBoolean(JSON_ADULT);
+        String releaseDateString = movie.optString(JSON_DATE);
+        Date date = null;
+        try {
+            Log.d(TAG, "Date: "+releaseDateString);
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(releaseDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        double voteAverage = movie.optDouble(JSON_VOTE_AVERAGE);
+
+
+        JSONArray jsonGenreIds = movie.optJSONArray(JSON_GENRE_IDS);
+        ArrayList<Integer> genreIds = new ArrayList<>();
+        if (jsonGenreIds != null && jsonGenreIds.length() > 0){
+            for (int j = 0; j < jsonGenreIds.length(); j++){
+                int a = jsonGenreIds.optInt(j);
+                genreIds.add(a);
+            }
+        }
+
+        String originalLanguage = movie.optString(JSON_ORIGINAL_LANGUAGE);
+
+        return new Movie(id, title, overview,
+                imageUrlPoster, imageUrlBackdrop, isAdult,
+                date, voteAverage, genreIds, originalLanguage);
     }
 }
