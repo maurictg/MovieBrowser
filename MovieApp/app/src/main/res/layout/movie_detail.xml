@@ -60,12 +60,13 @@
                         android:text="@string/company"
                         android:textColor="@color/colorText" />
 
-
                     <EditText
+                        android:id="@+id/review_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginTop="100dp"
+                        android:layout_marginEnd="10dp"
                         android:autofillHints="Review"
                         android:backgroundTint="@color/colorDisabled"
                         android:hint="@string/write_a_review"
@@ -74,9 +75,7 @@
                         android:textColor="@color/colorText"
                         android:textColorHint="@color/colorText"
                         android:textSize="16sp" />
-
                 </LinearLayout>
-
             </LinearLayout>
 
             <TextView
@@ -105,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Adult movie: yes/no"
-
                 android:textColor="@color/colorText"
                 android:textSize="15sp" />
 
@@ -139,9 +137,7 @@
                     android:text="@string/actors"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
-
             </GridLayout>
-
         </LinearLayout>
 
         <ImageButton
@@ -157,6 +153,5 @@
             android:src="@drawable/ic_bookmark_24dp"
             android:textColor="@color/colorText"
             android:tint="@color/colorHighlight" />
-
     </RelativeLayout>
 </ScrollView>

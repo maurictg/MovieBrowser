@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center_horizontal"
+    android:padding="10dp"
     android:theme="@style/AppTheme.Base">
-
 
         <ImageView
             android:id="@+id/ivImage"

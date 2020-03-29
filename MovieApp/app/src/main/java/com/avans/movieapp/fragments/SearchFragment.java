@@ -66,7 +66,6 @@ public class SearchFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
@@ -79,7 +78,6 @@ public class SearchFragment extends Fragment {
 //                lang_de.isChecked();
 
         RatingBar ratingBar = v.findViewById(R.id.rating);
-
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
             if(fromUser) {
                 Log.d("onRatingChanged", "Rating: "+rating * 2);
@@ -92,6 +90,7 @@ public class SearchFragment extends Fragment {
         mSortDropdown.setOnItemSelectedListener(new onSortTypeClick());
 
         mDrawerLayout = v.findViewById(R.id.drawer_layout);
+
         mNavigation = v.findViewById(R.id.nav_view);
 
         Button reset = v.findViewById(R.id.reset);
@@ -100,22 +99,18 @@ public class SearchFragment extends Fragment {
         ImageButton filter_chip = v.findViewById(R.id.filter_chip);
         filter_chip.setOnClickListener(v12 -> mDrawerLayout.openDrawer(mNavigation));
 
-        rvMovies = v.findViewById(R.id.rvSearch);
-        EditText editText = v.findViewById(R.id.etSearch);
-
         adapter = new VideosAdapter(movies, (data, success) -> {
 
             Movie m = (Movie) data;
             Log.d("M:", "Title: " + m.getTitle());
 
             Intent intent = new Intent(getActivity().getApplicationContext(), MovieDetailsActivity.class);
-
             intent.putExtra("MOVIE", m);
 
             startActivity(intent);
         });
-        rvMovies.setAdapter(adapter);
 
+        EditText editText = v.findViewById(R.id.etSearch);
         editText.setOnKeyListener((v1, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 String searchTerm = editText.getText().toString();
@@ -137,6 +132,8 @@ public class SearchFragment extends Fragment {
             }
             return false;
         });
+        rvMovies = v.findViewById(R.id.rvSearch);
+        rvMovies.setAdapter(adapter);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
         rvMovies.setLayoutManager(layoutManager);
@@ -146,7 +143,6 @@ public class SearchFragment extends Fragment {
     }
 
     private void printGenres(View v) {
-
         LinearLayout genreLayout = v.findViewById(R.id.genreLayout);
 
         LinearLayout ll = new LinearLayout(getContext());
@@ -236,4 +232,5 @@ public class SearchFragment extends Fragment {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { sort(); }
         public void onNothingSelected(AdapterView<?> parent) {}
     }
+
 }

@@ -1,5 +1,9 @@
 package com.avans.movieapp.models;
 
+import android.media.Image;
+import android.util.Log;
+import android.widget.ImageButton;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -64,4 +68,5 @@ public class MovieDetails extends Movie {
     public void setDirector(String director) {
         this.director = director;
     }
+
 }
