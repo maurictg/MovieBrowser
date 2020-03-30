@@ -1,11 +1,13 @@
 package com.avans.movieapp.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import com.avans.movieapp.R;
 import com.avans.movieapp.fragments.HomeFragment;
@@ -26,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_Base);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         // Set the default fragment to HomeFragment
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+
         }
     }
 

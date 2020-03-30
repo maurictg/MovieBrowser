@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.avans.movieapp.R;
@@ -24,10 +25,14 @@ import com.avans.movieapp.activities.SettingsActivity;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import org.w3c.dom.Text;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
+
+    TextView tvUsername;
 
     private TextView tvFeedCount;
     private TextView tvListCount;
@@ -38,7 +43,6 @@ public class ProfileFragment extends Fragment {
     private int reviewCount = 0;
 
     private ImageButton settings;
-
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -47,6 +51,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        tvUsername = v.findViewById(R.id.tvUsername);
+        tvUsername.setText(R.string.username);
 
         ImageView profPic = v.findViewById(R.id.profilePic);
         tvFeedCount = v.findViewById(R.id.feed_notif_count);

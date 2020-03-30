@@ -142,7 +142,6 @@ public class API {
 
     }
 
-
     public static void getLists(ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {

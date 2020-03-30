@@ -46,9 +46,6 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SearchFragment extends Fragment {
 
     private static final String TAG = SearchFragment.class.getSimpleName();
@@ -129,41 +126,43 @@ public class SearchFragment extends Fragment {
             startActivity(intent);
         });
         progressBar = v.findViewById(R.id.progressBar);
-        Thread thread = new Thread(() -> {
-            System.out.println(movies.size());
-            System.out.println(adapter.getItemCount());
 
-            while (progressStatus < 100) {
-                // Update the progress bar and display
-                progressStatus++;
-                int someprogess = adapter.getItemCount() / movies.size()*100;
-                handler.post(() -> progressBar.setProgress(someprogess));
-                try {
-                    // Sleep for 200 milliseconds.
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                while (progressStatus < 100) {
+                    System.out.println("Array size: " + movies.size());
+                    System.out.println("Adapter size: " + adapter.getItemCount());
+                    progressStatus = movies.size()/adapter.getItemCount()*100;
+//                    progressStatus += 5;
+
+                    handler.post(() -> progressBar.setProgress(progressStatus));
+                    try {
+                        // Sleep for 200 milliseconds.
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
+
         EditText editText = v.findViewById(R.id.etSearch);
         editText.setOnKeyListener((v1, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 String searchTerm = editText.getText().toString();
-
                 if (!searchTerm.isEmpty()) {
+                    showProgressBar();
                     API.searchMovies(searchTerm, (data, success) -> {
                         if (success) {
                             movies.clear();
-                            thread.start();
                             movies.addAll((ArrayList<Movie>) data);
-
                             Log.d(TAG, "onCreateView: movie list before = " + movies.toString() + "\n" + movies.size());
                             this.filterMovies();
                             Log.d(TAG, "onCreateView: movie list after = " + movies.toString() + "\n" + movies.size());
-
                             adapter.notifyDataSetChanged();
                             ratingBar.setRating(ratingBar.getNumStars());
+                            thread.start();
+
                         }
                     });
                 }
@@ -318,4 +317,13 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
 }
+

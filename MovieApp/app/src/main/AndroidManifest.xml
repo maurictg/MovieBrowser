@@ -11,22 +11,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.Base">
+        android:theme="@style/AppTheme.Launcher">
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme.Preference" />
+            android:theme="@style/AppTheme.Preference"></activity>
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation|screenLayout|layoutDirection|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.MovieDetailsActivity" />
-
+        <activity android:name=".activities.MovieDetailsActivity" />
     </application>
 
 </manifest>

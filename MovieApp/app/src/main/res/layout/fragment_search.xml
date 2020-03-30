@@ -102,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:indeterminate="false"
+                    android:visibility="invisible"
                     android:progress="0"
                     android:minHeight="5dp"
                     android:progressTint="@color/colorHighlight" />
