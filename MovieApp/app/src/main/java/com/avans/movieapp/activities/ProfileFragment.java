@@ -7,9 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.avans.movieapp.R;
 import com.squareup.picasso.Picasso;
@@ -72,13 +71,15 @@ public class ProfileFragment extends Fragment {
                 .load("https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg")
                 .transform(new CircleTransform())
                 .resize(200, 200)
-                .into(profPic)  ;
+                .into(profPic);
         return v;
     }
+
     public void onClick(View view) {
         Intent intent = new Intent(getActivity(), SettingsActivity.class);
         startActivity(intent);
     }
+
     private String feedCounter() {
         if (feedCount != 0) {
             tvFeedCount.setEnabled(true);

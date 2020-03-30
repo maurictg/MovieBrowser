@@ -1,9 +1,5 @@
 package com.avans.movieapp.models;
 
-import android.media.Image;
-import android.util.Log;
-import android.widget.ImageButton;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,7 +22,7 @@ public class MovieDetails extends Movie {
     }
 
     public MovieDetails(Movie m) {
-        super(m.getId(), m.getTitle(), m.getOverview(), m.getImageUrlPoster(), m.getImageUrlBackdrop(), m.isAdult(),m.getReleaseDate(), m.getVoteAverage(), m.getGenreIds());
+        super(m.getId(), m.getTitle(), m.getOverview(), m.getImageUrlPoster(), m.getImageUrlBackdrop(), m.isAdult(), m.getReleaseDate(), m.getVoteAverage(), m.getGenreIds());
     }
 
     public int getLength() {

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
-import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 
 import java.util.ArrayList;
@@ -50,8 +49,8 @@ public class HomeFragment extends Fragment {
         rvHomeRecent = view.findViewById(R.id.rvHomeRecent);
 
 //        RecyclerView.LayoutManager LayoutManager = new GridLayoutManager(getActivity(), MainActivity.calculateNoOfColumns(getActivity()));
-        RecyclerView.LayoutManager lmDiscover = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
-        RecyclerView.LayoutManager lmRecent = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager lmDiscover = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager lmRecent = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         rvHomeDiscover.setLayoutManager(lmDiscover);
         rvHomeRecent.setLayoutManager(lmRecent);
@@ -68,7 +67,9 @@ public class HomeFragment extends Fragment {
         if (LOAD_TESTDATA) {
             ArrayList<Integer> genreIds = new ArrayList<>();
 
-            genreIds.add(28); genreIds.add(12); genreIds.add(16);
+            genreIds.add(28);
+            genreIds.add(12);
+            genreIds.add(16);
             for (int i = 1; i < 12; i++) {
                 moviesDiscover.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4, genreIds));
                 moviesRecent.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4, genreIds));
@@ -77,8 +78,8 @@ public class HomeFragment extends Fragment {
             //Test
             API.searchMovies("James bond", (data, success) -> {
                 if (success) {
-                    ArrayList<Movie> mvs = (ArrayList<Movie>)data;
-                    Log.d(TAG, "Movies: "+mvs.size());
+                    ArrayList<Movie> mvs = (ArrayList<Movie>) data;
+                    Log.d(TAG, "Movies: " + mvs.size());
                     moviesDiscover.clear();
                     moviesDiscover.addAll(mvs);
                     adapterDiscover.notifyDataSetChanged();

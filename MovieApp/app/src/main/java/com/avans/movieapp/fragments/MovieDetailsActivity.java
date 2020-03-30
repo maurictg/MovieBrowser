@@ -22,9 +22,9 @@ import java.util.ArrayList;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    private final String TAG = MovieDetailsActivity.class.getSimpleName();
     private static final String LIFECYCLE_CALLBACKS_TEXT_KEY = "callbacks";
-
+    private final String TAG = MovieDetailsActivity.class.getSimpleName();
+    public ArrayList<Movie> savedList;
     private Movie movie;
     private ImageView image;
     private TextView title;
@@ -34,9 +34,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView age;
     private RatingBar rating;
     private ImageButton addToList;
-
-    public ArrayList<Movie> savedList;
-
     private RecyclerView rvSaved;
 
     @Override

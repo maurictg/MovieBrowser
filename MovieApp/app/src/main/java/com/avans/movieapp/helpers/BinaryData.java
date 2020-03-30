@@ -80,7 +80,7 @@ public class BinaryData {
      * @return JSONObject
      */
     public JSONObject toJSONObject() throws JSONException {
-        Log.d(TAG, "Parsing JSON: "+this.toString());
+        Log.d(TAG, "Parsing JSON: " + this.toString());
         return new JSONObject(this.toString());
     }
 

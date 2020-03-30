@@ -1,16 +1,15 @@
 package com.avans.movieapp.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
 import com.avans.movieapp.base_logic.DisplayCalc;
@@ -23,9 +22,8 @@ import java.io.Serializable;
 public class SavedFragment extends Fragment implements Serializable {
 
     private static final String TAG = SavedFragment.class.getSimpleName();
-
-    private Parcelable state;
     RecyclerView rvSaved;
+    private Parcelable state;
 
     public SavedFragment() {
         // Required empty public constructor
