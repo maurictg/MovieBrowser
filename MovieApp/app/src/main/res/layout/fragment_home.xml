@@ -37,57 +37,59 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="80dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/discover"
-                android:textAllCaps="true"
-                android:padding="10dp"
-                android:textColor="@color/colorText"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvHomeDiscover"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/discover"
+                    android:textAllCaps="true"
+                    android:padding="10dp"
+                    android:textColor="@color/colorText"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent">
 
-            </ScrollView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvHomeDiscover"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/recent"
-                android:textAllCaps="true"
-                android:padding="10dp"
-                android:textColor="@color/colorText"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                </ScrollView>
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="80dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/recent"
+                    android:textAllCaps="true"
+                    android:padding="10dp"
+                    android:textColor="@color/colorText"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvHomeRecent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-            </ScrollView>
-        </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
     </com.google.android.material.appbar.AppBarLayout>
 
 

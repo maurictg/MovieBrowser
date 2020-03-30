@@ -469,4 +469,43 @@ public class API {
                 imageUrlPoster, imageUrlBackdrop, isAdult,
                 date, voteAverage, genreIds, originalLanguage);
     }
+
+    public static void discover(ICallback callback) {
+        ArrayList<Movie> movies = new ArrayList<>();
+        NetworkTask nt = Security.getAPI3NetworkTask((data, success) -> {
+            if(success) {
+                try {
+                    JSONObject json = ((BinaryData)data).toJSONObject();
+                    JSONArray results = json.optJSONArray("results");
+                    if(results != null) {
+                        for (int i = 0; i < results.length(); i++) {
+                            movies.add(API.parseMovie(results.getJSONObject(i)));
+                        }
+                    }
+                    callback.callback(movies, true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callback.callback(null, false);
+                }
+            }
+        });
+        nt.execute("https://api.themoviedb.org/3/discover/movie");
+        //See https://developers.themoviedb.org/3/discover/movie-discover
+    }
+
+    public static void getMovieById(String id, ICallback callback) {
+        NetworkTask nt = Security.getAPI3NetworkTask((data, success) -> {
+            if(success) {
+                try {
+                    JSONObject res = ((BinaryData)data).toJSONObject();
+                    Movie m = parseMovie(res);
+                    callback.callback(m, true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callback.callback(null, false);
+                }
+            }
+        });
+        nt.execute("https://api.themoviedb.org/3/movie/"+id);
+    }
 }

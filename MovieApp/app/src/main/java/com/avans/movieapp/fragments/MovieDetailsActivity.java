@@ -1,7 +1,9 @@
 package com.avans.movieapp.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,6 +21,8 @@ import com.avans.movieapp.models.MovieDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -64,8 +68,19 @@ public class MovieDetailsActivity extends AppCompatActivity {
             Toast.makeText(this, movie.getTitle() + " added", Toast.LENGTH_SHORT).show();
         });
 
+
         Intent intent = getIntent();
         this.movie = (Movie) intent.getSerializableExtra("MOVIE");
+
+        //Add to recent
+        SharedPreferences sp = getSharedPreferences("MOVIES", MODE_PRIVATE);
+        ArrayList<String> ids = new ArrayList<>(Arrays.asList(sp.getString("recent", "").split(",")));
+        if(!ids.contains(Integer.toString(movie.getId()))) {
+            ids.add(Integer.toString(movie.getId()));
+            SharedPreferences.Editor e = sp.edit();
+            e.putString("recent", TextUtils.join(",", ids));
+            e.apply();
+        }
 
         API.getMovieDetails(movie, (data, success) -> {
             if (success) {

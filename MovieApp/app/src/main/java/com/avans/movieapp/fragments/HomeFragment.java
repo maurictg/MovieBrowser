@@ -1,5 +1,7 @@
 package com.avans.movieapp.fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
+import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,39 +63,47 @@ public class HomeFragment extends Fragment {
         rvHomeDiscover.setLayoutManager(lmDiscover);
         rvHomeRecent.setLayoutManager(lmRecent);
 
-        adapterDiscover = new VideosAdapter(moviesDiscover);
-        adapterRecent = new VideosAdapter(moviesRecent);
+        adapterDiscover = new VideosAdapter(moviesDiscover, new ClickCallback());
+        adapterRecent = new VideosAdapter(moviesRecent, new ClickCallback());
 
         rvHomeDiscover.setAdapter(adapterDiscover);
         rvHomeRecent.setAdapter(adapterRecent);
 
-        final boolean LOAD_TESTDATA = true; //Even om te voorkomen dat we de API overdosen bij het debuggen
 
-
-        if (LOAD_TESTDATA) {
-            ArrayList<Integer> genreIds = new ArrayList<>();
-
-            genreIds.add(28); genreIds.add(12); genreIds.add(16);
-            for (int i = 1; i < 12; i++) {
-                moviesDiscover.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4, genreIds));
-                moviesRecent.add(new Movie(i, "Titel " + i, "Overview van film " + i, "imageUrlPoster", "", false, new Date(), 4, genreIds));
+        //Discover
+        API.discover((data, success) -> {
+            if(success) {
+                moviesDiscover.addAll((ArrayList<Movie>)data);
+                adapterDiscover.notifyDataSetChanged();
             }
-        } else {
-            //Test
-            API.searchMovies("James bond", (data, success) -> {
-                if (success) {
-                    ArrayList<Movie> mvs = (ArrayList<Movie>)data;
-                    Log.d(TAG, "Movies: "+mvs.size());
-                    moviesDiscover.clear();
-                    moviesDiscover.addAll(mvs);
-                    adapterDiscover.notifyDataSetChanged();
-                    adapterRecent.notifyDataSetChanged();
+        });
+
+        //Fill recent
+        SharedPreferences sp = getActivity().getSharedPreferences("MOVIES", MODE_PRIVATE);
+        String[] ids = sp.getString("recent", "").split(",");
+        for (String id: ids) {
+            API.getMovieById(id, (data, success) -> {
+                if(success) {
+                    moviesRecent.add((Movie)data);
+                    adapterRecent.notifyItemInserted(moviesRecent.size());
                 }
             });
         }
-        adapterDiscover.notifyDataSetChanged();
-        adapterRecent.notifyDataSetChanged();
+
         return view;
+    }
+
+    class ClickCallback implements ICallback {
+        @Override
+        public void callback(Object data, boolean success) {
+            Movie m = (Movie) data;
+            Log.d("M:", "Title: " + m.getTitle());
+
+            Intent intent = new Intent(getActivity().getApplicationContext(), MovieDetailsActivity.class);
+            intent.putExtra("MOVIE", m);
+
+            startActivity(intent);
+        }
     }
 
 }
