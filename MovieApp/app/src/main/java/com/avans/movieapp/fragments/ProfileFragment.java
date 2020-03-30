@@ -1,9 +1,11 @@
-package com.avans.movieapp.activities;
+package com.avans.movieapp.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.activities.SettingsActivity;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -72,6 +75,11 @@ public class ProfileFragment extends Fragment {
                 .transform(new CircleTransform())
                 .resize(200, 200)
                 .into(profPic);
+
+        TextView tvTitle = v.findViewById(R.id.tvTitle);
+        Shader shader = new LinearGradient(tvTitle.getWidth(), tvTitle.getLineHeight(),0 , 0, Color.parseColor("#00B3E4"), Color.parseColor("#90CEA1"),
+                Shader.TileMode.REPEAT);
+        tvTitle.getPaint().setShader(shader);
         return v;
     }
 

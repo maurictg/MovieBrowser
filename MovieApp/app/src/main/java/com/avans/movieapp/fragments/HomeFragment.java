@@ -2,27 +2,28 @@ package com.avans.movieapp.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.activities.MovieDetailsActivity;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.interfaces.ICallback;
-import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -72,8 +73,8 @@ public class HomeFragment extends Fragment {
 
         //Discover
         API.discover((data, success) -> {
-            if(success) {
-                moviesDiscover.addAll((ArrayList<Movie>)data);
+            if (success) {
+                moviesDiscover.addAll((ArrayList<Movie>) data);
                 adapterDiscover.notifyDataSetChanged();
             }
         });
@@ -81,14 +82,19 @@ public class HomeFragment extends Fragment {
         //Fill recent
         SharedPreferences sp = getActivity().getSharedPreferences("MOVIES", MODE_PRIVATE);
         String[] ids = sp.getString("recent", "").split(",");
-        for (String id: ids) {
+        for (String id : ids) {
             API.getMovieById(id, (data, success) -> {
-                if(success) {
-                    moviesRecent.add((Movie)data);
+                if (success) {
+                    moviesRecent.add((Movie) data);
                     adapterRecent.notifyItemInserted(moviesRecent.size());
                 }
             });
         }
+
+        TextView tvHome = view.findViewById(R.id.tvTitle);
+        Shader shader = new LinearGradient(tvHome.getWidth(), tvHome.getLineHeight(),0 , 0, Color.parseColor("#00B3E4"), Color.parseColor("#90CEA1"),
+                Shader.TileMode.REPEAT);
+        tvHome.getPaint().setShader(shader);
 
         return view;
     }

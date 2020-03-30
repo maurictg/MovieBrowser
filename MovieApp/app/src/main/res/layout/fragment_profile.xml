@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context=".activities.ProfileFragment">
+    tools:context=".fragments.ProfileFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/etSearch"
+                    android:id="@+id/tvTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -59,13 +59,30 @@
             android:orientation="vertical"
             android:paddingBottom="50dp">
 
-            <ImageView
-                android:id="@+id/profilePic"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@string/profile_picture"
-                android:src="@mipmap/ic_launcher_round" />
+                android:layout_gravity="center">
+                <ImageView
+                    android:id="@+id/profilePicBorder"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="5dp"
+                    android:scaleY="1.1"
+                    android:scaleX="1.1"
+                    android:background="@drawable/bg_gradient_ring"
+                    android:contentDescription="@string/profile_picture" />
+                <ImageView
+                    android:id="@+id/profilePic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/bg_gradient_ring"
+                    android:contentDescription="@string/profile_picture"
+                    android:src="@mipmap/ic_launcher_round" />
+
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,9 +90,9 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:text="@string/username"
-                android:textStyle="bold"
                 android:textColor="@color/colorText"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"

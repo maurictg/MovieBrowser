@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.activities.MovieDetailsActivity;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.base_logic.DisplayCalc;
@@ -65,6 +68,10 @@ public class SearchFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigation;
 
+    private ProgressBar progressBar;
+    private int progressStatus = 0;
+    private Handler handler = new Handler();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView called");
@@ -87,15 +94,16 @@ public class SearchFragment extends Fragment {
         });
 
         glLanguages = v.findViewById(R.id.glLanguages);
-        for (int i = 0; i < glLanguages.getChildCount() ; i++) {
+        for (int i = 0; i < glLanguages.getChildCount(); i++) {
             View ch = glLanguages.getChildAt(i);
-            if(ch instanceof CheckBox) {
-                CheckBox cb = (CheckBox)ch;
+            if (ch instanceof CheckBox) {
+                CheckBox cb = (CheckBox) ch;
                 cb.setOnClickListener(v1 -> {
                     filterLanguages();
                 });
             }
         }
+        this.printGenres(v);
 
         mSortDropdown = v.findViewById(R.id.spinner);
         mSortDropdown.setOnItemSelectedListener(new onSortTypeClick());
@@ -120,7 +128,24 @@ public class SearchFragment extends Fragment {
 
             startActivity(intent);
         });
+        progressBar = v.findViewById(R.id.progressBar);
+        Thread thread = new Thread(() -> {
+            System.out.println(movies.size());
+            System.out.println(adapter.getItemCount());
 
+            while (progressStatus < 100) {
+                // Update the progress bar and display
+                progressStatus++;
+                int someprogess = adapter.getItemCount() / movies.size()*100;
+                handler.post(() -> progressBar.setProgress(someprogess));
+                try {
+                    // Sleep for 200 milliseconds.
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         EditText editText = v.findViewById(R.id.etSearch);
         editText.setOnKeyListener((v1, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -128,13 +153,12 @@ public class SearchFragment extends Fragment {
 
                 if (!searchTerm.isEmpty()) {
                     API.searchMovies(searchTerm, (data, success) -> {
-
                         if (success) {
                             movies.clear();
+                            thread.start();
                             movies.addAll((ArrayList<Movie>) data);
 
                             Log.d(TAG, "onCreateView: movie list before = " + movies.toString() + "\n" + movies.size());
-                            this.printGenres(v);
                             this.filterMovies();
                             Log.d(TAG, "onCreateView: movie list after = " + movies.toString() + "\n" + movies.size());
 
@@ -159,12 +183,12 @@ public class SearchFragment extends Fragment {
 
     private void filterLanguages() {
         ArrayList<String> languages = new ArrayList<>();
-        for (int i = 0; i < glLanguages.getChildCount() ; i++) {
+        for (int i = 0; i < glLanguages.getChildCount(); i++) {
             View ch = glLanguages.getChildAt(i);
-            if(ch instanceof CheckBox) {
-                CheckBox cb = (CheckBox)ch;
-                if(cb.isChecked())
-                    languages.add((String)cb.getTag());
+            if (ch instanceof CheckBox) {
+                CheckBox cb = (CheckBox) ch;
+                if (cb.isChecked())
+                    languages.add((String) cb.getTag());
             }
         }
         Filters.FilterLanguages(movies, languages);
@@ -258,15 +282,12 @@ public class SearchFragment extends Fragment {
     private void filterMovies() {
         ArrayList<Movie> allMoviesList = new ArrayList<>(movies);
         ArrayList<Movie> deletables = new ArrayList<>();
-
         for (int i = 0; i < allMoviesList.size(); i++) {
 
             ArrayList<Integer> movieGenresList = allMoviesList.get(i).getGenreIds();
-
             for (int j = 0; j < movieGenresList.size(); j++) {
                 int genreId = movieGenresList.get(j);
-
-                if (!(this.selectedGenresList.contains(genreId))) {
+                if (selectedGenresList.size() > 0 && !(this.selectedGenresList.contains(genreId))) {
                     deletables.add(allMoviesList.get(i));
                 }
             }

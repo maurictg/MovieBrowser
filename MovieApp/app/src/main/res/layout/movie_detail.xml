@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorMenu"
     android:orientation="vertical"
-    tools:context=".fragments.MovieDetailsActivity">
+    tools:context=".activities.MovieDetailsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

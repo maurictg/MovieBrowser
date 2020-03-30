@@ -15,15 +15,18 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme.Preference"/>
-        <activity android:name=".activities.MainActivity"
+            android:theme="@style/AppTheme.Preference" />
+        <activity
+            android:name=".activities.MainActivity"
             android:configChanges="orientation|screenLayout|layoutDirection|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".fragments.MovieDetailsActivity" />
+        <activity
+            android:name=".activities.MovieDetailsActivity" />
+
     </application>
 
 </manifest>

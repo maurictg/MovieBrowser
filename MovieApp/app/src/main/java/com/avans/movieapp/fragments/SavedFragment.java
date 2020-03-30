@@ -1,11 +1,15 @@
 package com.avans.movieapp.fragments;
 
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -38,7 +42,10 @@ public class SavedFragment extends Fragment implements Serializable {
         RecyclerView mSaveRecycler = v.findViewById(R.id.rvSave);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
         mSaveRecycler.setLayoutManager(layoutManager);
-
+        TextView tvTitle = v.findViewById(R.id.tvTitle);
+        Shader shader = new LinearGradient(tvTitle.getWidth(), tvTitle.getLineHeight(),0 , 0, Color.parseColor("#00B3E4"), Color.parseColor("#90CEA1"),
+                Shader.TileMode.REPEAT);
+        tvTitle.getPaint().setShader(shader);
         return v;
     }
 

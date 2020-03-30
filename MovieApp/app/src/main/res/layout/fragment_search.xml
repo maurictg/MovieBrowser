@@ -89,8 +89,22 @@
                             android:padding="20dp"
                             android:src="@drawable/ic_filter_list_24dp"
                             android:tint="@color/colorText" />
+
                     </LinearLayout>
+
+
                 </androidx.appcompat.widget.Toolbar>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:indeterminate="false"
+                    android:progress="0"
+                    android:minHeight="5dp"
+                    android:progressTint="@color/colorHighlight" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -149,19 +163,19 @@
                 android:textColor="@color/colorText" />
 
             <GridLayout
+                android:id="@+id/glLanguages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:columnCount="2"
-                android:id="@+id/glLanguages"
                 android:theme="@style/AppTheme.Preference">
 
                 <CheckBox
                     android:id="@+id/lang_nl"
-                    android:tag="nl"
-                    android:checked="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:tag="nl" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -172,10 +186,10 @@
 
                 <CheckBox
                     android:id="@+id/lang_en"
-                    android:tag="en"
-                    android:checked="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:tag="en" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -186,10 +200,10 @@
 
                 <CheckBox
                     android:id="@+id/lang_de"
-                    android:tag="de"
-                    android:checked="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:tag="de" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -200,10 +214,10 @@
 
                 <CheckBox
                     android:id="@+id/lang_fr"
-                    android:tag="fr"
-                    android:checked="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:tag="fr" />
 
                 <TextView
                     android:layout_width="wrap_content"

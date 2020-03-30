@@ -1,4 +1,4 @@
-package com.avans.movieapp.fragments;
+package com.avans.movieapp.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +22,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 

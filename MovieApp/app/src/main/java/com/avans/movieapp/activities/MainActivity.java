@@ -1,26 +1,19 @@
 package com.avans.movieapp.activities;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.avans.movieapp.R;
-import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.fragments.HomeFragment;
+import com.avans.movieapp.fragments.ProfileFragment;
 import com.avans.movieapp.fragments.SavedFragment;
 import com.avans.movieapp.fragments.SearchFragment;
-import com.avans.movieapp.models.Movie;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
@@ -45,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         nav_profile = navigation.findItem(R.id.nav_profile);
         nav_saved = navigation.findItem(R.id.nav_saved);
         
-        setNotification(nav_profile);
         setNotification(nav_saved);
 
         // Set the default fragment to HomeFragment
