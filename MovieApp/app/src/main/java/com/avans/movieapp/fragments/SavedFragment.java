@@ -55,8 +55,8 @@ public class SavedFragment extends Fragment implements Serializable {
     public void onPause() {
         // Save ListView state @ onPause
         Log.d(TAG, "saving listview state @ onPause");
-        AdapterViewAnimator listView = null;
-        state = listView.onSaveInstanceState();
+        //AdapterViewAnimator listView = null;
+        //state = listView.onSaveInstanceState();
         super.onPause();
     }
 

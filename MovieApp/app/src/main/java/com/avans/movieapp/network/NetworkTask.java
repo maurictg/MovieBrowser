@@ -7,8 +7,6 @@ import com.avans.movieapp.helpers.BinaryData;
 import com.avans.movieapp.helpers.RequestMethod;
 import com.avans.movieapp.interfaces.ICallback;
 
-import org.json.JSONException;
-
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -90,7 +88,7 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
         if (parameters.size() > 0) {
             parameters.forEach((k, v) -> {
                 try {
-                    url.append("&").append(k).append("=").append(URLEncoder.encode(v, "UTF-8"));
+                    url.append("&").append(URLEncoder.encode(k, "UTF-8")).append("=").append(URLEncoder.encode(v, "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     Log.e(TAG, "Failed to encode URL data");
                     e.printStackTrace();
@@ -102,7 +100,7 @@ public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
         if (formData.size() > 0) {
             formData.forEach((k, v) -> {
                 try {
-                    form_data.append("&").append(k).append("=").append(URLEncoder.encode(v, "UTF-8"));
+                    form_data.append("&").append(URLEncoder.encode(k, "UTF-8")).append("=").append(URLEncoder.encode(v, "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     Log.e(TAG, "Failed to URLEncode data");
                     e.printStackTrace();
