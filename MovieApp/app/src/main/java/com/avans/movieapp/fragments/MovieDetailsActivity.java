@@ -33,7 +33,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView summary;
     private TextView age;
     private RatingBar rating;
-    private TextView ratingNumber;
     private ImageButton addToList;
 
     public ArrayList<Movie> savedList;
@@ -53,7 +52,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         summary = findViewById(R.id.movie_detail_summary);
         age = findViewById(R.id.movie_detail_age);
         rating = findViewById(R.id.movie_detail_rating);
-        ratingNumber = findViewById(R.id.movie_detail_rating_number);
 
         savedList = new ArrayList<>();
         addToList = findViewById(R.id.movie_detail_list);

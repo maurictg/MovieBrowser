@@ -3,24 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/colorMenu"
     android:orientation="vertical"
     tools:context=".fragments.MovieDetailsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/colorMenu">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:background="@color/colorMenu"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="308dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
 
@@ -117,14 +117,6 @@
                 android:progressBackgroundTint="@color/colorBackground"
                 android:progressTint="@color/colorHighlight" />
 
-            <TextView
-                android:id="@+id/movie_detail_rating_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/colorText"
-                android:textSize="15sp" />
-
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,6 +129,7 @@
                     android:text="@string/actors"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
+
             </GridLayout>
         </LinearLayout>
 

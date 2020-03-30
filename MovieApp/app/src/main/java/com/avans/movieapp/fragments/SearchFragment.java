@@ -2,9 +2,9 @@ package com.avans.movieapp.fragments;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -79,8 +78,8 @@ public class SearchFragment extends Fragment {
 
         RatingBar ratingBar = v.findViewById(R.id.rating);
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
-            if(fromUser) {
-                Log.d("onRatingChanged", "Rating: "+rating * 2);
+            if (fromUser) {
+                Log.d("onRatingChanged", "Rating: " + rating * 2);
                 Filters.FilterRating(movies, rating * 2);
                 adapter.notifyDataSetChanged();
             }
@@ -163,10 +162,12 @@ public class SearchFragment extends Fragment {
                     textViewArray[i].setBackground(bgDisabled);
                     textViewArray[i].setGravity(Gravity.CENTER);
                     textViewArray[i].setTextSize(12);
+                    textViewArray[i].setTextColor(Color.WHITE);
                     textViewArray[i].setTypeface(null, Typeface.BOLD);
                     layoutParams.setMargins(10, 10, 10, 10);
                     layoutParams.gravity = Gravity.CENTER;
                     int j = i;
+
                     textViewArray[i].setOnClickListener(v1 -> {
                         if (textViewArray[j].getBackground() == bgDisabled) {
                             Toast.makeText(getContext(), "Genre added: " + genres.get(j).getName(), Toast.LENGTH_SHORT).show();
@@ -177,6 +178,7 @@ public class SearchFragment extends Fragment {
                         } else if (textViewArray[j].getBackground() == bgEnabled) {
                             Toast.makeText(getContext(), "Genre removed: " + genres.get(j).getName(), Toast.LENGTH_SHORT).show();
                             textViewArray[j].setBackground(bgDisabled);
+
                             for (int k = 0; k < genresList.size(); k++)
                                 if (genresList.get(k) == genres.get(k).getId())
                                     genresList.remove(genres.get(k).getId());
@@ -199,8 +201,7 @@ public class SearchFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
             break; //Date - New - old
-            case 2:
-            {
+            case 2: {
                 Collections.sort(movies, Movie.ReleaseDateSorter);
                 Collections.reverse(movies);
                 Collections.sort(movies, Movie.VisibleSorter);
@@ -229,8 +230,12 @@ public class SearchFragment extends Fragment {
 
     private class onSortTypeClick implements android.widget.AdapterView.OnItemSelectedListener {
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { sort(); }
-        public void onNothingSelected(AdapterView<?> parent) {}
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            sort();
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
     }
 
 }
