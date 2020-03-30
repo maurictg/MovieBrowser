@@ -37,6 +37,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView age;
     private RatingBar rating;
     private ImageButton addToList;
+    private ImageButton share;
     private RecyclerView rvSaved;
 
     @Override
@@ -52,9 +53,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         summary = findViewById(R.id.movie_detail_summary);
         age = findViewById(R.id.movie_detail_age);
         rating = findViewById(R.id.movie_detail_rating);
+        addToList = findViewById(R.id.movie_detail_list);
+        share = findViewById(R.id.movie_detail_share);
 
         savedList = new ArrayList<>();
-        addToList = findViewById(R.id.movie_detail_list);
         addToList.setOnClickListener(v -> {
             // TODO add to list
 //            if () {
@@ -62,6 +64,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
             Toast.makeText(this, movie.getTitle() + " added", Toast.LENGTH_SHORT).show();
         });
 
+        share.setOnClickListener(v -> {
+            Intent share = new Intent(Intent.ACTION_SEND);
+
+            share.putExtra(Intent.EXTRA_TEXT, "I've found a movie for you! \n \n" + movie.getTitle() + "\n" + movie.getImageUrlBackdrop() + "\n\n" + movie.getOverview());
+            share.setType("text/*");
+
+            startActivity(Intent.createChooser(share, "Share via"));
+        });
 
         Intent intent = getIntent();
         this.movie = (Movie) intent.getSerializableExtra("MOVIE");
@@ -69,7 +79,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         //Add to recent
         SharedPreferences sp = getSharedPreferences("MOVIES", MODE_PRIVATE);
         ArrayList<String> ids = new ArrayList<>(Arrays.asList(sp.getString("recent", "").split(",")));
-        if(!ids.contains(Integer.toString(movie.getId()))) {
+        if (!ids.contains(Integer.toString(movie.getId()))) {
             ids.add(Integer.toString(movie.getId()));
             SharedPreferences.Editor e = sp.edit();
             e.putString("recent", TextUtils.join(",", ids));
