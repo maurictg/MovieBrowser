@@ -153,10 +153,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:columnCount="2"
+                android:id="@+id/glLanguages"
                 android:theme="@style/AppTheme.Preference">
 
                 <CheckBox
                     android:id="@+id/lang_nl"
+                    android:tag="nl"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -169,6 +172,8 @@
 
                 <CheckBox
                     android:id="@+id/lang_en"
+                    android:tag="en"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -181,6 +186,8 @@
 
                 <CheckBox
                     android:id="@+id/lang_de"
+                    android:tag="de"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -188,6 +195,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/german"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorText" />
+
+                <CheckBox
+                    android:id="@+id/lang_fr"
+                    android:tag="fr"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/french"
                     android:textAllCaps="true"
                     android:textColor="@color/colorText" />
             </GridLayout>
