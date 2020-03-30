@@ -68,4 +68,5 @@
         <item>Date: New - Old</item>
         <item>Date: Old - New</item>
     </string-array>
+    <string name="french">FRENCH</string>
 </resources>

@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -58,6 +59,7 @@ public class SearchFragment extends Fragment {
     private ArrayList<Genre> genres;
     private RecyclerView.Adapter adapter;
     private RecyclerView rvMovies;
+    private GridLayout glLanguages;
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigation;
@@ -85,6 +87,17 @@ public class SearchFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+
+        glLanguages = v.findViewById(R.id.glLanguages);
+        for (int i = 0; i < glLanguages.getChildCount() ; i++) {
+            View ch = glLanguages.getChildAt(i);
+            if(ch instanceof CheckBox) {
+                CheckBox cb = (CheckBox)ch;
+                cb.setOnClickListener(v1 -> {
+                    filterLanguages();
+                });
+            }
+        }
 
         mSortDropdown = v.findViewById(R.id.spinner);
         mSortDropdown.setOnItemSelectedListener(new onSortTypeClick());
@@ -140,6 +153,21 @@ public class SearchFragment extends Fragment {
 
         printGenres(v);
         return v;
+    }
+
+    private void filterLanguages() {
+        ArrayList<String> languages = new ArrayList<>();
+        for (int i = 0; i < glLanguages.getChildCount() ; i++) {
+            View ch = glLanguages.getChildAt(i);
+            if(ch instanceof CheckBox) {
+                CheckBox cb = (CheckBox)ch;
+                if(cb.isChecked())
+                    languages.add((String)cb.getTag());
+            }
+        }
+        Filters.FilterLanguages(movies, languages);
+        Collections.sort(movies, Movie.VisibleSorter);
+        adapter.notifyDataSetChanged();
     }
 
     private void printGenres(View v) {
