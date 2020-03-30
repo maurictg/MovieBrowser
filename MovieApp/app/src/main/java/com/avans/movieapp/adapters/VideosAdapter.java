@@ -42,7 +42,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         Movie m = movies.get(position);
 
         View vw = holder.itemView.getRootView();
-        if(!m.isVisible()) {
+        if (!m.isVisible()) {
             ViewGroup.LayoutParams pw = vw.getLayoutParams();
             pw.height = 0;
             pw.width = 0;
@@ -65,7 +65,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         }
 
         holder.itemView.setOnClickListener(v -> {
-            if(clickCallback != null) {
+            if (clickCallback != null) {
                 clickCallback.callback(m, true);
             }
         });

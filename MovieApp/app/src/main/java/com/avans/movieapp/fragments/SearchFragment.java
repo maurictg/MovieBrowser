@@ -2,9 +2,9 @@ package com.avans.movieapp.fragments;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -49,9 +48,11 @@ import java.util.Collections;
  */
 public class SearchFragment extends Fragment {
 
+    private static final String TAG = SearchFragment.class.getSimpleName();
+
     private ArrayList<Movie> movies;
     private Spinner mSortDropdown;
-    private ArrayList<Integer> genresList = new ArrayList<>();
+    private ArrayList<Integer> selectedGenresList = new ArrayList<>();
     private TextView[] textViewArray;
 
     private Drawable bgEnabled;
@@ -64,12 +65,9 @@ public class SearchFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigation;
 
-    public SearchFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView called");
         View v = inflater.inflate(R.layout.fragment_search, container, false);
 
         movies = new ArrayList<>();
@@ -81,8 +79,8 @@ public class SearchFragment extends Fragment {
 
         RatingBar ratingBar = v.findViewById(R.id.rating);
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
-            if(fromUser) {
-                Log.d("onRatingChanged", "Rating: "+rating * 2);
+            if (fromUser) {
+                Log.d(TAG, "onRatingChanged" + "Rating: " + rating * 2);
                 Filters.FilterRating(movies, rating * 2);
                 adapter.notifyDataSetChanged();
             }
@@ -115,7 +113,7 @@ public class SearchFragment extends Fragment {
         adapter = new VideosAdapter(movies, (data, success) -> {
 
             Movie m = (Movie) data;
-            Log.d("M:", "Title: " + m.getTitle());
+            Log.d(TAG, "onCreateView, M:" + "Title: " + m.getTitle());
 
             Intent intent = new Intent(getActivity().getApplicationContext(), MovieDetailsActivity.class);
             intent.putExtra("MOVIE", m);
@@ -127,15 +125,19 @@ public class SearchFragment extends Fragment {
         editText.setOnKeyListener((v1, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 String searchTerm = editText.getText().toString();
+
                 if (!searchTerm.isEmpty()) {
                     API.searchMovies(searchTerm, (data, success) -> {
+
                         if (success) {
-                            ArrayList<Movie> results;
-                            results = (ArrayList<Movie>) data;
-                            editText.setText("");
                             movies.clear();
-                            movies.addAll(results);
-                            Log.d("List: ", results.toString());
+                            movies.addAll((ArrayList<Movie>) data);
+
+                            Log.d(TAG, "onCreateView: movie list before = " + movies.toString() + "\n" + movies.size());
+                            this.printGenres(v);
+                            this.filterMovies();
+                            Log.d(TAG, "onCreateView: movie list after = " + movies.toString() + "\n" + movies.size());
+
                             adapter.notifyDataSetChanged();
                             ratingBar.setRating(ratingBar.getNumStars());
                         }
@@ -145,13 +147,13 @@ public class SearchFragment extends Fragment {
             }
             return false;
         });
+
         rvMovies = v.findViewById(R.id.rvSearch);
         rvMovies.setAdapter(adapter);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
         rvMovies.setLayoutManager(layoutManager);
 
-        printGenres(v);
         return v;
     }
 
@@ -171,6 +173,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void printGenres(View v) {
+        Log.d(TAG, "printGenres called");
         LinearLayout genreLayout = v.findViewById(R.id.genreLayout);
 
         LinearLayout ll = new LinearLayout(getContext());
@@ -191,23 +194,27 @@ public class SearchFragment extends Fragment {
                     textViewArray[i].setBackground(bgDisabled);
                     textViewArray[i].setGravity(Gravity.CENTER);
                     textViewArray[i].setTextSize(12);
+                    textViewArray[i].setTextColor(Color.WHITE);
                     textViewArray[i].setTypeface(null, Typeface.BOLD);
                     layoutParams.setMargins(10, 10, 10, 10);
                     layoutParams.gravity = Gravity.CENTER;
                     int j = i;
+
                     textViewArray[i].setOnClickListener(v1 -> {
                         if (textViewArray[j].getBackground() == bgDisabled) {
                             Toast.makeText(getContext(), "Genre added: " + genres.get(j).getName(), Toast.LENGTH_SHORT).show();
-                            Log.d("Genre added: ", String.valueOf(genres.get(j).getId()));
+                            Log.d(TAG, "printGenres, Genre added: " + (genres.get(j).getId()));
                             textViewArray[j].setBackground(bgEnabled);
-                            genresList.add(genres.get(j).getId());
+                            selectedGenresList.add(genres.get(j).getId());
 
                         } else if (textViewArray[j].getBackground() == bgEnabled) {
                             Toast.makeText(getContext(), "Genre removed: " + genres.get(j).getName(), Toast.LENGTH_SHORT).show();
                             textViewArray[j].setBackground(bgDisabled);
-                            for (int k = 0; k < genresList.size(); k++)
-                                if (genresList.get(k) == genres.get(k).getId())
-                                    genresList.remove(genres.get(k).getId());
+
+                            for (int k = 0; k < selectedGenresList.size(); k++)
+                                if (selectedGenresList.get(k) == genres.get(k).getId()) {
+                                    selectedGenresList.remove(genres.get(k).getId());
+                                }
                         }
                     });
                     genreLayout.addView(textViewArray[i], layoutParams);
@@ -217,6 +224,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void sort() {
+        Log.d(TAG, "sort called");
         int position = mSortDropdown.getSelectedItemPosition();
         switch (position) {
             case 1: //Rating
@@ -227,8 +235,7 @@ public class SearchFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
             break; //Date - New - old
-            case 2:
-            {
+            case 2: {
                 Collections.sort(movies, Movie.ReleaseDateSorter);
                 Collections.reverse(movies);
                 Collections.sort(movies, Movie.VisibleSorter);
@@ -248,6 +255,31 @@ public class SearchFragment extends Fragment {
         mDrawerLayout.closeDrawer(mNavigation);
     }
 
+    private void filterMovies() {
+        ArrayList<Movie> allMoviesList = new ArrayList<>(movies);
+        ArrayList<Movie> deletables = new ArrayList<>();
+
+        for (int i = 0; i < allMoviesList.size(); i++) {
+
+            ArrayList<Integer> movieGenresList = allMoviesList.get(i).getGenreIds();
+
+            for (int j = 0; j < movieGenresList.size(); j++) {
+                int genreId = movieGenresList.get(j);
+
+                if (!(this.selectedGenresList.contains(genreId))) {
+                    deletables.add(allMoviesList.get(i));
+                }
+            }
+        }
+
+        for (Movie m : deletables) {
+            allMoviesList.remove(m);
+        }
+
+        movies.clear();
+        movies.addAll(allMoviesList);
+    }
+
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -257,8 +289,12 @@ public class SearchFragment extends Fragment {
 
     private class onSortTypeClick implements android.widget.AdapterView.OnItemSelectedListener {
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { sort(); }
-        public void onNothingSelected(AdapterView<?> parent) {}
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            sort();
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
     }
 
 }

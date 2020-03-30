@@ -55,8 +55,16 @@ public class Movie implements Serializable {
         return genreIds;
     }
 
+    public void setGenreIds(ArrayList<Integer> genreIds) {
+        this.genreIds = genreIds;
+    }
+
     public String getOriginalLanguage() {
         return originalLanguage;
+    }
+
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
     }
 
     public int getId() {
@@ -155,7 +163,7 @@ public class Movie implements Serializable {
     public static Comparator<Movie> RatingSorter = new Comparator<Movie>() {
         @Override
         public int compare(Movie o1, Movie o2) {
-            return (int)((o1.getVoteAverage()*100) - (o2.getVoteAverage()*100));
+            return (int) ((o1.getVoteAverage() * 100) - (o2.getVoteAverage() * 100));
         }
     };
 

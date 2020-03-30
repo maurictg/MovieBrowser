@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.avans.movieapp.helpers.BinaryData;
-import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.helpers.RequestMethod;
+import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Genre;
 import com.avans.movieapp.models.Movie;
 import com.avans.movieapp.models.MovieDetails;
@@ -21,9 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
-
-import javax.security.auth.callback.Callback;
 
 public class API {
     private static final String TAG = API.class.getSimpleName();
@@ -115,7 +112,7 @@ public class API {
         nt.execute("https://api.themoviedb.org/3/authentication/session/new");
     }
 
-    public static void deleteList(MovieList movieList){
+    public static void deleteList(MovieList movieList) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.DELETE, ((data, success) -> {
 
         }));
@@ -129,8 +126,8 @@ public class API {
     }
 
 
-    public static void createList(String name, String description){
-        NetworkTask networkTask = new NetworkTask(RequestMethod.POST, ((data, success) ->{
+    public static void createList(String name, String description) {
+        NetworkTask networkTask = new NetworkTask(RequestMethod.POST, ((data, success) -> {
 
         }));
 
@@ -146,16 +143,16 @@ public class API {
     }
 
 
-    public static void getLists(ICallback callback){
+    public static void getLists(ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
-            if (success){
+            if (success) {
                 ArrayList<MovieList> movieLists = new ArrayList<>();
                 BinaryData binaryData = (BinaryData) data;
 
                 try {
                     JSONObject JSONResult = binaryData.toJSONObject();
                     JSONArray results = JSONResult.optJSONArray(JSON_RESULTS);
-                    for (int i = 0; i < results.length(); i++){
+                    for (int i = 0; i < results.length(); i++) {
                         JSONObject movieList = (JSONObject) results.get(i);
                         String description = movieList.optString(JSON_DESCRIPTION);
                         int id = movieList.optInt(JSON_ID);
@@ -180,16 +177,16 @@ public class API {
 //        https://api.themoviedb.org/3/account/9160674/lists?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146&page=1
     }
 
-    public static void getMoviesFromMovieList(MovieList movieList, ICallback callback){
+    public static void getMoviesFromMovieList(MovieList movieList, ICallback callback) {
         int movieListId = movieList.getId();
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
-            if (success){
+            if (success) {
                 BinaryData binaryData = (BinaryData) data;
                 ArrayList<Movie> movies = new ArrayList<>();
                 try {
                     JSONObject JSONResult = binaryData.toJSONObject();
                     JSONArray items = JSONResult.optJSONArray(JSON_ITEMS);
-                    for (int i = 0; i < items.length(); i++){
+                    for (int i = 0; i < items.length(); i++) {
                         JSONObject jsonMovie = (JSONObject) items.get(i);
 
                         Movie movie = parseMovie(jsonMovie);
@@ -216,34 +213,33 @@ public class API {
 
     /**
      * * geeft een Arraylist<Genre> genres terug.
-        https://api.themoviedb.org/3/genre/movie/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
+     * https://api.themoviedb.org/3/genre/movie/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
      * Lauran, Maurice
      */
-    public static void getGenres(Context context, ICallback callback){
+    public static void getGenres(Context context, ICallback callback) {
 
         SharedPreferences sp = context.getSharedPreferences("MOVIEDB", Context.MODE_PRIVATE);
         String strGenres = sp.getString("genres", "");
-        if(!strGenres.equals("")) {
+        if (!strGenres.equals("")) {
             callback.callback(API.parseGenres(strGenres), true);
             Log.d(TAG, "Returned genres from device storage");
             return;
         }
 
         NetworkTask nt = new NetworkTask(RequestMethod.GET, (data, success) -> {
-           if (success){
-               ArrayList<Genre> genres = API.parseGenres(data.toString());
-                if(genres != null) {
+            if (success) {
+                ArrayList<Genre> genres = API.parseGenres(data.toString());
+                if (genres != null) {
                     callback.callback(genres, true);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("genres", data.toString());
                     editor.apply();
                     Log.d(TAG, "Returned genres from API");
-                }
-                else
+                } else
                     callback.callback(null, false);
-           } else {
-               callback.callback(null, false);
-           }
+            } else {
+                callback.callback(null, false);
+            }
 
         });
 
@@ -257,7 +253,7 @@ public class API {
         try {
             JSONObject result = new JSONObject(json);
             JSONArray jsonGenres = result.getJSONArray(JSON_GENRES);
-            for (int i = 0; i < jsonGenres.length(); i++){
+            for (int i = 0; i < jsonGenres.length(); i++) {
                 JSONObject arrayResult = jsonGenres.getJSONObject(i);
                 String genreName = arrayResult.optString(JSON_NAME);
                 int genreId = arrayResult.optInt(JSON_ID);
@@ -265,7 +261,7 @@ public class API {
             }
 
             return genres;
-        } catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             Log.e(TAG, "Failed to parse JSON getGenres");
             return null;
@@ -282,28 +278,28 @@ public class API {
 
     public static void getMovieDetails(Movie movie, ICallback callback) {
         NetworkTask nt = new NetworkTask((data, success) -> {
-            if(success) {
+            if (success) {
                 getMovieCreditsJsonObject(movie, (data1, success1) -> {
-                    if(success1) {
+                    if (success1) {
                         try {
-                            JSONObject movieCredits = (JSONObject)data1;
-                            JSONObject movieDetails = ((BinaryData)data).toJSONObject();
+                            JSONObject movieCredits = (JSONObject) data1;
+                            JSONObject movieDetails = ((BinaryData) data).toJSONObject();
 
                             //Get movieDetails
                             MovieDetails m = new MovieDetails(movie);
                             m.setLength(movieDetails.optInt(JSON_RUNTIME));
 
                             JSONArray genres = movieDetails.optJSONArray(JSON_GENRES);
-                            if(genres != null && genres.length() > 0)
+                            if (genres != null && genres.length() > 0)
                                 m.setGenre(genres.getJSONObject(0).optString(JSON_NAME));
 
                             JSONArray companies = movieCredits.optJSONArray(JSON_PRODUCTION_COMPANIES);
-                            if(companies != null && companies.length() > 0)
+                            if (companies != null && companies.length() > 0)
                                 m.setCompany(companies.getJSONObject(0).optString(JSON_NAME));
 
                             JSONArray casts = movieCredits.optJSONArray(JSON_CAST);
                             ArrayList<String> actors = new ArrayList<>();
-                            if(casts != null) {
+                            if (casts != null) {
                                 for (int i = 0; i < Math.min(3, casts.length()); i++)
                                     actors.add(casts.getJSONObject(i).optString(JSON_NAME));
                             }
@@ -311,7 +307,7 @@ public class API {
                             m.setActors(actors);
 
                             JSONArray crew = movieCredits.optJSONArray(JSON_CREW);
-                            if(crew != null) {
+                            if (crew != null) {
                                 for (int i = 0; i < crew.length(); i++) {
                                     JSONObject crewMember = crew.getJSONObject(i);
                                     if (crewMember.optString(JSON_JOB, "").equals("Director")) {
@@ -435,7 +431,7 @@ public class API {
         networkTask.execute("https://api.themoviedb.org/3/search/movie");
     }
 
-    public static Movie parseMovie(JSONObject movie){
+    public static Movie parseMovie(JSONObject movie) {
 
         int id = movie.optInt(JSON_ID);
         String title = movie.optString(JSON_TITLE);
@@ -446,7 +442,7 @@ public class API {
         String releaseDateString = movie.optString(JSON_DATE);
         Date date = null;
         try {
-            Log.d(TAG, "Date: "+releaseDateString);
+            Log.d(TAG, "Date: " + releaseDateString);
             date = new SimpleDateFormat("yyyy-MM-dd").parse(releaseDateString);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -456,8 +452,8 @@ public class API {
 
         JSONArray jsonGenreIds = movie.optJSONArray(JSON_GENRE_IDS);
         ArrayList<Integer> genreIds = new ArrayList<>();
-        if (jsonGenreIds != null && jsonGenreIds.length() > 0){
-            for (int j = 0; j < jsonGenreIds.length(); j++){
+        if (jsonGenreIds != null && jsonGenreIds.length() > 0) {
+            for (int j = 0; j < jsonGenreIds.length(); j++) {
                 int a = jsonGenreIds.optInt(j);
                 genreIds.add(a);
             }

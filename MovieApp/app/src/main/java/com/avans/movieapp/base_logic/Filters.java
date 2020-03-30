@@ -17,7 +17,7 @@ public class Filters {
     }
 
     public static void FilterRating(ArrayList<Movie> movies, double minRating) {
-        for (Movie m: movies) {
+        for (Movie m : movies) {
             boolean satisfies = (m.getVoteAverage() >= minRating);
             m.setVisible(satisfies);
         }

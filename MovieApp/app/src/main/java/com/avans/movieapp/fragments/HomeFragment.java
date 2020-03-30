@@ -57,8 +57,8 @@ public class HomeFragment extends Fragment {
         rvHomeRecent = view.findViewById(R.id.rvHomeRecent);
 
 //        RecyclerView.LayoutManager LayoutManager = new GridLayoutManager(getActivity(), MainActivity.calculateNoOfColumns(getActivity()));
-        RecyclerView.LayoutManager lmDiscover = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
-        RecyclerView.LayoutManager lmRecent = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager lmDiscover = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager lmRecent = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         rvHomeDiscover.setLayoutManager(lmDiscover);
         rvHomeRecent.setLayoutManager(lmRecent);
