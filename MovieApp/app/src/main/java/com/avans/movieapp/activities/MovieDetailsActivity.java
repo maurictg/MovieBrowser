@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
 import com.avans.movieapp.R;
 import com.avans.movieapp.base_logic.API;
@@ -57,16 +58,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
         addToList = findViewById(R.id.movie_detail_list);
         share = findViewById(R.id.movie_detail_share);
 
-
         ibRating = findViewById(R.id.movie_detail_rating_button);
-        ibRating.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReviewActivity.class)));
+        ibRating.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReviewActivity.class).putExtra("movieId",movie.getId())));
 
-        savedList = new ArrayList<>();
+
+                savedList = new ArrayList<>();
         addToList.setOnClickListener(v -> {
             API.listAddMovie(movie.getId());
             // TODO add to list, check duplicate
 //            if () {
 //            }
+            API.listAddMovie(movie.getId());
+            addToList.setImageDrawable(ContextCompat.getDrawable(addToList.getContext(), R.drawable.ic_bookmark_24dp));
             Toast.makeText(this, movie.getTitle() + " added", Toast.LENGTH_SHORT).show();
         });
 

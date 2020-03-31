@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.base_logic.API;
+
+import java.util.ArrayList;
 
 public class ReviewActivity extends Activity {
     @Override
@@ -24,8 +28,14 @@ public class ReviewActivity extends Activity {
         closeBtn.setOnClickListener(v -> finish());
         RatingBar review = findViewById(R.id.rt_review);
         ImageButton sendBtn = findViewById(R.id.ibSend);
+
+        Bundle extras = getIntent().getExtras();
         sendBtn.setOnClickListener(v -> {
-            if (review.getRating() > .5) {
+            int rating = (int) review.getRating();
+            if (rating > .5) {
+                assert extras != null;
+                API.putRating(extras.getInt("movieId"), rating, (data, success) -> {
+                });
                 Toast.makeText(getApplicationContext(), "Thanks for your review!", Toast.LENGTH_LONG).show();
                 finish();
             }

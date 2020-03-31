@@ -32,7 +32,6 @@ public class SavedFragment extends Fragment implements Serializable {
 
     private static final String TAG = SavedFragment.class.getSimpleName();
     RecyclerView rvSaved;
-    private Parcelable state;
     private VideosAdapter mSavedList;
     private RecyclerView mSaveRecycler;
 
