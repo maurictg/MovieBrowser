@@ -17,9 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
 import com.avans.movieapp.adapters.VideosAdapter;
+import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.base_logic.DisplayCalc;
+import com.avans.movieapp.interfaces.ICallback;
+import com.avans.movieapp.models.Movie;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +34,7 @@ public class SavedFragment extends Fragment implements Serializable {
     RecyclerView rvSaved;
     private Parcelable state;
     private VideosAdapter mSavedList;
+    private RecyclerView mSaveRecycler;
 
     public SavedFragment() {
         // Required empty public constructor
@@ -46,11 +51,37 @@ public class SavedFragment extends Fragment implements Serializable {
                 Shader.TileMode.REPEAT);
         tvTitle.getPaint().setShader(shader);
 
-        RecyclerView mSaveRecycler = v.findViewById(R.id.rvSave);
+        mSaveRecycler = v.findViewById(R.id.rvSave);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
         mSaveRecycler.setLayoutManager(layoutManager);
+
+        mSavedList = new VideosAdapter(movies, (data, success) -> {
+
+            Movie m = (Movie) data;
+            Log.d(TAG, "onCreateView, M:" + "Title: " + m.getTitle());
+            Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
+            intent.putExtra("MOVIE", m);
+
+            startActivity(intent);
+        });
 
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        API.getMoviesFromMovieList((data, success) -> {
+            ArrayList<Movie> movies = (ArrayList<Movie>) data;
+
+            
+
+
+
+        });
+
+
+
+    }
 }
