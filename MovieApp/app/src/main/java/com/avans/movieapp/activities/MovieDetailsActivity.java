@@ -40,7 +40,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private ImageButton share;
     private ImageButton ibRating;
     private ImageButton ibReview;
-    private RecyclerView rvSaved;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,15 +57,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         addToList = findViewById(R.id.movie_detail_list);
         share = findViewById(R.id.movie_detail_share);
 
-        ibReview = findViewById(R.id.movie_detail_review_button);
-        ibReview.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReviewActivity.class)));
 
         ibRating = findViewById(R.id.movie_detail_rating_button);
-        //ibRating.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), RatingActivity.class)));
+        ibRating.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReviewActivity.class)));
 
         savedList = new ArrayList<>();
         addToList.setOnClickListener(v -> {
-            // TODO add to list
+            // TODO add to list, check duplicate
 //            if () {
 //            }
             Toast.makeText(this, movie.getTitle() + " added", Toast.LENGTH_SHORT).show();

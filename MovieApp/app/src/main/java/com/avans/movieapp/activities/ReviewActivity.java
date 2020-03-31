@@ -18,7 +18,7 @@ public class ReviewActivity extends Activity {
         setContentView(R.layout.review_popup);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        getWindow().setLayout((int) (displayMetrics.widthPixels * .8), (int) (displayMetrics.heightPixels * .35));
+        getWindow().setLayout((int) (displayMetrics.widthPixels * .8), (int) (displayMetrics.heightPixels * .30));
 
         ImageButton closeBtn = findViewById(R.id.cancel_button);
         closeBtn.setOnClickListener(v -> finish());
