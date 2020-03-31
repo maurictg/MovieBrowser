@@ -64,6 +64,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
                 savedList = new ArrayList<>();
         addToList.setOnClickListener(v -> {
+            API.listAddMovie(movie.getId());
             // TODO add to list, check duplicate
 //            if () {
 //            }
