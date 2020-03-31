@@ -35,7 +35,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/movie_detail_title"
@@ -50,7 +51,6 @@
                         android:id="@+id/movie_detail_genre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
                         android:text="@string/genre"
                         android:textColor="@color/colorText"
                         android:textSize="16sp" />
@@ -59,7 +59,6 @@
                         android:id="@+id/movie_detail_company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
                         android:text="@string/company"
                         android:textColor="@color/colorText"
                         android:textSize="16sp" />
@@ -84,8 +83,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="10dp"
-                android:lineSpacingMultiplier="1.5"
-                android:padding="10dp"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingHorizontal="10dp"
                 android:text="@string/summary"
                 android:textColor="@color/colorText"
                 android:textSize="15sp" />
@@ -117,31 +116,34 @@
                 android:layout_margin="12sp"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:progressBackgroundTint="@color/colorBackground"
+                android:progressBackgroundTint="@color/colorText"
                 android:progressTint="@color/colorHighlight" />
 
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:padding="11dp">
+                android:paddingStart="10dp">
 
                 <TextView
+                    android:id="@+id/movie_detail_actors"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="12sp"
                     android:text="@string/actors"
                     android:textColor="@color/colorText"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
             </GridLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="10dp"
                 android:text="@string/write_a_review"
                 android:textColor="@color/colorText"
-                android:padding="10dp"
-                android:layout_gravity="end"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <ImageButton
                 android:id="@+id/movie_detail_review"

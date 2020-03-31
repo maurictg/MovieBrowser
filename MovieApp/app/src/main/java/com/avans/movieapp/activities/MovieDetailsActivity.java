@@ -39,6 +39,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private RatingBar rating;
     private ImageButton addToList;
     private ImageButton share;
+    private ImageButton review;
     private RecyclerView rvSaved;
 
     @Override
@@ -56,6 +57,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         rating = findViewById(R.id.movie_detail_rating);
         addToList = findViewById(R.id.movie_detail_list);
         share = findViewById(R.id.movie_detail_share);
+        review = findViewById(R.id.movie_detail_review);
 
         PopupMenu popup = new PopupMenu(this, addToList);
         //Inflating the Popup using xml file
