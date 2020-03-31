@@ -24,7 +24,7 @@
                 android:id="@+id/rvSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_gravity="center"
                 android:padding="10dp" />
 
         </androidx.core.widget.NestedScrollView>
@@ -64,8 +64,9 @@
 
                         <EditText
                             android:id="@+id/etSearch"
-                            android:layout_width="300dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:autofillHints="@string/search"
                             android:background="@color/colorMenu"
                             android:gravity="center_vertical"
@@ -102,9 +103,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:indeterminate="false"
-                    android:visibility="invisible"
+                    android:minHeight="5dp"
                     android:progress="0"
-                    android:minHeight="5dp" />
+                    android:visibility="invisible" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -134,144 +135,127 @@
         app:itemIconTint="@color/colorText"
         app:itemTextColor="@color/colorText">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/reset"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/colorAccent"
-                android:drawableStart="@drawable/ic_close_24dp"
-                android:drawableTint="@color/colorText"
-                android:padding="10dp"
-                android:text="@string/reset_filter"
-                android:textColor="@color/colorText" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorAccent"
-                android:padding="10dp"
-                android:text="@string/language"
-                android:textAllCaps="true"
-                android:textColor="@color/colorText" />
-
-            <GridLayout
-                android:id="@+id/glLanguages"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:columnCount="2"
-                android:theme="@style/AppTheme.Preference">
-
-                <CheckBox
-                    android:id="@+id/lang_nl"
+                <Button
+                    android:id="@+id/reset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:tag="nl" />
+                    android:layout_margin="10dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:drawableStart="@drawable/ic_close_24dp"
+                    android:drawableTint="@color/colorText"
+                    android:padding="10dp"
+                    android:text="@string/reset_filter"
+                    android:textColor="@color/colorText" />
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorAccent"
+                    android:padding="10dp"
+                    android:text="@string/language"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorText" />
+                <RadioGroup
+                    android:id="@+id/glLanguages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dutch"
+                    android:checkedButton="@id/lang_en">
+
+                    <RadioButton
+                        android:id="@+id/lang_en"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:checked="true"
+                        android:padding="10dp"
+                        android:tag="en"
+                        android:text="@string/english"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorText" />
+                    <RadioButton
+                        android:id="@+id/lang_nl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:checked="true"
+                        android:padding="10dp"
+                        android:tag="nl"
+                        android:text="@string/dutch"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorText"/>
+
+                    <RadioButton
+                        android:id="@+id/lang_de"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:checked="true"
+                        android:padding="10dp"
+                        android:tag="de"
+                        android:text="@string/german"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorText" />
+                </RadioGroup>
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorAccent"
+                    android:padding="10dp"
+                    android:text="@string/rating"
                     android:textAllCaps="true"
                     android:textColor="@color/colorText" />
 
-                <CheckBox
-                    android:id="@+id/lang_en"
+                <RatingBar
+                    android:id="@+id/rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:tag="en" />
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/colorMenu"
+                    android:numStars="5"
+                    android:progressTint="@color/colorHighlight"
+                    android:rating="2"
+                    android:scaleX=".9"
+                    android:scaleY=".9"
+                    android:stepSize=".5" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/english"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorAccent"
+                    android:padding="10dp"
+                    android:text="@string/sort_by"
                     android:textAllCaps="true"
                     android:textColor="@color/colorText" />
 
-                <CheckBox
-                    android:id="@+id/lang_de"
-                    android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:tag="de" />
+                    android:layout_margin="10dp"
+                    android:entries="@array/sort_entries"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+        </ScrollView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/german"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorText" />
-
-                <CheckBox
-                    android:id="@+id/lang_fr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:tag="fr" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/french"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorText" />
-            </GridLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorAccent"
-                android:padding="10dp"
-                android:text="@string/rating"
-                android:textAllCaps="true"
-                android:textColor="@color/colorText" />
-
-            <RatingBar
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/colorMenu"
-                android:numStars="5"
-                android:progressTint="@color/colorHighlight"
-                android:rating="2"
-                android:scaleX=".9"
-                android:scaleY=".9"
-                android:stepSize=".5" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorAccent"
-                android:padding="10dp"
-                android:text="@string/sort_by"
-                android:textAllCaps="true"
-                android:textColor="@color/colorText" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:entries="@array/sort_entries"
-                android:spinnerMode="dropdown" />
-
-        </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

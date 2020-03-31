@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -42,6 +41,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private ImageButton ibRating;
     private ImageButton ibReview;
 
+    private boolean checked = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate called");
@@ -58,20 +59,23 @@ public class MovieDetailsActivity extends AppCompatActivity {
         addToList = findViewById(R.id.movie_detail_list);
         share = findViewById(R.id.movie_detail_share);
 
-        ibRating = findViewById(R.id.movie_detail_rating_button);
-        ibRating.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReviewActivity.class).putExtra("movieId",movie.getId())));
+        addToList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!checked) {
+                    API.listAddMovie(movie.getId());
+                    System.out.println("List: added to list");
+//                    Toast.makeText(this, movie.getTitle() + " added", Toast.LENGTH_SHORT).show();
+                } else {
+                    API.listDeleteMovie(movie.getId());
+                    System.out.println("List: removed from list");
+                }
+                getMoviesFromList();
 
-
-                savedList = new ArrayList<>();
-        addToList.setOnClickListener(v -> {
-            API.listAddMovie(movie.getId());
-            // TODO add to list, check duplicate
-//            if () {
-//            }
-            API.listAddMovie(movie.getId());
-            addToList.setImageDrawable(ContextCompat.getDrawable(addToList.getContext(), R.drawable.ic_bookmark_24dp));
-            Toast.makeText(this, movie.getTitle() + " added", Toast.LENGTH_SHORT).show();
+            }
         });
+        ibRating = findViewById(R.id.movie_detail_rating_button);
+        ibRating.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReviewActivity.class).putExtra("movieId", movie.getId())));
 
         share.setOnClickListener(v -> {
             Intent share = new Intent(Intent.ACTION_SEND);
@@ -94,20 +98,42 @@ public class MovieDetailsActivity extends AppCompatActivity {
             e.putString("recent", TextUtils.join(",", ids));
             e.apply();
         }
-
         API.getMovieDetails(movie, (data, success) -> {
             if (success) {
-                MovieDetails movies = (MovieDetails) data;
-                title.setText(movies.getTitle());
-                genre.setText(movies.getGenre());
-                company.setText(movies.getCompany());
-                summary.setText(movies.getOverview());
-                age.setText(String.format("Adult movie: %s", movies.isAdultString()));
-                rating.setRating((int) (movies.getVoteAverage() / 2));
+                MovieDetails movieDetails = (MovieDetails) data;
+                title.setText(movieDetails.getTitle());
+                genre.setText(movieDetails.getGenre());
+                company.setText(movieDetails.getCompany());
+                summary.setText(movieDetails.getOverview());
+                age.setText(String.format("Adult movie: %s", movieDetails.isAdultString()));
+                rating.setRating((int) (movieDetails.getVoteAverage() / 2));
+
             }
         });
-
+        getMoviesFromList();
         Picasso.get().load(movie.getImageUrlPoster()).into(image);
     }
 
+    public void getMoviesFromList() {
+        API.getMoviesFromMovieList((data, success) -> {
+            if (success) {
+                ArrayList<Movie> movieList = new ArrayList<>();
+                movieList.addAll((ArrayList<Movie>) data);
+                checked = false;
+                    for (int i = 0; i < movieList.size(); i++) {
+                        if (movie.getId() == movieList.get(i).getId()) {
+                            checked = true;
+                            break;
+                        }
+                    }
+                    if (!checked) {
+                        System.out.println("List: not in list");
+                        addToList.setImageDrawable(ContextCompat.getDrawable(addToList.getContext(), R.drawable.ic_bookmark_border_24dp));
+                    } else {
+                        System.out.println("List: in list");
+                        addToList.setImageDrawable(ContextCompat.getDrawable(addToList.getContext(), R.drawable.ic_bookmark_24dp));
+                    }
+            }
+        });
+    }
 }

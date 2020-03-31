@@ -14,19 +14,19 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
-import com.avans.movieapp.activities.MainActivity;
 import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder> {
+public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> {
 
     private ArrayList<Movie> movies;
     private ICallback clickCallback;
+    private String overview;
 
-    public VideosAdapter(ArrayList<Movie> movies, ICallback clickCallback) {
+    public SavedAdapter(ArrayList<Movie> movies, ICallback clickCallback) {
         this.movies = movies;
         this.clickCallback = clickCallback;
     }
@@ -34,9 +34,9 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_movie, parent, false);
         ProgressBar pbPoster = v.findViewById(R.id.imageLoader);
-        Drawable drawable = ContextCompat.getDrawable(pbPoster.getContext(),R.drawable.gradient);
+        Drawable drawable = ContextCompat.getDrawable(pbPoster.getContext(), R.drawable.gradient);
         pbPoster.setProgressDrawable(drawable);
         Rect bounds = pbPoster.getProgressDrawable().getBounds();
         pbPoster.getProgressDrawable().setBounds(bounds);
@@ -60,14 +60,14 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
         }
-
+        overview = m.getOverview();
         holder.tvTitle.setText(m.getTitle());
         holder.tvInfo.setText(String.format("%d - %s", m.getId(), m.getVoteAverage())); //Just for testing
+        holder.tvOverview.setText(overview.substring(0, Math.min(overview.length(), 60)) + "...");
 
-//        holder.tvOverview.setText(overview.substring(0, Math.min(overview.length(), 60)) + "...");
         if (m.getImageUrlPoster().length() > 10) {
             Picasso.get()
-                    .load(m.getImageUrlPoster())
+                    .load(m.getImageUrlBackdrop())
                     .into(holder.ivImage);
         }
 
@@ -98,6 +98,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
             tvTitle = itemView.findViewById(R.id.tvTitle);
 //            tvOverview = itemView.findViewById(R.id.tvOverview);
             tvInfo = itemView.findViewById(R.id.tvInfo);
+            tvOverview = itemView.findViewById(R.id.tvOverview);
             ivImage = itemView.findViewById(R.id.ivImage);
         }
     }

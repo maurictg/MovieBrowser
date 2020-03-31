@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
                     .setIcon(R.drawable.ic_signal_wifi_off_24dp)
                     .show();
         }
-
-
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);

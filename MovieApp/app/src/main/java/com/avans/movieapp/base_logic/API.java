@@ -145,8 +145,7 @@ public class API {
     }
 
     public static void listDeleteMovie(int movieId){
-
-        NetworkTask networkTask = new NetworkTask(RequestMethod.PUT, (data, success) -> {
+        NetworkTask networkTask = new NetworkTask(RequestMethod.POST, (data, success) -> {
 
         });
 

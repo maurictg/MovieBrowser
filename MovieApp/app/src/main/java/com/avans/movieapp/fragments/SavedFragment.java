@@ -1,10 +1,10 @@
 package com.avans.movieapp.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +13,15 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.activities.MovieDetailsActivity;
+import com.avans.movieapp.adapters.SavedAdapter;
 import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
 import com.avans.movieapp.base_logic.DisplayCalc;
-import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Movie;
 
 import java.io.Serializable;
@@ -31,13 +33,13 @@ import java.util.ArrayList;
 public class SavedFragment extends Fragment implements Serializable {
 
     private static final String TAG = SavedFragment.class.getSimpleName();
-    RecyclerView rvSaved;
-    private VideosAdapter mSavedList;
+    private SavedAdapter mSavedList;
     private RecyclerView mSaveRecycler;
+
+    private ArrayList<Movie> movies = new ArrayList<>();
 
     public SavedFragment() {
         // Required empty public constructor
-
     }
 
     @Override
@@ -46,16 +48,11 @@ public class SavedFragment extends Fragment implements Serializable {
         View v = inflater.inflate(R.layout.fragment_saved, container, false);
 
         TextView tvTitle = v.findViewById(R.id.tvTitle);
-        Shader shader = new LinearGradient(tvTitle.getWidth(), tvTitle.getLineHeight(),0 , 0, Color.parseColor("#00B3E4"), Color.parseColor("#90CEA1"),
+        Shader shader = new LinearGradient(tvTitle.getWidth(), tvTitle.getLineHeight(), 0, 0, Color.parseColor("#00B3E4"), Color.parseColor("#90CEA1"),
                 Shader.TileMode.REPEAT);
         tvTitle.getPaint().setShader(shader);
 
-        mSaveRecycler = v.findViewById(R.id.rvSave);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), DisplayCalc.calculateNoOfColumns(getActivity()));
-        mSaveRecycler.setLayoutManager(layoutManager);
-
-        mSavedList = new VideosAdapter(movies, (data, success) -> {
-
+        mSavedList = new SavedAdapter(movies, (data, success) -> {
             Movie m = (Movie) data;
             Log.d(TAG, "onCreateView, M:" + "Title: " + m.getTitle());
             Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
@@ -63,6 +60,11 @@ public class SavedFragment extends Fragment implements Serializable {
 
             startActivity(intent);
         });
+
+        mSaveRecycler = v.findViewById(R.id.rvSave);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mSaveRecycler.setLayoutManager(layoutManager);
+        mSaveRecycler.setAdapter(mSavedList);
 
         return v;
     }
@@ -72,15 +74,11 @@ public class SavedFragment extends Fragment implements Serializable {
         super.onResume();
 
         API.getMoviesFromMovieList((data, success) -> {
-            ArrayList<Movie> movies = (ArrayList<Movie>) data;
-
-            
-
-
-
+            if (success) {
+                movies.clear();
+                movies.addAll((ArrayList<Movie>) data);
+                mSavedList.notifyDataSetChanged();
+            }
         });
-
-
-
     }
 }

@@ -17,10 +17,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,7 +61,7 @@ public class SearchFragment extends Fragment {
     private ArrayList<Genre> genres;
     private RecyclerView.Adapter adapter;
     private RecyclerView rvMovies;
-    private GridLayout glLanguages;
+    private RadioGroup glLanguages;
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigation;
@@ -89,7 +90,7 @@ public class SearchFragment extends Fragment {
         for (int i = 0; i < glLanguages.getChildCount(); i++) {
             View ch = glLanguages.getChildAt(i);
             if (ch instanceof CheckBox) {
-                CheckBox cb = (CheckBox) ch;
+                RadioButton cb = (RadioButton) ch;
                 cb.setOnClickListener(v1 -> {
                     filterLanguages();
                 });
@@ -216,15 +217,15 @@ public class SearchFragment extends Fragment {
                             Log.d(TAG, "printGenres, Genre added: " + (genres.get(j).getId()));
                             textViewArray[j].setBackground(bgEnabled);
                             selectedGenresList.add(genres.get(j).getId());
-
                         } else if (textViewArray[j].getBackground() == bgEnabled) {
                             textViewArray[j].setBackground(bgDisabled);
-
-                            for (int k = 0; k < selectedGenresList.size(); k++)
+                            for (int k = 0; k < selectedGenresList.size(); k++) {
                                 if (selectedGenresList.get(k) == genres.get(k).getId()) {
-                                    selectedGenresList.remove(genres.get(k).getId());
+                                    selectedGenresList.remove(k);
                                 }
+                            }
                         }
+                        filterMovies();
                     });
                     genreLayout.addView(textViewArray[i], layoutParams);
                 }
@@ -283,6 +284,7 @@ public class SearchFragment extends Fragment {
         }
         movies.clear();
         movies.addAll(allMoviesList);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
