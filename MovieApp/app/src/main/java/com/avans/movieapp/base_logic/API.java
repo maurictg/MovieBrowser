@@ -238,8 +238,7 @@ public class API {
     }
 
     public static void getMoviesFromMovieList(ICallback callback) {
-        int movieList
-        Id = LIST_ID;
+        int movieListId = LIST_ID;
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
                 BinaryData binaryData = (BinaryData) data;
