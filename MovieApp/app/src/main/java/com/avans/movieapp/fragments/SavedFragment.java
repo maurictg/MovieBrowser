@@ -46,6 +46,8 @@ public class SavedFragment extends Fragment implements Serializable {
         Shader shader = new LinearGradient(tvTitle.getWidth(), tvTitle.getLineHeight(),0 , 0, Color.parseColor("#00B3E4"), Color.parseColor("#90CEA1"),
                 Shader.TileMode.REPEAT);
         tvTitle.getPaint().setShader(shader);
+
+
         return v;
     }
 

@@ -1,15 +1,22 @@
 package com.avans.movieapp.adapters;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
+import com.avans.movieapp.activities.MainActivity;
 import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Movie;
 import com.squareup.picasso.Picasso;
@@ -34,6 +41,11 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie, parent, false);
+        ProgressBar pbPoster = v.findViewById(R.id.imageLoader);
+        Drawable drawable = ContextCompat.getDrawable(pbPoster.getContext(),R.drawable.gradient);
+        pbPoster.setProgressDrawable(drawable);
+        Rect bounds = pbPoster.getProgressDrawable().getBounds();
+        pbPoster.getProgressDrawable().setBounds(bounds);
         return new ViewHolder(v);
     }
 
@@ -57,9 +69,9 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
 
         holder.tvTitle.setText(m.getTitle());
         holder.tvInfo.setText(String.format("%d - %s", m.getId(), m.getVoteAverage())); //Just for testing
+
         String overview = m.getOverview();
 //        holder.tvOverview.setText(overview.substring(0, Math.min(overview.length(), 60)) + "...");
-
         if (m.getImageUrlPoster().length() > 10) {
             Picasso.get()
                     .load(m.getImageUrlPoster())
@@ -71,6 +83,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
                 clickCallback.callback(m, true);
             }
         });
+
     }
 
     @Override
@@ -79,13 +92,16 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+
         ImageView ivImage;
         TextView tvTitle;
         TextView tvOverview;
         TextView tvInfo;
 
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             tvTitle = itemView.findViewById(R.id.tvTitle);
 //            tvOverview = itemView.findViewById(R.id.tvOverview);
             tvInfo = itemView.findViewById(R.id.tvInfo);

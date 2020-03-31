@@ -6,7 +6,7 @@
     <style name="AppTheme.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorBackground</item>
         <item name="colorPrimaryDark">@color/colorBackground</item>
-        <item name="colorAccent">@color/colorMenu</item>
+        <item name="colorAccent">@color/colorText</item>
         <item name="colorSecondary">@drawable/gradient</item>
     </style>
     <!-- Preference application theme. -->

@@ -63,15 +63,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         addToList = findViewById(R.id.movie_detail_list);
         share = findViewById(R.id.movie_detail_share);
 
-        LinearLayout main = findViewById(R.id.main);
-
         ibReview = findViewById(R.id.ibReview);
-        ibReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),ReviewActivity.class));
-            }
-        });
+        ibReview.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),ReviewActivity.class)));
 
         savedList = new ArrayList<>();
         addToList.setOnClickListener(v -> {
