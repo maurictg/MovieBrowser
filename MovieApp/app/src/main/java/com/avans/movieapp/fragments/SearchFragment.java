@@ -74,7 +74,7 @@ public class SearchFragment extends Fragment {
         Log.d(TAG, "onCreateView called");
         View v = inflater.inflate(R.layout.fragment_search, container, false);
 
-        movies = new ArrayList<>();
+        this.movies = new ArrayList<>();
 
         RatingBar ratingBar = v.findViewById(R.id.rating);
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
