@@ -90,12 +90,10 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
-
         TextView tvHome = view.findViewById(R.id.tvTitle);
         Shader shader = new LinearGradient(tvHome.getWidth(), tvHome.getLineHeight(),0 , 0, Color.parseColor("#00B3E4"), Color.parseColor("#90CEA1"),
                 Shader.TileMode.REPEAT);
         tvHome.getPaint().setShader(shader);
-
         return view;
     }
 

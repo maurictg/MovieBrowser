@@ -76,11 +76,6 @@ public class SearchFragment extends Fragment {
 
         movies = new ArrayList<>();
 
-        CheckBox lang_en = v.findViewById(R.id.lang_en);
-        CheckBox lang_nl = v.findViewById(R.id.lang_nl);
-        CheckBox lang_de = v.findViewById(R.id.lang_de);
-//                lang_de.isChecked();
-
         RatingBar ratingBar = v.findViewById(R.id.rating);
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
             if (fromUser) {
@@ -125,26 +120,9 @@ public class SearchFragment extends Fragment {
 
             startActivity(intent);
         });
+
         progressBar = v.findViewById(R.id.progressBar);
-
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                while (progressStatus < 100) {
-                    System.out.println("Array size: " + movies.size());
-                    System.out.println("Adapter size: " + adapter.getItemCount());
-                    progressStatus = movies.size()/adapter.getItemCount()*100;
-//                    progressStatus += 5;
-
-                    handler.post(() -> progressBar.setProgress(progressStatus));
-                    try {
-                        // Sleep for 200 milliseconds.
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        progressBar.setProgressDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.gradient));
 
         EditText editText = v.findViewById(R.id.etSearch);
         editText.setOnKeyListener((v1, keyCode, event) -> {
@@ -161,8 +139,20 @@ public class SearchFragment extends Fragment {
                             Log.d(TAG, "onCreateView: movie list after = " + movies.toString() + "\n" + movies.size());
                             adapter.notifyDataSetChanged();
                             ratingBar.setRating(ratingBar.getNumStars());
-                            thread.start();
-
+                            showProgressBar();
+                            while (progressStatus < 100) {
+                                System.out.println("Array size: " + movies.size());
+                                System.out.println("Adapter size: " + adapter.getItemCount());
+                                progressStatus = movies.size() / adapter.getItemCount() * 100;
+                                handler.post(() -> progressBar.setProgress(progressStatus));
+                                try {
+                                    // Sleep for 200 milliseconds.
+                                    Thread.sleep(200);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            hideProgressBar();
                         }
                     });
                 }
@@ -295,7 +285,6 @@ public class SearchFragment extends Fragment {
         for (Movie m : deletables) {
             allMoviesList.remove(m);
         }
-
         movies.clear();
         movies.addAll(allMoviesList);
     }

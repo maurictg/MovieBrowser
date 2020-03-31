@@ -50,31 +50,20 @@
                         android:id="@+id/movie_detail_genre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="10dp"
                         android:text="@string/genre"
-                        android:textColor="@color/colorText" />
+                        android:textColor="@color/colorText"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/movie_detail_company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/company"
-                        android:textColor="@color/colorText" />
-
-                    <EditText
-                        android:id="@+id/review_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="100dp"
-                        android:layout_marginEnd="10dp"
-                        android:autofillHints="Review"
-                        android:backgroundTint="@color/colorDisabled"
-                        android:hint="@string/write_a_review"
-                        android:inputType="textLongMessage"
                         android:padding="10dp"
+                        android:text="@string/company"
                         android:textColor="@color/colorText"
-                        android:textColorHint="@color/colorText"
                         android:textSize="16sp" />
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -83,6 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:padding="10dp"
                 android:text="@string/summary"
                 android:textColor="@color/colorText"
                 android:textSize="15sp"
@@ -94,6 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:padding="10dp"
                 android:text="@string/summary"
                 android:textColor="@color/colorText"
                 android:textSize="15sp" />
@@ -103,7 +95,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:padding="10dp"
                 android:text="Adult movie: yes/no"
+                android:textColor="@color/colorText"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:text="@string/rating"
                 android:textColor="@color/colorText"
                 android:textSize="15sp" />
 
@@ -131,13 +134,34 @@
                     android:textSize="14sp" />
 
             </GridLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/write_a_review"
+                android:textColor="@color/colorText"
+                android:padding="10dp"
+                android:layout_gravity="end"
+                android:textSize="18sp"/>
+
+            <ImageButton
+                android:id="@+id/movie_detail_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/colorAccent"
+                android:contentDescription="@string/share"
+                android:padding="15dp"
+                android:src="@drawable/ic_edit_24dp"
+                android:textColor="@color/colorText"
+                android:tint="@color/colorHighlight" />
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/movie_detail_list"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
-            android:layout_marginStart="105dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
             android:layout_marginTop="260dp"
             android:background="@drawable/bg_circle"
             android:backgroundTint="@color/colorAccent"
@@ -149,16 +173,17 @@
 
         <ImageButton
             android:id="@+id/movie_detail_share"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="260dp"
             android:background="@drawable/bg_circle"
             android:backgroundTint="@color/colorAccent"
             android:contentDescription="@string/share"
             android:padding="15dp"
-            android:src="@drawable/ic_bookmark_border_24dp"
+            android:src="@drawable/ic_share_24dp"
             android:textColor="@color/colorText"
             android:tint="@color/colorHighlight" />
+
     </RelativeLayout>
 </ScrollView>

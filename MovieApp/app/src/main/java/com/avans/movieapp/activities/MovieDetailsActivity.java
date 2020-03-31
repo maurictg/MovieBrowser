@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         addToList = findViewById(R.id.movie_detail_list);
         share = findViewById(R.id.movie_detail_share);
 
+        PopupMenu popup = new PopupMenu(this, addToList);
+        //Inflating the Popup using xml file
+        popup.getMenuInflater().inflate(R.menu.review, popup.getMenu());
         savedList = new ArrayList<>();
         addToList.setOnClickListener(v -> {
             // TODO add to list

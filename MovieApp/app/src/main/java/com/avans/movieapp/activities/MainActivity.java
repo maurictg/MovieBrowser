@@ -1,6 +1,9 @@
 package com.avans.movieapp.activities;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,12 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
     private MenuItem nav_profile;
     private MenuItem nav_saved;
+    private MenuItem nav_search;
 
     BadgeDrawable badgeDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme_Base);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
         }
+        setTheme(R.style.AppTheme_Base);
     }
 
     private void setNotification(MenuItem menuItem) {

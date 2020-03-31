@@ -104,8 +104,7 @@
                     android:indeterminate="false"
                     android:visibility="invisible"
                     android:progress="0"
-                    android:minHeight="5dp"
-                    android:progressTint="@color/colorHighlight" />
+                    android:minHeight="5dp" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
