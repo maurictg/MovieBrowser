@@ -202,7 +202,7 @@ public class API {
 //        https://api.themoviedb.org/3/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146
 
     }
-    
+
     public static void getLists(ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
@@ -238,7 +238,8 @@ public class API {
     }
 
     public static void getMoviesFromMovieList(ICallback callback) {
-        int movieListId = LIST_ID;
+        int movieList
+        Id = LIST_ID;
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
                 BinaryData binaryData = (BinaryData) data;
