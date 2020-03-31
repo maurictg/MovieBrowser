@@ -163,6 +163,29 @@
                         android:textSize="14sp" />
 
                 </GridLayout>
+
+                <TextView
+                    android:id="@+id/movie_detail_actors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:padding="10dp"
+                    android:text="@string/write_a_review"
+                    android:textColor="@color/colorText"
+                    android:textSize="18sp" />
+
+                <ImageButton
+                    android:id="@+id/ibReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/colorAccent"
+                    android:contentDescription="@string/share"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_edit_24dp"
+                    android:textColor="@color/colorText"
+                    android:tint="@color/colorHighlight" />
             </LinearLayout>
 
             <ImageButton

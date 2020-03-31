@@ -62,6 +62,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         rating = findViewById(R.id.movie_detail_rating);
         addToList = findViewById(R.id.movie_detail_list);
         share = findViewById(R.id.movie_detail_share);
+        review = findViewById(R.id.movie_detail_review);
 
         ibReview = findViewById(R.id.ibReview);
         ibReview.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),ReviewActivity.class)));
