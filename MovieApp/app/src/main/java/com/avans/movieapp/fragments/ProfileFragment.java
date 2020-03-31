@@ -34,13 +34,6 @@ public class ProfileFragment extends Fragment {
 
     TextView tvUsername;
 
-    private TextView tvFeedCount;
-    private TextView tvListCount;
-    private TextView tvReviewCount;
-
-    private int feedCount = 0;
-    private int listCount = 0;
-    private int reviewCount = 0;
 
     private ImageButton settings;
     public ProfileFragment() {
@@ -56,21 +49,6 @@ public class ProfileFragment extends Fragment {
         tvUsername.setText(R.string.username);
 
         ImageView profPic = v.findViewById(R.id.profilePic);
-        tvFeedCount = v.findViewById(R.id.feed_notif_count);
-        tvListCount = v.findViewById(R.id.list_count_notif);
-        tvReviewCount = v.findViewById(R.id.review_notif_count);
-
-        tvFeedCount.setGravity(Gravity.CENTER);
-        tvListCount.setGravity(Gravity.CENTER);
-        tvReviewCount.setGravity(Gravity.CENTER);
-
-        tvFeedCount.setPadding(20, 20, 20, 20);
-        tvListCount.setPadding(20, 20, 20, 20);
-        tvReviewCount.setPadding(20, 20, 20, 20);
-
-        tvFeedCount.setText(feedCounter());
-        tvListCount.setText(listCounter());
-        tvReviewCount.setText(reviewCounter());
 
         settings = v.findViewById(R.id.btn_settings);
         settings.setOnClickListener(this::onClick);
@@ -93,33 +71,6 @@ public class ProfileFragment extends Fragment {
     public void onClick(View view) {
         Intent intent = new Intent(getActivity(), SettingsActivity.class);
         startActivity(intent);
-    }
-
-    private String feedCounter() {
-        if (feedCount != 0) {
-            tvFeedCount.setEnabled(true);
-            return String.valueOf(feedCount);
-        } else {
-            return null;
-        }
-    }
-
-    private String reviewCounter() {
-        if (reviewCount != 0) {
-            tvReviewCount.setEnabled(true);
-            return String.valueOf(reviewCount);
-        } else {
-            return null;
-        }
-    }
-
-    private String listCounter() {
-        if (listCount != 0) {
-            tvListCount.setEnabled(true);
-            return String.valueOf(listCount);
-        } else {
-            return null;
-        }
     }
 
     public class CircleTransform implements Transformation {

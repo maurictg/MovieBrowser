@@ -47,6 +47,7 @@
     <string name="language">Language</string>
     <string name="genre">Genre</string>
     <string name="rating">Rating</string>
+    <string name="ratings">Ratings</string>
     <string name="duration">duration</string>
     <string name="reset_filter">reset all filters</string>
     <string name="dutch">DUTCH</string>
@@ -75,4 +76,6 @@
     <string name="logo">LOGO</string>
     <string name="share">share</string>
     <string name="cancel">cancel</string>
+    <string name="submit_a_rating">Submit a rating:</string>
+    <string name="support">Support</string>
 </resources>
