@@ -5,10 +5,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +44,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private RatingBar rating;
     private ImageButton addToList;
     private ImageButton share;
-    private ImageButton review;
+    private ImageButton ibReview;
     private RecyclerView rvSaved;
 
     @Override
@@ -59,9 +64,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
         share = findViewById(R.id.movie_detail_share);
         review = findViewById(R.id.movie_detail_review);
 
-        PopupMenu popup = new PopupMenu(this, addToList);
-        //Inflating the Popup using xml file
-        popup.getMenuInflater().inflate(R.menu.review, popup.getMenu());
+        LinearLayout main = findViewById(R.id.main);
+
+        ibReview = findViewById(R.id.ibReview);
+        ibReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),ReviewActivity.class));
+            }
+        });
+
         savedList = new ArrayList<>();
         addToList.setOnClickListener(v -> {
             // TODO add to list

@@ -114,15 +114,14 @@ public class SearchFragment extends Fragment {
 
             Movie m = (Movie) data;
             Log.d(TAG, "onCreateView, M:" + "Title: " + m.getTitle());
-
-            Intent intent = new Intent(getActivity().getApplicationContext(), MovieDetailsActivity.class);
+            Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
             intent.putExtra("MOVIE", m);
 
             startActivity(intent);
         });
 
         progressBar = v.findViewById(R.id.progressBar);
-        progressBar.setProgressDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.gradient));
+        progressBar.setProgressDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.gradient));
 
         EditText editText = v.findViewById(R.id.etSearch);
         editText.setOnKeyListener((v1, keyCode, event) -> {
@@ -141,8 +140,6 @@ public class SearchFragment extends Fragment {
                             ratingBar.setRating(ratingBar.getNumStars());
                             showProgressBar();
                             while (progressStatus < 100) {
-                                System.out.println("Array size: " + movies.size());
-                                System.out.println("Adapter size: " + adapter.getItemCount());
                                 progressStatus = movies.size() / adapter.getItemCount() * 100;
                                 handler.post(() -> progressBar.setProgress(progressStatus));
                                 try {

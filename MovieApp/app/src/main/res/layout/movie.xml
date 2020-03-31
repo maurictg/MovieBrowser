@@ -3,10 +3,21 @@
     android:id="@+id/movieLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_gravity="center_horizontal"
+    android:orientation="vertical"
     android:padding="10dp"
     android:theme="@style/AppTheme.Base">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:padding="50dp" />
 
         <ImageView
             android:id="@+id/ivImage"
@@ -14,32 +25,35 @@
             android:layout_height="250dp"
             android:contentDescription="@string/poster" />
 
-        <LinearLayout
-            android:layout_width="150dp"
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:background="@color/colorTransparentBackground"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
-            android:background="@color/colorTransparentBackground"
-            android:orientation="vertical">
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/tvOverview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:maxLines="2"
-                            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tvInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp" />
-
-        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
