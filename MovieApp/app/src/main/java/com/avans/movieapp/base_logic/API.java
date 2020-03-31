@@ -112,6 +112,35 @@ public class API {
         nt.execute("https://api.themoviedb.org/3/authentication/session/new");
     }
 
+//    Als er een rating wordt gegeven van een film die al gerate is door de gebruiker wordt de rating geupdate.
+    public static void putRating(int movieId, double rating, ICallback callback){
+        if (rating > 0 && rating <= 10.0 ){
+
+            NetworkTask networkTask = new NetworkTask(RequestMethod.POST, ((data, success) -> {
+
+            }));
+
+            networkTask.addParameter("api_key", "0767cc753758bdc7d9556d163b0b3f3d");
+            networkTask.addParameter("session_id", "61a26c854ae3c0b7fb9422cada90dd1773a98146");
+            networkTask.addFormData("value", rating + "");
+            networkTask.execute("https://api.themoviedb.org/3/movie/" + movieId + "/rating");
+//                 https://api.themoviedb.org/3/movie/10191/rating?api_key=0767cc753758bdc7d9556d163b0b3f3d&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146
+        }
+    }
+
+    public static void removeRating(int movieId, ICallback callback){
+        NetworkTask networkTask = new NetworkTask(RequestMethod.DELETE, ((data, success) -> {
+
+        }));
+
+        networkTask.addParameter("api_key", "0767cc753758bdc7d9556d163b0b3f3d");
+        networkTask.addParameter("session_id", "61a26c854ae3c0b7fb9422cada90dd1773a98146");
+        networkTask.execute("https://api.themoviedb.org/3/movie/" + movieId + "/rating");
+//          https://api.themoviedb.org/3/movie/10191/rating?api_key=0767cc753758bdc7d9556d163b0b3f3d&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146
+
+
+    }
+
     public static void deleteList(MovieList movieList) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.DELETE, ((data, success) -> {
 
@@ -379,41 +408,10 @@ public class API {
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject movie = (JSONObject) results.get(i);
 
-//                        Commentaar hieronder staat nu in de methode parseMovie()
+
                         movies.add(parseMovie(movie));
 
-//                        int id = movie.optInt(JSON_ID);
-//                        String title = movie.optString(JSON_TITLE);
-//                        String overview = movie.optString(JSON_OVERVIEW);
-//                        String imageUrlPoster = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_POSTER);
-//                        String imageUrlBackdrop = imageUrlLocation + imageUrlOriginalWidth + movie.optString(JSON_IMAGE_URL_BACKDROP);
-//                        boolean isAdult = movie.optBoolean(JSON_ADULT);
-//                        String releaseDateString = movie.optString(JSON_DATE);
-//                        Date date = null;
-//                        try {
-//                            Log.d(TAG, "Date: "+releaseDateString);
-//                            date = new SimpleDateFormat("yyyy-MM-dd").parse(releaseDateString);
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-//                        double voteAverage = movie.optDouble(JSON_VOTE_AVERAGE);
-//
-//
-//                        JSONArray jsonGenreIds = movie.optJSONArray(JSON_GENRE_IDS);
-//                        ArrayList<Integer> genreIds = new ArrayList<>();
-//                        if (jsonGenreIds != null && jsonGenreIds.length() > 0){
-//                            for (int j = 0; j < jsonGenreIds.length(); j++){
-//                                int a = jsonGenreIds.optInt(j);
-//                                genreIds.add(j);
-//                            }
-//                        }
-//
-//                        String originalLanguage = movie.optString(JSON_ORIGINAL_LANGUAGE);
-//
-//
-//                        movies.add(new Movie(id, title, overview,
-//                                imageUrlPoster, imageUrlBackdrop, isAdult,
-//                                date, voteAverage, genreIds, originalLanguage));
+
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse json");
