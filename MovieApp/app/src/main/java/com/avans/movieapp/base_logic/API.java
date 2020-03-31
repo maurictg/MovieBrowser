@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class API {
+    private static final int LIST_ID = 137769;
+
     private static final String TAG = API.class.getSimpleName();
 
     private static final String imageUrlLocation = "https://image.tmdb.org/t/p/";
@@ -128,6 +130,34 @@ public class API {
         }
     }
 
+    public static void listAddMovie(int movieId){
+
+        NetworkTask networkTask = new NetworkTask(RequestMethod.POST, ((data, success) -> {
+
+        }));
+
+        networkTask.addParameter("api_key", "0767cc753758bdc7d9556d163b0b3f3d");
+        networkTask.addParameter("session_id", "61a26c854ae3c0b7fb9422cada90dd1773a98146");
+        networkTask.addFormData("media_id", movieId + "");
+        networkTask.execute("https://api.themoviedb.org/3/list/" + LIST_ID + "/add_item");
+//                https://api.themoviedb.org/3/list/137504/add_item?api_key=0767cc753758bdc7d9556d163b0b3f3d&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146
+
+    }
+
+    public static void listDeleteMovie(int movieId){
+
+        NetworkTask networkTask = new NetworkTask(RequestMethod.PUT, (data, success) -> {
+
+        });
+
+        networkTask.addParameter("api_key", "0767cc753758bdc7d9556d163b0b3f3d");
+        networkTask.addParameter("session_id", "61a26c854ae3c0b7fb9422cada90dd1773a98146");
+        networkTask.addFormData("media_id", movieId + "");
+        networkTask.execute("https://api.themoviedb.org/3/list/" + LIST_ID + "/remove_item");
+//         https://api.themoviedb.org/3/list/137504/remove_item?api_key=0767cc753758bdc7d9556d163b0b3f3d&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146
+
+    }
+
     public static void removeRating(int movieId, ICallback callback){
         NetworkTask networkTask = new NetworkTask(RequestMethod.DELETE, ((data, success) -> {
 
@@ -140,6 +170,8 @@ public class API {
 
 
     }
+
+
 
     public static void deleteList(MovieList movieList) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.DELETE, ((data, success) -> {
@@ -170,7 +202,7 @@ public class API {
 //        https://api.themoviedb.org/3/list?api_key=0767cc753758bdc7d9556d163b0b3f3d&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146
 
     }
-
+    
     public static void getLists(ICallback callback) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
@@ -205,8 +237,8 @@ public class API {
 //        https://api.themoviedb.org/3/account/9160674/lists?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146&page=1
     }
 
-    public static void getMoviesFromMovieList(MovieList movieList, ICallback callback) {
-        int movieListId = movieList.getId();
+    public static void getMoviesFromMovieList(ICallback callback) {
+        int movieListId = LIST_ID;
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
                 BinaryData binaryData = (BinaryData) data;

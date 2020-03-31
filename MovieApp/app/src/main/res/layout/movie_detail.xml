@@ -71,6 +71,7 @@
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/movie_detail_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
@@ -81,7 +82,7 @@
                             android:textSize="18sp" />
 
                         <ImageButton
-                            android:id="@+id/ibReview"
+                            android:id="@+id/movie_detail_rating_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom|end"
@@ -140,7 +141,7 @@
                     android:textSize="15sp" />
 
                 <RatingBar
-                    android:id="@+id/movie_detail_rating"
+                    android:id="@+id/movie_detail_rating_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="12sp"
@@ -165,7 +166,7 @@
                 </GridLayout>
 
                 <TextView
-                    android:id="@+id/movie_detail_actors"
+                    android:id="@+id/movie_detail_review"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -175,7 +176,7 @@
                     android:textSize="18sp" />
 
                 <ImageButton
-                    android:id="@+id/ibReview"
+                    android:id="@+id/movie_detail_review_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"

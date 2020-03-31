@@ -5,15 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MenuInflater;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.RatingBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +38,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private RatingBar rating;
     private ImageButton addToList;
     private ImageButton share;
+    private ImageButton ibRating;
     private ImageButton ibReview;
     private RecyclerView rvSaved;
 
@@ -59,12 +54,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
         company = findViewById(R.id.movie_detail_company);
         summary = findViewById(R.id.movie_detail_summary);
         age = findViewById(R.id.movie_detail_age);
-        rating = findViewById(R.id.movie_detail_rating);
+        rating = findViewById(R.id.movie_detail_rating_bar);
         addToList = findViewById(R.id.movie_detail_list);
         share = findViewById(R.id.movie_detail_share);
 
-        ibReview = findViewById(R.id.ibReview);
-        ibReview.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),ReviewActivity.class)));
+        ibReview = findViewById(R.id.movie_detail_review_button);
+        ibReview.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReviewActivity.class)));
+
+        ibRating = findViewById(R.id.movie_detail_rating_button);
+        //ibRating.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), RatingActivity.class)));
 
         savedList = new ArrayList<>();
         addToList.setOnClickListener(v -> {
