@@ -69,7 +69,6 @@
                             android:text="@string/company"
                             android:textColor="@color/colorText"
                             android:textSize="16sp" />
-
                         <TextView
                             android:id="@+id/movie_detail_rating"
                             android:layout_width="wrap_content"
@@ -189,7 +188,7 @@
                 android:backgroundTint="@color/colorAccent"
                 android:contentDescription="@string/saved"
                 android:padding="15dp"
-                android:src="@drawable/ic_bookmark_24dp"
+                android:src="@drawable/ic_bookmark_border_24dp"
                 android:textColor="@color/colorText"
                 android:tint="@color/colorHighlight" />
         </RelativeLayout>
