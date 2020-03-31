@@ -128,6 +128,34 @@ public class API {
         }
     }
 
+    public static void listAddMovie(int movieId, int listId){
+
+        NetworkTask networkTask = new NetworkTask(RequestMethod.POST, ((data, success) -> {
+
+        }));
+
+        networkTask.addParameter("api_key", "0767cc753758bdc7d9556d163b0b3f3d");
+        networkTask.addParameter("session_id", "61a26c854ae3c0b7fb9422cada90dd1773a98146");
+        networkTask.addFormData("media_id", movieId + "");
+        networkTask.execute("https://api.themoviedb.org/3/list/" + listId + "/add_item");
+//                https://api.themoviedb.org/3/list/137504/add_item?api_key=0767cc753758bdc7d9556d163b0b3f3d&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146
+
+    }
+
+    public static void listDeleteMovie(int movieId, int listId){
+
+        NetworkTask networkTask = new NetworkTask(RequestMethod.PUT, (data, success) -> {
+
+        });
+
+        networkTask.addParameter("api_key", "0767cc753758bdc7d9556d163b0b3f3d");
+        networkTask.addParameter("session_id", "61a26c854ae3c0b7fb9422cada90dd1773a98146");
+        networkTask.addFormData("media_id", movieId + "");
+        networkTask.execute("https://api.themoviedb.org/3/list/" + listId + "/remove_item");
+//         https://api.themoviedb.org/3/list/137504/remove_item?api_key=0767cc753758bdc7d9556d163b0b3f3d&session_id=61a26c854ae3c0b7fb9422cada90dd1773a98146
+
+    }
+
     public static void removeRating(int movieId, ICallback callback){
         NetworkTask networkTask = new NetworkTask(RequestMethod.DELETE, ((data, success) -> {
 
@@ -140,6 +168,8 @@ public class API {
 
 
     }
+
+
 
     public static void deleteList(MovieList movieList) {
         NetworkTask networkTask = new NetworkTask(RequestMethod.DELETE, ((data, success) -> {
