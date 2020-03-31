@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dip"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMenu">
+    <ImageButton
+        android:id="@+id/end_data_send_button"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_close_black_24dp"
+        android:tint="@color/colorHighlight"
+        android:backgroundTint="@color/colorMenu"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:contentDescription="@string/cancel" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rating"
+        android:padding="10dp"
+
+        android:textSize="18sp"
+        android:textColor="@color/colorText"/>
+    <RatingBar
+        android:id="@+id/rt_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:progressBackgroundTint="@color/colorBackground"
+        android:progressTint="@color/colorHighlight" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Write a short review:"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/colorText"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/colorText"
+        android:backgroundTint="@color/colorText"/>
+</LinearLayout>

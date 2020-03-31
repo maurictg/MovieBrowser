@@ -61,7 +61,9 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
 //        holder.tvOverview.setText(overview.substring(0, Math.min(overview.length(), 60)) + "...");
 
         if (m.getImageUrlPoster().length() > 10) {
-            Picasso.get().load(m.getImageUrlPoster()).placeholder(R.drawable.ic_image_placeholder_24dp).into(holder.ivImage);
+            Picasso.get()
+                    .load(m.getImageUrlPoster())
+                    .into(holder.ivImage);
         }
 
         holder.itemView.setOnClickListener(v -> {

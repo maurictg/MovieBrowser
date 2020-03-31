@@ -7,12 +7,16 @@
         <item name="colorPrimary">@color/colorBackground</item>
         <item name="colorPrimaryDark">@color/colorBackground</item>
         <item name="colorAccent">@color/colorMenu</item>
-        <item name="colorSecondary">@color/colorBackground</item>
+        <item name="colorSecondary">@drawable/gradient</item>
     </style>
     <!-- Preference application theme. -->
     <style name="AppTheme.Preference" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorBackground</item>
         <item name="colorPrimaryDark">@color/colorBackground</item>
         <item name="colorAccent">@color/colorHighlight</item>
+    </style>
+    <style name="AppTheme.Review" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 </resources>
