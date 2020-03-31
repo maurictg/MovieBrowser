@@ -218,7 +218,6 @@ public class SearchFragment extends Fragment {
                             selectedGenresList.add(genres.get(j).getId());
 
                         } else if (textViewArray[j].getBackground() == bgEnabled) {
-                            Toast.makeText(getContext(), "Genre removed: " + genres.get(j).getName(), Toast.LENGTH_SHORT).show();
                             textViewArray[j].setBackground(bgDisabled);
 
                             for (int k = 0; k < selectedGenresList.size(); k++)
