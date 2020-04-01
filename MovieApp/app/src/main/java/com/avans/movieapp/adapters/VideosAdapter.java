@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
-import com.avans.movieapp.activities.MainActivity;
 import com.avans.movieapp.interfaces.ICallback;
 import com.avans.movieapp.models.Movie;
 import com.squareup.picasso.Picasso;

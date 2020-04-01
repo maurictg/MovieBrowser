@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -25,9 +24,7 @@ import java.util.Arrays;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    private static final String LIFECYCLE_CALLBACKS_TEXT_KEY = "callbacks";
     private final String TAG = MovieDetailsActivity.class.getSimpleName();
-    public ArrayList<Movie> savedList;
     private Movie movie;
     private ImageView image;
     private TextView title;
@@ -59,27 +56,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
         addToList = findViewById(R.id.movie_detail_list);
         share = findViewById(R.id.movie_detail_share);
 
-        addToList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!checked) {
-                    API.listAddMovie(movie.getId());
-                    System.out.println("List: added to list");
-//                    Toast.makeText(this, movie.getTitle() + " added", Toast.LENGTH_SHORT).show();
-                } else {
-                    API.listDeleteMovie(movie.getId());
-                    System.out.println("List: removed from list");
-                }
-                getMoviesFromList();
-
+        addToList.setOnClickListener(v -> {
+            if (!checked) {
+                API.listAddMovie(movie.getId());
+            } else {
+                API.listDeleteMovie(movie.getId());
             }
+            getMoviesFromList();
         });
+
         ibRating = findViewById(R.id.movie_detail_rating_button);
         ibRating.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReviewActivity.class).putExtra("movieId", movie.getId())));
 
         share.setOnClickListener(v -> {
             Intent share = new Intent(Intent.ACTION_SEND);
-
             share.putExtra(Intent.EXTRA_TEXT, "I've found a movie for you! \n \n" + movie.getTitle() + "\n" + movie.getImageUrlBackdrop() + "\n\n" + movie.getOverview());
             share.setType("text/*");
 
@@ -107,9 +97,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 summary.setText(movieDetails.getOverview());
                 age.setText(String.format("Adult movie: %s", movieDetails.isAdultString()));
                 rating.setRating((int) (movieDetails.getVoteAverage() / 2));
-
             }
         });
+
         getMoviesFromList();
         Picasso.get().load(movie.getImageUrlPoster()).into(image);
     }
@@ -117,15 +107,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
     public void getMoviesFromList() {
         API.getMoviesFromMovieList((data, success) -> {
             if (success) {
-                ArrayList<Movie> movieList = new ArrayList<>();
-                movieList.addAll((ArrayList<Movie>) data);
+                ArrayList<Movie> movieList = new ArrayList<>((ArrayList<Movie>)data);
                 checked = false;
+
                 for (int i = 0; i < movieList.size(); i++) {
                     if (movie.getId() == movieList.get(i).getId()) {
                         checked = true;
                         break;
                     }
                 }
+
                 if (!checked) {
                     System.out.println("List: not in list");
                     addToList.setImageDrawable(ContextCompat.getDrawable(addToList.getContext(), R.drawable.ic_bookmark_border_24dp));

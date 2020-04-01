@@ -12,16 +12,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avans.movieapp.R;
 import com.avans.movieapp.activities.MovieDetailsActivity;
 import com.avans.movieapp.adapters.SavedAdapter;
-import com.avans.movieapp.adapters.VideosAdapter;
 import com.avans.movieapp.base_logic.API;
-import com.avans.movieapp.base_logic.DisplayCalc;
 import com.avans.movieapp.models.Movie;
 
 import java.io.Serializable;
@@ -38,9 +35,7 @@ public class SavedFragment extends Fragment implements Serializable {
 
     private ArrayList<Movie> movies = new ArrayList<>();
 
-    public SavedFragment() {
-        // Required empty public constructor
-    }
+    public SavedFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

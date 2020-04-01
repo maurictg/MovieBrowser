@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -12,8 +11,6 @@ import androidx.annotation.Nullable;
 
 import com.avans.movieapp.R;
 import com.avans.movieapp.base_logic.API;
-
-import java.util.ArrayList;
 
 public class ReviewActivity extends Activity {
     @Override

@@ -43,8 +43,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvHomeDiscover;
     private RecyclerView rvHomeRecent;
 
-    public HomeFragment() {
-    }
+    public HomeFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,8 +52,6 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, "Called onCreateView");
         moviesDiscover = new ArrayList<>();
         moviesRecent = new ArrayList<>();
-
-        ProgressBar imageLoader;
 
         rvHomeDiscover = view.findViewById(R.id.rvHomeDiscover);
         rvHomeRecent = view.findViewById(R.id.rvHomeRecent);
