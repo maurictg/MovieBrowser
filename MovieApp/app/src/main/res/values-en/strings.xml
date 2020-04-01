@@ -28,4 +28,27 @@
     <string name="recent">recent</string>
     <string name="poster">POSTER</string>
     <string name="icon">ICON</string>
+    <string name="filter">Filter</string>
+    <string name="language">Language</string>
+    <string name="genre">Genre</string>
+    <string name="rating">Rating</string>
+    <string name="ratings">Ratings</string>
+    <string name="duration">Duration</string>
+    <string name="reset_filter">Reset filters</string>
+    <string name="dutch">DUTCH</string>
+    <string name="german">GERMAN</string>
+    <string name="english">ENGLISH</string>
+    <string name="sort_by">Sort by</string>
+    <string name="date_new">Date - New</string>
+    <string name="date_old">Date - Old</string>
+    <string name="length">Length</string>
+    <string name="title">Title</string>
+    <string name="company">Company</string>
+    <string name="summary">Summary</string>
+    <string name="write_a_review">Write a review:</string>
+    <string name="actors">Actors:</string>
+    <string name="french">FRENCH</string>
+    <string name="share">Share</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit_a_rating">Submit rating:</string>
 </resources>

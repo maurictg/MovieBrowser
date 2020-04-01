@@ -28,4 +28,27 @@
     <string name="recent">recent</string>
     <string name="poster">POSTER</string>
     <string name="icon">ICOON</string>
+    <string name="filter">Filteren</string>
+    <string name="language">Taal</string>
+    <string name="genre">Genre</string>
+    <string name="rating">Beoordeling</string>
+    <string name="ratings">Beoordelingen</string>
+    <string name="duration">Duur</string>
+    <string name="reset_filter">Filters wissen</string>
+    <string name="dutch">NEDERLANDS</string>
+    <string name="german">DUITS</string>
+    <string name="english">ENGELS</string>
+    <string name="sort_by">Sorteren</string>
+    <string name="date_new">Datum - Nieuw</string>
+    <string name="date_old">Datum - Oud</string>
+    <string name="length">Lengte</string>
+    <string name="title">Titel</string>
+    <string name="company">Bedrijf</string>
+    <string name="summary">Samenvatting</string>
+    <string name="write_a_review">Review schrijven:</string>
+    <string name="actors">Acteurs:</string>
+    <string name="french">FRANS</string>
+    <string name="share">Delen</string>
+    <string name="cancel">Annuleren</string>
+    <string name="submit_a_rating">Beoordeling indienen:</string>
 </resources>
