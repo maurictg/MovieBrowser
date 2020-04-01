@@ -78,4 +78,6 @@
     <string name="cancel">cancel</string>
     <string name="submit_a_rating">Submit a rating:</string>
     <string name="support">Support</string>
+    <string name="color">Color</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

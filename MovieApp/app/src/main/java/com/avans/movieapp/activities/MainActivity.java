@@ -20,7 +20,6 @@ import androidx.preference.PreferenceManager;
 
 import com.avans.movieapp.R;
 import com.avans.movieapp.fragments.HomeFragment;
-import com.avans.movieapp.fragments.ProfileFragment;
 import com.avans.movieapp.fragments.SavedFragment;
 import com.avans.movieapp.fragments.SearchFragment;
 import com.google.android.material.badge.BadgeDrawable;
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
     private BottomNavigationView bottomNavigationView;
 
-    private MenuItem nav_profile;
     private MenuItem nav_saved;
     private MenuItem nav_search;
 
@@ -59,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         // Menu notifications
         Menu navigation = bottomNavigationView.getMenu();
         badgeDrawable = BadgeDrawable.create(this);
-        nav_profile = navigation.findItem(R.id.nav_profile);
         nav_saved = navigation.findItem(R.id.nav_saved);
         
         setNotification(nav_saved);
@@ -94,10 +91,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_saved:
                 fragment = new SavedFragment();
                 clearNotification(nav_saved);
-                break;
-            case R.id.nav_profile:
-                fragment = new ProfileFragment();
-                clearNotification(nav_profile);
                 break;
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();

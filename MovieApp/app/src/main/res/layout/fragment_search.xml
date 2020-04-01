@@ -171,7 +171,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checkedButton="@id/lang_en">
-
                     <RadioButton
                         android:id="@+id/lang_en"
                         android:layout_width="wrap_content"
@@ -194,7 +193,6 @@
                         android:text="@string/dutch"
                         android:textAllCaps="true"
                         android:textColor="@color/colorText"/>
-
                     <RadioButton
                         android:id="@+id/lang_de"
                         android:layout_width="wrap_content"
@@ -207,8 +205,6 @@
                         android:textAllCaps="true"
                         android:textColor="@color/colorText" />
                 </RadioGroup>
-
-
 
                 <TextView
                     android:layout_width="match_parent"

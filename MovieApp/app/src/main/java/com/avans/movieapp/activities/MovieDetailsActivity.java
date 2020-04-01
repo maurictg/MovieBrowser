@@ -120,19 +120,19 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 ArrayList<Movie> movieList = new ArrayList<>();
                 movieList.addAll((ArrayList<Movie>) data);
                 checked = false;
-                    for (int i = 0; i < movieList.size(); i++) {
-                        if (movie.getId() == movieList.get(i).getId()) {
-                            checked = true;
-                            break;
-                        }
+                for (int i = 0; i < movieList.size(); i++) {
+                    if (movie.getId() == movieList.get(i).getId()) {
+                        checked = true;
+                        break;
                     }
-                    if (!checked) {
-                        System.out.println("List: not in list");
-                        addToList.setImageDrawable(ContextCompat.getDrawable(addToList.getContext(), R.drawable.ic_bookmark_border_24dp));
-                    } else {
-                        System.out.println("List: in list");
-                        addToList.setImageDrawable(ContextCompat.getDrawable(addToList.getContext(), R.drawable.ic_bookmark_24dp));
-                    }
+                }
+                if (!checked) {
+                    System.out.println("List: not in list");
+                    addToList.setImageDrawable(ContextCompat.getDrawable(addToList.getContext(), R.drawable.ic_bookmark_border_24dp));
+                } else {
+                    System.out.println("List: in list");
+                    addToList.setImageDrawable(ContextCompat.getDrawable(addToList.getContext(), R.drawable.ic_bookmark_24dp));
+                }
             }
         });
     }

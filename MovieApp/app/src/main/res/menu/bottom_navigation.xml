@@ -13,8 +13,4 @@
         android:id="@+id/nav_saved"
         android:icon="@drawable/ic_bookmark_24dp"
         android:title="@string/saved" />
-    <item
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_person_24dp"
-        android:title="@string/profile" />
 </menu>

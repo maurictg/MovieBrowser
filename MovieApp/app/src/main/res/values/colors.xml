@@ -11,5 +11,4 @@
     <color name="colorTransparent">@android:color/transparent</color>
     <color name="colorText">#C8C8C8</color>
     <color name="colorTransparentBackground">#66000000</color>
-    /* TODO ADD WHITE MODE */
 </resources>
