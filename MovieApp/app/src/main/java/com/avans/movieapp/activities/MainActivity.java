@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.avans.movieapp.R;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES);
         //Show popup when no wifi found
         if (((ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE)).getAllNetworks().length<=0) {
             System.out.println("WIFI OFF");
