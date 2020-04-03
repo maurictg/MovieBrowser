@@ -23,7 +23,7 @@ public class BinaryData {
     private final String TAG = BinaryData.class.getSimpleName();
 
     //Private variables
-    private byte[] data;
+    private final byte[] data;
 
     /**
      * Create new BinaryData instance

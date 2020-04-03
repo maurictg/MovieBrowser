@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -40,9 +39,6 @@ public class HomeFragment extends Fragment {
     private VideosAdapter adapterDiscover;
     private VideosAdapter adapterRecent;
 
-    private RecyclerView rvHomeDiscover;
-    private RecyclerView rvHomeRecent;
-
     public HomeFragment() {}
 
     @Override
@@ -53,10 +49,9 @@ public class HomeFragment extends Fragment {
         moviesDiscover = new ArrayList<>();
         moviesRecent = new ArrayList<>();
 
-        rvHomeDiscover = view.findViewById(R.id.rvHomeDiscover);
-        rvHomeRecent = view.findViewById(R.id.rvHomeRecent);
+        RecyclerView rvHomeDiscover = view.findViewById(R.id.rvHomeDiscover);
+        RecyclerView rvHomeRecent = view.findViewById(R.id.rvHomeRecent);
 
-//        RecyclerView.LayoutManager LayoutManager = new GridLayoutManager(getActivity(), MainActivity.calculateNoOfColumns(getActivity()));
         RecyclerView.LayoutManager lmDiscover = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView.LayoutManager lmRecent = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
@@ -89,9 +84,11 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+
         TextView tvHome = view.findViewById(R.id.tvTitle);
         Shader shader = new LinearGradient(tvHome.getWidth(), tvHome.getLineHeight(),0 , 0, Color.parseColor("#00B3E4"), Color.parseColor("#90CEA1"),
                 Shader.TileMode.REPEAT);
+
         tvHome.getPaint().setShader(shader);
         return view;
     }

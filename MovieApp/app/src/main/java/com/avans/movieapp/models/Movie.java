@@ -153,21 +153,21 @@ public class Movie implements Serializable {
     }
 
     //Sorting using Collections.sort(ArrayList<Movie> movies, Movie.*Sorter);
-    public static Comparator<Movie> ReleaseDateSorter = new Comparator<Movie>() {
+    public static final Comparator<Movie> ReleaseDateSorter = new Comparator<Movie>() {
         @Override
         public int compare(Movie o1, Movie o2) {
             return o1.getReleaseDate().compareTo(o2.getReleaseDate());
         }
     };
 
-    public static Comparator<Movie> RatingSorter = new Comparator<Movie>() {
+    public static final Comparator<Movie> RatingSorter = new Comparator<Movie>() {
         @Override
         public int compare(Movie o1, Movie o2) {
             return (int) ((o1.getVoteAverage() * 100) - (o2.getVoteAverage() * 100));
         }
     };
 
-    public static Comparator<Movie> VisibleSorter = new Comparator<Movie>() {
+    public static final Comparator<Movie> VisibleSorter = new Comparator<Movie>() {
         @Override
         public int compare(Movie o1, Movie o2) {
             return (o1.isVisible() == o2.isVisible() ? 0 : (o2.isVisible() ? 1 : -1));

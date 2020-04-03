@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder> {
 
     private ArrayList<Movie> movies;
-    private ICallback clickCallback;
+    private final ICallback clickCallback;
 
     public VideosAdapter(ArrayList<Movie> movies, ICallback clickCallback) {
         this.movies = movies;

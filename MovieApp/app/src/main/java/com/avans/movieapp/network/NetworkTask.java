@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 public class NetworkTask extends AsyncTask<String, Void, BinaryData> {
     private final String TAG = NetworkTask.class.getSimpleName();
-    private ICallback callback;
+    private final ICallback callback;
 
     private HashMap<String, String> headers;
     private HashMap<String, String> parameters;

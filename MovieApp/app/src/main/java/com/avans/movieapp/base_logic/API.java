@@ -211,6 +211,7 @@ public class API {
                 try {
                     JSONObject JSONResult = binaryData.toJSONObject();
                     JSONArray results = JSONResult.optJSONArray(JSON_RESULTS);
+                    assert results != null;
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject movieList = (JSONObject) results.get(i);
                         String description = movieList.optString(JSON_DESCRIPTION);
@@ -237,7 +238,6 @@ public class API {
     }
 
     public static void getMoviesFromMovieList(ICallback callback) {
-        int movieListId = LIST_ID;
         NetworkTask networkTask = new NetworkTask(RequestMethod.GET, ((data, success) -> {
             if (success) {
                 BinaryData binaryData = (BinaryData) data;
@@ -245,6 +245,7 @@ public class API {
                 try {
                     JSONObject JSONResult = binaryData.toJSONObject();
                     JSONArray items = JSONResult.optJSONArray(JSON_ITEMS);
+                    assert items != null;
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject jsonMovie = (JSONObject) items.get(i);
 
@@ -253,7 +254,7 @@ public class API {
                         movies.add(movie);
                     }
 
-                    callback.callback(movies, success);
+                    callback.callback(movies, true);
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse json");
@@ -264,7 +265,7 @@ public class API {
         }));
 
         networkTask.addParameter("api_key", "0767cc753758bdc7d9556d163b0b3f3d");
-        networkTask.execute(" https://api.themoviedb.org/3/list/" + movieListId);
+        networkTask.execute(" https://api.themoviedb.org/3/list/" + LIST_ID);
 //         https://api.themoviedb.org/3/list/137504?api_key=0767cc753758bdc7d9556d163b0b3f3d&language=en-US
 
     }
