@@ -26,7 +26,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private final String TAG = MovieDetailsActivity.class.getSimpleName();
     private Movie movie;
-    private ImageView image;
     private TextView title;
     private TextView genre;
     private TextView company;
@@ -34,9 +33,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView age;
     private RatingBar rating;
     private ImageButton addToList;
-    private ImageButton share;
-    private ImageButton ibRating;
-    private ImageButton ibReview;
 
     private boolean checked = false;
 
@@ -46,7 +42,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_detail);
 
-        image = findViewById(R.id.movie_detail_image);
+        ImageView image = findViewById(R.id.movie_detail_image);
         title = findViewById(R.id.movie_detail_title);
         genre = findViewById(R.id.movie_detail_genre);
         company = findViewById(R.id.movie_detail_company);
@@ -54,7 +50,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         age = findViewById(R.id.movie_detail_age);
         rating = findViewById(R.id.movie_detail_rating_bar);
         addToList = findViewById(R.id.movie_detail_list);
-        share = findViewById(R.id.movie_detail_share);
+        ImageButton share1 = findViewById(R.id.movie_detail_share);
 
         addToList.setOnClickListener(v -> {
             if (!checked) {
@@ -65,10 +61,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
             getMoviesFromList();
         });
 
-        ibRating = findViewById(R.id.movie_detail_rating_button);
+        ImageButton ibRating = findViewById(R.id.movie_detail_rating_button);
         ibRating.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReviewActivity.class).putExtra("movieId", movie.getId())));
 
-        share.setOnClickListener(v -> {
+        share1.setOnClickListener(v -> {
             Intent share = new Intent(Intent.ACTION_SEND);
             share.putExtra(Intent.EXTRA_TEXT, "I've found a movie for you! \n \n" + movie.getTitle() + "\n" + movie.getImageUrlBackdrop() + "\n\n" + movie.getOverview());
             share.setType("text/*");

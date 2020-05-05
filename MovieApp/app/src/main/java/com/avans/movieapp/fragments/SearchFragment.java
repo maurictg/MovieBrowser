@@ -282,6 +282,7 @@ public class SearchFragment extends Fragment {
         for (Movie m : deletables) {
             allMoviesList.remove(m);
         }
+
         movies.clear();
         movies.addAll(allMoviesList);
         adapter.notifyDataSetChanged();
@@ -296,19 +297,14 @@ public class SearchFragment extends Fragment {
 
     private class onSortTypeClick implements android.widget.AdapterView.OnItemSelectedListener {
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            sort();
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) {
-        }
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { sort(); }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 
-    public void showProgressBar() {
+    private void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
-
-    public void hideProgressBar() {
+    private void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
     }
 

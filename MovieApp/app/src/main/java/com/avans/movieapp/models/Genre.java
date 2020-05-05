@@ -2,8 +2,8 @@ package com.avans.movieapp.models;
 
 public class Genre {
 
-    private String genreName;
-    private int genreId;
+    private final String genreName;
+    private final int genreId;
 
     public Genre(String genreName, int genreId) {
         this.genreName = genreName;

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem nav_saved;
     private MenuItem nav_search;
 
-    BadgeDrawable badgeDrawable;
+    private BadgeDrawable badgeDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Bottom navigation buttons
-    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item -> {
+    private final BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item -> {
         Fragment fragment = null;
         assert false;
         switch (item.getItemId()) {

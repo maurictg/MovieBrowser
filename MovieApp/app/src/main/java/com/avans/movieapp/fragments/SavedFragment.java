@@ -31,7 +31,6 @@ public class SavedFragment extends Fragment implements Serializable {
 
     private static final String TAG = SavedFragment.class.getSimpleName();
     private SavedAdapter mSavedList;
-    private RecyclerView mSaveRecycler;
 
     private ArrayList<Movie> movies = new ArrayList<>();
 
@@ -56,7 +55,7 @@ public class SavedFragment extends Fragment implements Serializable {
             startActivity(intent);
         });
 
-        mSaveRecycler = v.findViewById(R.id.rvSave);
+        RecyclerView mSaveRecycler = v.findViewById(R.id.rvSave);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mSaveRecycler.setLayoutManager(layoutManager);
         mSaveRecycler.setAdapter(mSavedList);

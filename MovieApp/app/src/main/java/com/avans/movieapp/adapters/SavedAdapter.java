@@ -23,8 +23,7 @@ import java.util.ArrayList;
 public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> {
 
     private ArrayList<Movie> movies;
-    private ICallback clickCallback;
-    private String overview;
+    private final ICallback clickCallback;
 
     public SavedAdapter(ArrayList<Movie> movies, ICallback clickCallback) {
         this.movies = movies;
@@ -60,7 +59,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
         }
-        overview = m.getOverview();
+        String overview = m.getOverview();
         holder.tvTitle.setText(m.getTitle());
         holder.tvInfo.setText(String.format("%d - %s", m.getId(), m.getVoteAverage())); //Just for testing
         holder.tvOverview.setText(overview.substring(0, Math.min(overview.length(), 60)) + "...");
